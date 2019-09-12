@@ -16,5 +16,20 @@ namespace GameEngineTests
 
             Assert.AreEqual(expectedPosition, actualPosition);
         }
+
+        [TestMethod]
+        //[DataRow(CardType.Red, 6)]
+        [DataRow(CardType.Orange, 1)]
+        [DataRow(CardType.Yellow, 2)]
+        [DataRow(CardType.Green, 3)]
+        [DataRow(CardType.Blue, 4)]
+        [DataRow(CardType.Purple, 5)]
+        public void ShouldMakeSimpleMove(CardType cardType, int newPosition)
+        {
+            var board = new GameBoard();
+            board.Move(cardType);
+
+            Assert.AreEqual(newPosition, board.OwlPosition);
+        }
     }
 }
