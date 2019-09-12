@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +33,7 @@ namespace GameEngine
             var targetBoardPosition = Convert(type);
             for (int i = OwlPosition + 1; i < Board.Count; i++)
             {
-                if(Board[i] == targetBoardPosition)
+                if(Board[i] == targetBoardPosition || Board[i] == BoardPositionType.Nest)
                 {
                     OwlPosition = i;
                     break;

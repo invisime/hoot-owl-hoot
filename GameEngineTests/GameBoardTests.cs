@@ -1,4 +1,4 @@
-using GameEngine;
+﻿using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -31,6 +31,18 @@ namespace GameEngineTests
             board.Move(cardType);
 
             Assert.AreEqual(newPosition, board.OwlPosition);
+        }
+
+        [TestMethod]
+        public void ShouldMoveOwlIntoNest()
+        {
+            var board = new GameBoard();
+            board.OwlPosition = board.Board.Count - 2;
+
+            board.Move(CardType.Red);
+
+            Assert.AreEqual(board.Board.Count - 1, board.OwlPosition);
+            Assert.AreEqual(BoardPositionType.Nest, board.Board[board.OwlPosition]);
         }
     }
 }
