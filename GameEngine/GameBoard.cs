@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +31,7 @@ namespace GameEngine
         public void Move(CardType type)
         {
             var targetBoardPosition = Convert(type);
-            for (int i = OwlPosition; i < Board.Count; i++)
+            for (int i = OwlPosition + 1; i < Board.Count; i++)
             {
                 if(Board[i] == targetBoardPosition)
                 {

@@ -1,4 +1,4 @@
-﻿using GameEngine;
+using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -18,15 +18,16 @@ namespace GameEngineTests
         }
 
         [TestMethod]
-        //[DataRow(CardType.Red, 6)]
+        [DataRow(CardType.Red, 6)]
         [DataRow(CardType.Orange, 1)]
         [DataRow(CardType.Yellow, 2)]
         [DataRow(CardType.Green, 3)]
         [DataRow(CardType.Blue, 4)]
         [DataRow(CardType.Purple, 5)]
-        public void ShouldMakeSimpleMove(CardType cardType, int newPosition)
+        public void ShouldMakeSimpleMoves(CardType cardType, int newPosition)
         {
             var board = new GameBoard();
+
             board.Move(cardType);
 
             Assert.AreEqual(newPosition, board.OwlPosition);
