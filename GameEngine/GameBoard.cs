@@ -17,6 +17,15 @@ namespace GameEngine
 
         public void Move(CardType type)
         {
+            if(OwlPosition == Board.Count - 1)
+            {
+                throw new InvalidMoveException("Owl is already in the Nest");
+            }
+            if(type == CardType.Sun)
+            {
+                throw new InvalidMoveException("Sun is not a valid movement type");
+            }
+
             var targetBoardPosition = Convert(type);
             for (int i = OwlPosition + 1; i < Board.Count; i++)
             {

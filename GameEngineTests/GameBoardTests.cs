@@ -43,5 +43,23 @@ namespace GameEngineTests
             Assert.AreEqual(board.Board.Count - 1, board.OwlPosition);
             Assert.AreEqual(BoardPositionType.Nest, board.Board[board.OwlPosition]);
         }
+
+        [TestMethod]
+        public void ShouldFailToMoveOwlWhenItIsAlreadyInTheNest()
+        {
+            var board = new GameBoard();
+            board.OwlPosition = board.Board.Count - 1;
+
+            Assert.ThrowsException<InvalidMoveException>(() => board.Move(CardType.Red));
+        }
+
+        [TestMethod]
+        public void ShouldFailToMoveWhenInvalidCardType()
+        {
+            var board = new GameBoard();
+            board.OwlPosition = board.Board.Count - 1;
+
+            Assert.ThrowsException<InvalidMoveException>(() => board.Move(CardType.Sun));
+        }
     }
 }
