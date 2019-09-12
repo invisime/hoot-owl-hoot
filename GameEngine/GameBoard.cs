@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GameEngine
 {
@@ -12,19 +11,7 @@ namespace GameEngine
 
         public GameBoard()
         {
-            Board = new List<BoardPositionType>();
-            for (int i = 0; i < 6; i++)
-            {
-                foreach (BoardPositionType type in Enum.GetValues(typeof(BoardPositionType)))
-                {
-                    if(type == BoardPositionType.Nest)
-                    {
-                        continue;
-                    }
-                    Board.Add(type);
-                }
-            }
-            Board.Add(BoardPositionType.Nest);
+            BuildBoard();
             OwlPosition = 0;
         }
 
@@ -59,6 +46,23 @@ namespace GameEngine
                     return BoardPositionType.Purple;
             }
             return BoardPositionType.Nest;
+        }
+
+        private void BuildBoard()
+        {
+            Board = new List<BoardPositionType>();
+            for (int i = 0; i < 6; i++)
+            {
+                foreach (BoardPositionType type in Enum.GetValues(typeof(BoardPositionType)))
+                {
+                    if (type == BoardPositionType.Nest)
+                    {
+                        continue;
+                    }
+                    Board.Add(type);
+                }
+            }
+            Board.Add(BoardPositionType.Nest);
         }
     }
 }
