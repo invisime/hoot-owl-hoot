@@ -18,5 +18,15 @@ namespace GameEngine
             int index = Random.Next(0, Hand.Count);
             return Hand[index];
         }
+
+        public void Discard(CardType card)
+        {
+            Hand.Remove(card);
+        }
+
+        public void AddCardsToHand(List<CardType> cards)
+        {
+            Hand.AddRange(cards);
+        }
     }
 }
