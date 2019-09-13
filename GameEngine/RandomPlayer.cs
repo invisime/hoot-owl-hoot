@@ -8,9 +8,9 @@ namespace GameEngine
         private static readonly Random Random = new Random();
         public List<CardType> Hand { get; private set; }
 
-        public RandomPlayer(List<CardType> hand)
+        public RandomPlayer()
         {
-            Hand = hand;
+            Hand = new List<CardType>();
         }
 
         public CardType Play(GameBoard board)

@@ -9,7 +9,8 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldStartPlayerWithThreeCards()
         {
-            var state = new GameState();
+            var player = new LeastRecentCardPlayer();
+            var state = new GameState(player);
 
             Assert.AreEqual(3, state.Player.Hand.Count);
         }
@@ -17,7 +18,8 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldTakeOneTurn()
         {
-            var state = new GameState();
+            var player = new LeastRecentCardPlayer();
+            var state = new GameState(player);
             CardType[] startingHand = new CardType[3];
             state.Player.Hand.CopyTo(startingHand);
             var startingOwlPosition = state.Board.OwlPosition;

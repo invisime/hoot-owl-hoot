@@ -12,7 +12,8 @@ namespace GameEngineTests
         {
             var expectedCardType = CardType.Blue;
             var hand = new List<CardType> { expectedCardType };
-            var player = new RandomPlayer(hand);
+            var player = new RandomPlayer();
+            player.AddCardsToHand(hand);
             var board = new GameBoard();
 
             var playedCard = player.Play(board);
@@ -25,7 +26,8 @@ namespace GameEngineTests
         {
             var expectedCardType = CardType.Blue;
             var hand = new List<CardType> { expectedCardType };
-            var player = new RandomPlayer(hand);
+            var player = new RandomPlayer();
+            player.AddCardsToHand(hand);
 
             player.Discard(expectedCardType);
 
@@ -36,7 +38,7 @@ namespace GameEngineTests
         public void ShouldAddCardsToHand()
         {
             var expectedHand = new List<CardType> { CardType.Blue };
-            var player = new RandomPlayer(new List<CardType>());
+            var player = new RandomPlayer();
 
             player.AddCardsToHand(expectedHand);
 

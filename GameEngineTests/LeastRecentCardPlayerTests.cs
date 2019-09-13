@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,6 +14,7 @@ namespace GameEngineTests
             var unexpected = CardType.Red;
             var hand = new List<CardType> { expectedCardType, unexpected };
             var player = new LeastRecentCardPlayer();
+            player.AddCardsToHand(hand);
             var board = new GameBoard();
 
             var playedCard = player.Play(board);
@@ -27,6 +28,7 @@ namespace GameEngineTests
             var expectedCardType = CardType.Blue;
             var hand = new List<CardType> { expectedCardType };
             var player = new LeastRecentCardPlayer();
+            player.AddCardsToHand(hand);
 
             player.Discard(expectedCardType);
 

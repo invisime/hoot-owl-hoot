@@ -6,9 +6,9 @@ namespace GameEngine
     {
         public List<CardType> Hand { get; private set; }
 
-        public LeastRecentCardPlayer(List<CardType> hand)
+        public LeastRecentCardPlayer()
         {
-            Hand = hand;
+            Hand = new List<CardType>();
         }
 
         public CardType Play(GameBoard board)

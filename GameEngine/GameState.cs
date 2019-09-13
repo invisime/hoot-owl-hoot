@@ -5,14 +5,15 @@ namespace GameEngine
     {
         public GameBoard Board { get; private set; }
         public Deck Deck { get; private set; }
-        public RandomPlayer Player { get; private set; }
+        public IPlayer Player { get; private set; }
 
-        public GameState()
+        public GameState(IPlayer player)
         {
             Board = new GameBoard();
             Deck = new Deck();
             var hand = Deck.Draw(3);
-            Player = new RandomPlayer(hand);
+            Player = player;
+            Player.AddCardsToHand(hand);
         }
 
         public void TakeTurn()
