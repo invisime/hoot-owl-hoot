@@ -54,6 +54,7 @@
     <Compile Include="RandomPlayerTests.cs" />
     <Compile Include="GameStateTests.cs" />
     <Compile Include="DeckTests.cs" />
+    <Compile Include="LeastRecentCardPlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

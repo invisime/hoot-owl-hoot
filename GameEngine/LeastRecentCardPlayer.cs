@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GameEngine
 {
-    public class RandomPlayer : IPlayer
+    public class LeastRecentCardPlayer : IPlayer
     {
-        private static readonly Random Random = new Random();
         public List<CardType> Hand { get; private set; }
 
-        public RandomPlayer(List<CardType> hand)
+        public LeastRecentCardPlayer(List<CardType> hand)
         {
             Hand = hand;
         }
 
         public CardType Play(GameBoard board)
         {
-            int index = Random.Next(0, Hand.Count);
-            return Hand[index];
+            return Hand[0];
         }
 
         public void Discard(CardType card)
