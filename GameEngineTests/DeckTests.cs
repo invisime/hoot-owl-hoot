@@ -8,26 +8,26 @@ namespace GameEngineTests
     public class DeckTests
     {
         [TestMethod]
-        public void ShouldDrawZerothCard()
+        public void ShouldDrawFromBeginningOfDeck()
         {
             var deck = new Deck();
-            var expectedCard = deck.Cards[0];
+            var expectedCards = deck.Cards.GetRange(0, 2);
 
-            var actualCard = deck.Draw();
+            var actualCards = deck.Draw(2);
 
-            Assert.AreEqual(expectedCard, actualCard);
+            CollectionAssert.AreEqual(expectedCards, actualCards);
         }
 
         [TestMethod]
-        public void ShouldRemoveDrawnCardFromTheDeck()
+        public void ShouldRemoveDrawnCardsFromTheDeck()
         {
             var deck = new Deck();
             var deckSizeBefore = deck.Cards.Count;
 
-            deck.Draw();
+            deck.Draw(3);
 
             var deckSizeAfter = deck.Cards.Count;
-            Assert.AreEqual(deckSizeBefore - 1, deckSizeAfter);
+            Assert.AreEqual(deckSizeBefore - 3, deckSizeAfter);
         }
     }
 }
