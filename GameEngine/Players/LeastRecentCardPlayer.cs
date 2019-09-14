@@ -2,7 +2,7 @@
 {
     public class LeastRecentCardPlayer : Player
     {
-        public override CardType Play(GameBoard board)
+        public override CardType SelectCardToPlay(GameBoard board)
         {
             return Hand[0];
         }

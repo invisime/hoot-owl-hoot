@@ -21,6 +21,6 @@ namespace GameEngine.Players
             Hand.Remove(card);
         }
 
-        public abstract CardType Play(GameBoard board);
+        public abstract CardType SelectCardToPlay(GameBoard board);
     }
 }

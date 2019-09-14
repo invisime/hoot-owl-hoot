@@ -18,11 +18,11 @@ namespace GameEngineTests.Players
             player.AddCardsToHand(hand);
             var board = new GameBoard();
 
-            var playedCard = player.Play(board);
+            var playedCard = player.SelectCardToPlay(board);
             Assert.AreEqual(firstCard, playedCard);
 
             player.Discard(playedCard);
-            playedCard = player.Play(board);
+            playedCard = player.SelectCardToPlay(board);
             Assert.AreEqual(secondCard, playedCard);
         }
     }

@@ -20,7 +20,7 @@ namespace GameEngine
 
         public void TakeTurn()
         {
-            var cardToPlay = Player.Play(Board);
+            var cardToPlay = Player.SelectCardToPlay(Board);
             Board.Move(cardToPlay);
             Player.Discard(cardToPlay);
             var newCards = Deck.Draw(1);

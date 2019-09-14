@@ -17,7 +17,7 @@ namespace GameEngineTests.Players
             player.AddCardsToHand(hand);
             var board = new GameBoard();
 
-            var playedCard = player.Play(board);
+            var playedCard = player.SelectCardToPlay(board);
 
             Assert.AreEqual(expectedCardType, playedCard);
         }

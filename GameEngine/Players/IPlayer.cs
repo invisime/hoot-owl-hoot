@@ -8,6 +8,6 @@ namespace GameEngine.Players
 
         void AddCardsToHand(List<CardType> cards);
         void Discard(CardType card);
-        CardType Play(GameBoard board);
+        CardType SelectCardToPlay(GameBoard board);
     }
 }

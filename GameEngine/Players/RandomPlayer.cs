@@ -6,7 +6,7 @@ namespace GameEngine.Players
     {
         private static readonly Random Random = new Random();
 
-        public override CardType Play(GameBoard board)
+        public override CardType SelectCardToPlay(GameBoard board)
         {
             int index = Random.Next(0, Hand.Count);
             return Hand[index];
