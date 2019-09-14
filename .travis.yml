@@ -1,2 +1,5 @@
 language: csharp
 solution: HootOwlHoot.sln
+script:
+  - dotnet restore
+  - dotnet test
