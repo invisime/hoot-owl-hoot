@@ -22,5 +22,10 @@ namespace GameEngine.Players
         }
 
         public abstract CardType SelectCardToPlay(GameBoard board);
+
+        public bool HandContainsSun()
+        {
+            return Hand.Contains(CardType.Sun);
+        }
     }
 }

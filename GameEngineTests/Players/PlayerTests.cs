@@ -33,6 +33,17 @@ namespace GameEngineTests.Players
 
             CollectionAssert.AreEqual(expectedHand, player.Hand);
         }
+
+        [TestMethod]
+        public void ShouldDetectIfHandContainsSun()
+        {
+            var player = new DummyPlayer();
+            player.AddCardsToHand(new List<CardType> { CardType.Sun });
+            Assert.IsTrue(player.HandContainsSun());
+
+            player.Discard(CardType.Sun);
+            Assert.IsFalse(player.HandContainsSun());
+        }
     }
 
     class DummyPlayer : Player
