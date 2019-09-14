@@ -1,6 +1,7 @@
 ﻿using GameEngine;
 using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace GameEngineTests
 {
@@ -11,38 +12,69 @@ namespace GameEngineTests
         public void ShouldStartGame()
         {
             var player = new LeastRecentCardPlayer();
-            var state = new GameState(player);
+            var deck = new Deck();
+            var state = new GameState(player, deck);
             var startingDeckSize = state.Deck.Cards.Count;
 
             state.StartGame();
 
+            Assert.AreEqual(0, state.SunCounter);
             Assert.AreEqual(3, state.Player.Hand.Count);
             Assert.AreEqual(startingDeckSize - 3, state.Deck.Cards.Count);
         }
 
         [TestMethod]
-        public void ShouldTakeOneTurn()
+        public void ShouldTakeOneTurnWithoutSunCard()
         {
             var player = new LeastRecentCardPlayer();
-            var state = new GameState(player);
+            var deck = new Deck();
+            deck.Cards.InsertRange(0, new List<CardType> {
+                CardType.Red,
+                CardType.Orange,
+                CardType.Yellow,
+                CardType.Green
+            });
+            var state = new GameState(player, deck);
             state.StartGame();
-
-            CardType[] startingHand = new CardType[3];
-            state.Player.Hand.CopyTo(startingHand);
-            var startingOwlPosition = state.Board.OwlPosition;
-            var startingDeckSize = state.Deck.Cards.Count;
 
             state.TakeTurn();
 
-            var endingHand = state.Player.Hand;
-            CollectionAssert.AreNotEqual(startingHand, endingHand);
-            Assert.AreEqual(3, endingHand.Count);
+            var expectedHand = new List<CardType> {
+                CardType.Orange,
+                CardType.Yellow,
+                CardType.Green
+            };
+            CollectionAssert.AreEqual(expectedHand, state.Player.Hand);
+            Assert.AreEqual(6, state.Board.OwlPosition);
+            Assert.AreEqual(42, state.Deck.Cards.Count);
+            Assert.AreEqual(0, state.SunCounter);
+        }
 
-            var endingOwlPosition = state.Board.OwlPosition;
-            Assert.AreNotEqual(startingOwlPosition, endingOwlPosition);
+        [TestMethod]
+        public void ShouldTakeOneTurnWithSunCard()
+        {
+            var player = new LeastRecentCardPlayer();
+            var deck = new Deck();
+            deck.Cards.InsertRange(0, new List<CardType> {
+                CardType.Sun,
+                CardType.Orange,
+                CardType.Yellow,
+                CardType.Green
+            });
+            var state = new GameState(player, deck);
+            state.StartGame();
 
-            var endingDeckSize = state.Deck.Cards.Count;
-            Assert.AreEqual(startingDeckSize - 1, endingDeckSize);
+            state.TakeTurn();
+
+            var expectedHand = new List<CardType> {
+                CardType.Orange,
+                CardType.Yellow,
+                CardType.Green
+            };
+            CollectionAssert.AreEqual(expectedHand, state.Player.Hand);
+            Assert.AreEqual(0, state.Board.OwlPosition);
+            Assert.AreEqual(42, state.Deck.Cards.Count);
+            Assert.AreEqual(1, state.SunCounter);
         }
     }
 }
