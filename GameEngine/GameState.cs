@@ -40,5 +40,10 @@ namespace GameEngine
             var newCards = Deck.Draw(1);
             Player.AddCardsToHand(newCards);
         }
+
+        public bool IsGameOver()
+        {
+            return Board.OwlPosition == Board.Board.Count - 1;
+        }
     }
 }

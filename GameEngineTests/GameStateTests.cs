@@ -76,5 +76,31 @@ namespace GameEngineTests
             Assert.AreEqual(42, state.Deck.Cards.Count);
             Assert.AreEqual(1, state.SunCounter);
         }
+
+        [TestMethod]
+        public void ShouldEndGameWhenOwlReachesNest()
+        {
+            const int boardSize = 6;
+            var player = new LeastRecentCardPlayer();
+            var deck = new Deck();
+            for (int i = 0; i < boardSize + 1; i++)
+            {
+                deck.Cards.Insert(0, CardType.Red);
+            }
+            var state = new GameState(player, deck);
+            state.StartGame();
+
+            Assert.IsFalse(state.IsGameOver());
+
+            for (int i = 0; i < boardSize; i++)
+            {
+                Assert.AreEqual(CardType.Red, state.Player.Hand[0]);
+                state.TakeTurn();
+                Assert.AreEqual(boardSize * (i + 1), state.Board.OwlPosition);
+            }
+
+            Assert.AreEqual(BoardPositionType.Nest, state.Board.Board[state.Board.OwlPosition]);
+            Assert.IsTrue(state.IsGameOver());
+        }
     }
 }
