@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GameEngine
+namespace GameEngine.Players
 {
     public interface IPlayer
     {

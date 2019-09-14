@@ -1,4 +1,6 @@
 ﻿
+using GameEngine.Players;
+
 namespace GameEngine
 {
     public class GameState

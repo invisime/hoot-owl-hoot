@@ -50,11 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameBoardTests.cs" />
+    <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomPlayerTests.cs" />
+    <Compile Include="Players\RandomPlayerTests.cs" />
     <Compile Include="GameStateTests.cs" />
     <Compile Include="DeckTests.cs" />
-    <Compile Include="LeastRecentCardPlayerTests.cs" />
+    <Compile Include="Players\LeastRecentCardPlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

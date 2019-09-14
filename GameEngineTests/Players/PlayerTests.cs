@@ -1,32 +1,21 @@
-﻿using GameEngine;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using System.Collections.Generic;
+using GameEngine;
+using GameEngine.Players;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GameEngineTests
+namespace GameEngineTests.Players
 {
     [TestClass]
-    public class RandomPlayerTests
+    public class PlayerTests
     {
-        [TestMethod]
-        public void ShouldPlayCardFromHand()
-        {
-            var expectedCardType = CardType.Blue;
-            var hand = new List<CardType> { expectedCardType };
-            var player = new RandomPlayer();
-            player.AddCardsToHand(hand);
-            var board = new GameBoard();
-
-            var playedCard = player.Play(board);
-
-            Assert.AreEqual(expectedCardType, playedCard);
-        }
 
         [TestMethod]
         public void ShouldDiscard()
         {
             var expectedCardType = CardType.Blue;
             var hand = new List<CardType> { expectedCardType };
-            var player = new RandomPlayer();
+            var player = new DummyPlayer();
             player.AddCardsToHand(hand);
 
             player.Discard(expectedCardType);
@@ -38,11 +27,19 @@ namespace GameEngineTests
         public void ShouldAddCardsToHand()
         {
             var expectedHand = new List<CardType> { CardType.Blue };
-            var player = new RandomPlayer();
+            var player = new DummyPlayer();
 
             player.AddCardsToHand(expectedHand);
 
             CollectionAssert.AreEqual(expectedHand, player.Hand);
+        }
+    }
+
+    class DummyPlayer : Player
+    {
+        public override CardType Play(GameBoard board)
+        {
+            throw new NotImplementedException();
         }
     }
 }

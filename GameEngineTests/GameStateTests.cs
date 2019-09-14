@@ -1,4 +1,5 @@
 ﻿using GameEngine;
+using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameEngineTests
