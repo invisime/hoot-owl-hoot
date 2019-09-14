@@ -8,12 +8,16 @@ namespace GameEngineTests
     public class GameStateTests
     {
         [TestMethod]
-        public void ShouldStartPlayerWithThreeCards()
+        public void ShouldStartGame()
         {
             var player = new LeastRecentCardPlayer();
             var state = new GameState(player);
+            var startingDeckSize = state.Deck.Cards.Count;
+
+            state.StartGame();
 
             Assert.AreEqual(3, state.Player.Hand.Count);
+            Assert.AreEqual(startingDeckSize - 3, state.Deck.Cards.Count);
         }
 
         [TestMethod]
@@ -21,6 +25,8 @@ namespace GameEngineTests
         {
             var player = new LeastRecentCardPlayer();
             var state = new GameState(player);
+            state.StartGame();
+
             CardType[] startingHand = new CardType[3];
             state.Player.Hand.CopyTo(startingHand);
             var startingOwlPosition = state.Board.OwlPosition;

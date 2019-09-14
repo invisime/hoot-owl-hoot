@@ -13,8 +13,12 @@ namespace GameEngine
         {
             Board = new GameBoard();
             Deck = new Deck();
-            var hand = Deck.Draw(3);
             Player = player;
+        }
+
+        public void StartGame()
+        {
+            var hand = Deck.Draw(3);
             Player.AddCardsToHand(hand);
         }
 
