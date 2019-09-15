@@ -8,9 +8,9 @@ namespace GameEngine
         private static readonly Random Random = new Random();
         public List<CardType> Cards { get; private set; }
 
-        public Deck()
+        public Deck(int gameSizeMultiplier)
         {
-            BuildDeck();
+            BuildDeck(gameSizeMultiplier);
             Shuffle();
         }
 
@@ -21,10 +21,10 @@ namespace GameEngine
             return cards;
         }
 
-        private void BuildDeck()
+        private void BuildDeck(int gameSizeMultiplier)
         {
             Cards = new List<CardType>();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < gameSizeMultiplier; i++)
             {
                 foreach (CardType type in Enum.GetValues(typeof(CardType)))
                 {

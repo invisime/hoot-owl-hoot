@@ -9,7 +9,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldStartOwlsAtFirstSpots()
         {
-            var board = new GameBoard();
+            var board = new GameBoard(2);
             var actualPosition = board.OwlPosition;
             var expectedPosition = 0;
 
@@ -25,7 +25,7 @@ namespace GameEngineTests
         [DataRow(CardType.Purple, 5)]
         public void ShouldMakeSimpleMoves(CardType cardType, int newPosition)
         {
-            var board = new GameBoard();
+            var board = new GameBoard(2);
 
             board.Move(cardType);
 
@@ -35,7 +35,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldMoveOwlIntoNest()
         {
-            var board = new GameBoard();
+            var board = new GameBoard(2);
             board.OwlPosition = board.Board.Count - 2;
 
             board.Move(CardType.Red);
@@ -47,7 +47,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldFailToMoveOwlWhenItIsAlreadyInTheNest()
         {
-            var board = new GameBoard();
+            var board = new GameBoard(2);
             board.OwlPosition = board.Board.Count - 1;
 
             Assert.ThrowsException<InvalidMoveException>(() => board.Move(CardType.Red));
@@ -56,7 +56,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldFailToMoveWhenInvalidCardType()
         {
-            var board = new GameBoard();
+            var board = new GameBoard(2);
             board.OwlPosition = board.Board.Count - 1;
 
             Assert.ThrowsException<InvalidMoveException>(() => board.Move(CardType.Sun));

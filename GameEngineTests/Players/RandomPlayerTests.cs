@@ -15,7 +15,7 @@ namespace GameEngineTests.Players
             var hand = new List<CardType> { expectedCardType };
             var player = new RandomPlayer();
             player.AddCardsToHand(hand);
-            var board = new GameBoard();
+            var board = new GameBoard(2);
 
             var playedCard = player.SelectCardToPlay(board);
 

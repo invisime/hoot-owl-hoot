@@ -9,9 +9,9 @@ namespace GameEngine
         public int OwlPosition { get; set; }
 
 
-        public GameBoard()
+        public GameBoard(int gameSizeMultiplier)
         {
-            BuildBoard();
+            BuildBoard(gameSizeMultiplier);
             OwlPosition = 0;
         }
 
@@ -57,10 +57,10 @@ namespace GameEngine
             return BoardPositionType.Nest;
         }
 
-        private void BuildBoard()
+        private void BuildBoard(int gameSizeMultiplier)
         {
             Board = new List<BoardPositionType>();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < gameSizeMultiplier; i++)
             {
                 foreach (BoardPositionType type in Enum.GetValues(typeof(BoardPositionType)))
                 {

@@ -9,13 +9,15 @@ namespace GameEngine
         public Deck Deck { get; private set; }
         public IPlayer Player { get; private set; }
         public int SunCounter { get; private set; }
+        public int GameSizeMultiplier { get; }
 
-        public GameState(IPlayer player, Deck deck)
+        public GameState(IPlayer player, Deck deck, int gameSizeMultiplier)
         {
-            Board = new GameBoard();
+            Board = new GameBoard(gameSizeMultiplier);
             Deck = deck;
             Player = player;
             SunCounter = 0;
+            GameSizeMultiplier = gameSizeMultiplier;
         }
 
         public void StartGame()
@@ -43,7 +45,8 @@ namespace GameEngine
 
         public bool IsGameOver()
         {
-            return Board.OwlPosition == Board.Board.Count - 1;
+            return Board.OwlPosition == Board.Board.Count - 1 ||
+                SunCounter == GameSizeMultiplier;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldDrawFromBeginningOfDeck()
         {
-            var deck = new Deck();
+            var deck = new Deck(2);
             var expectedCards = deck.Cards.GetRange(0, 2);
 
             var actualCards = deck.Draw(2);
@@ -21,7 +21,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldRemoveDrawnCardsFromTheDeck()
         {
-            var deck = new Deck();
+            var deck = new Deck(2);
             var deckSizeBefore = deck.Cards.Count;
 
             deck.Draw(3);

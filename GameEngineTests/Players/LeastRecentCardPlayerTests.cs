@@ -16,7 +16,7 @@ namespace GameEngineTests.Players
             var hand = new List<CardType> { firstCard, secondCard };
             var player = new LeastRecentCardPlayer();
             player.AddCardsToHand(hand);
-            var board = new GameBoard();
+            var board = new GameBoard(2);
 
             var playedCard = player.SelectCardToPlay(board);
             Assert.AreEqual(firstCard, playedCard);
