@@ -61,12 +61,12 @@ namespace GameEngineTests
         }
 
         [TestMethod]
-        public void ShouldTakeOneTurnWithSunCard()
+        public void ShouldPlaySunCardFirstWhenPossible()
         {
             Deck.Cards.InsertRange(0, new List<CardType> {
-                CardType.Sun,
                 CardType.Orange,
                 CardType.Yellow,
+                CardType.Sun,
                 CardType.Green
             });
             State.StartGame();
