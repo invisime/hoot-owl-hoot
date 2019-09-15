@@ -1,6 +1,7 @@
 language: csharp
 solution: HootOwlHoot.sln
+mono: none
+dotnet: 2.2.109
 script:
-  - cd GameEngineTests
+  - cd ./GameEngine
   - dotnet restore
-  - dotnet test
