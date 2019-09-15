@@ -1,5 +1,6 @@
 language: csharp
 solution: HootOwlHoot.sln
 script:
+  - cd GameEngineTests
   - dotnet restore
   - dotnet test
