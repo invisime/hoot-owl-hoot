@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HootOwlHoot", "HootOwlHoot\HootOwlHoot.csproj", "{803009D2-189B-4426-8519-F8603FB1D917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\GameEngine.csproj", "{6EABCBF6-5C75-4B60-80B9-88E9FD781D09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameEngine", "GameEngine\GameEngine.csproj", "{6EABCBF6-5C75-4B60-80B9-88E9FD781D09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngineTests", "GameEngineTests\GameEngineTests.csproj", "{2D56D140-A614-480C-8A01-9D669CD86527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GETests_Standard", "GETests_Standard\GETests_Standard.csproj", "{798B1C35-59CF-4D6C-8FD6-5699C7B32C4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2D56D140-A614-480C-8A01-9D669CD86527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D56D140-A614-480C-8A01-9D669CD86527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D56D140-A614-480C-8A01-9D669CD86527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{798B1C35-59CF-4D6C-8FD6-5699C7B32C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{798B1C35-59CF-4D6C-8FD6-5699C7B32C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{798B1C35-59CF-4D6C-8FD6-5699C7B32C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{798B1C35-59CF-4D6C-8FD6-5699C7B32C4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
