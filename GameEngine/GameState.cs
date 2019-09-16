@@ -1,5 +1,6 @@
-
+﻿
 using GameEngine.Players;
+using System;
 
 namespace GameEngine
 {
@@ -28,18 +29,22 @@ namespace GameEngine
 
         public void TakeTurn()
         {
+            Console.WriteLine("Taking a turn");
             if (Player.HandContainsSun())
             {
+                Console.WriteLine("Player forced to play a Sun card");
                 SunCounter++;
                 Player.Discard(CardType.Sun);
             }
             else
             {
                 var cardToPlay = Player.SelectCardToPlay(Board);
+                Console.WriteLine("Player chose to play a {0} card", cardToPlay);
                 Board.Move(cardToPlay);
                 Player.Discard(cardToPlay);
             }
             var newCards = Deck.Draw(1);
+            Console.WriteLine("Player drew a {0} card", newCards[0]);
             Player.AddCardsToHand(newCards);
         }
 
