@@ -1,4 +1,4 @@
-﻿
+
 using GameEngine.Players;
 
 namespace GameEngine
@@ -43,10 +43,14 @@ namespace GameEngine
             Player.AddCardsToHand(newCards);
         }
 
-        public bool IsGameOver()
+        public bool GameIsWon()
         {
-            return Board.OwlPosition == Board.Board.Count - 1 ||
-                SunCounter == GameSizeMultiplier;
+            return Board.OwlPosition == Board.Board.Count - 1;
+        }
+
+        public bool GameIsLost()
+        {
+            return SunCounter == GameSizeMultiplier;
         }
     }
 }

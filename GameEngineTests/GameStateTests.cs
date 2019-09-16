@@ -85,13 +85,13 @@ namespace GameEngineTests
         }
 
         [TestMethod]
-        public void ShouldEndGameWhenOwlReachesNest()
+        public void ShouldWinGameWhenOwlReachesNest()
         {
             var cards = Enumerable.Repeat(CardType.Red, Multiplier);
             Deck.Cards.InsertRange(0, cards);
             State.StartGame();
 
-            Assert.IsFalse(State.IsGameOver());
+            Assert.IsFalse(State.GameIsWon());
 
             for (int i = 0; i < Multiplier; i++)
             {
@@ -102,17 +102,17 @@ namespace GameEngineTests
 
             Assert.AreEqual(BoardPositionType.Nest, State.Board.Board[State.Board.OwlPosition]);
             Assert.AreEqual(0, State.SunCounter);
-            Assert.IsTrue(State.IsGameOver());
+            Assert.IsTrue(State.GameIsWon());
         }
 
         [TestMethod]
-        public void ShouldEndGameWhenSunCounterReachesMaximum()
+        public void ShouldLoseGameWhenSunCounterReachesMaximum()
         {
             var cards = Enumerable.Repeat(CardType.Sun, Multiplier);
             Deck.Cards.InsertRange(0, cards);
             State.StartGame();
 
-            Assert.IsFalse(State.IsGameOver());
+            Assert.IsFalse(State.GameIsLost());
 
             for (int i = 0; i < Multiplier; i++)
             {
@@ -123,7 +123,7 @@ namespace GameEngineTests
 
             Assert.AreNotEqual(BoardPositionType.Nest, State.Board.Board[State.Board.OwlPosition]);
             Assert.AreEqual(Multiplier, State.SunCounter);
-            Assert.IsTrue(State.IsGameOver());
+            Assert.IsTrue(State.GameIsLost());
         }
     }
 }
