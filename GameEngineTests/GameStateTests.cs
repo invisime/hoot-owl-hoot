@@ -93,8 +93,13 @@ namespace GameEngineTests
 
             Assert.IsFalse(State.GameIsWon());
 
+            Console.WriteLine("Deck Count: " + State.Deck.Cards.Count);
+            Console.WriteLine("Board Count: " + State.Board.Board.Count);
             for (int i = 0; i < Multiplier; i++)
             {
+                Console.WriteLine("Next Hand: " + State.Player.Hand[0]);
+                Console.WriteLine("OwlPosition: " + State.Board.OwlPosition);
+                Console.WriteLine("Next Deck: " + State.Deck.Cards[0]);
                 Assert.AreEqual(CardType.Red, State.Player.Hand[0]);
                 State.TakeTurn();
                 Assert.AreEqual(Multiplier * (i + 1), State.Board.OwlPosition);
