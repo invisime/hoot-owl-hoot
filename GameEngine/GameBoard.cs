@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine
 {
     public class GameBoard
     { 
         public List<BoardPositionType> Board { get; private set; }
-        public int OwlPosition { get; set; }
+        public List<int> OwlPositions { get; set; }
 
 
         public GameBoard(int gameSizeMultiplier)
         {
             BuildBoard(gameSizeMultiplier);
-            OwlPosition = 0;
+            OwlPositions = Enumerable.Repeat(0, gameSizeMultiplier).ToList();
         }
 
-        public void Move(CardType type)
+        public void Move(CardType type, int owlIndex)
         {
-            if(OwlPosition == Board.Count - 1)
+            if (OwlPositions[owlIndex] == Board.Count - 1)
             {
                 throw new InvalidMoveException("Owl is already in the Nest");
             }
@@ -27,11 +28,11 @@ namespace GameEngine
             }
 
             var targetBoardPosition = Convert(type);
-            for (int i = OwlPosition + 1; i < Board.Count; i++)
+            for (int i = OwlPositions[owlIndex] + 1; i < Board.Count; i++)
             {
                 if(Board[i] == targetBoardPosition || Board[i] == BoardPositionType.Nest)
                 {
-                    OwlPosition = i;
+                    OwlPositions[owlIndex] = i;
                     break;
                 }
             }
@@ -59,17 +60,14 @@ namespace GameEngine
 
         private void BuildBoard(int gameSizeMultiplier)
         {
+            var nonNestTypes = Enum.GetValues(typeof(BoardPositionType))
+                .Cast<BoardPositionType>()
+                .Where(b => b != BoardPositionType.Nest);
+
             Board = new List<BoardPositionType>();
             for (int i = 0; i < gameSizeMultiplier; i++)
             {
-                foreach (BoardPositionType type in Enum.GetValues(typeof(BoardPositionType)))
-                {
-                    if (type == BoardPositionType.Nest)
-                    {
-                        continue;
-                    }
-                    Board.Add(type);
-                }
+                Board.AddRange(nonNestTypes);
             }
             Board.Add(BoardPositionType.Nest);
         }
