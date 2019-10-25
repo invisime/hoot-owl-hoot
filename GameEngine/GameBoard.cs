@@ -65,15 +65,14 @@ namespace GameEngine
         private int FindDestinationPosition(Play play)
         {
             var desiredBoardColor = Convert(play.Card);
-            int newPosition;
-            for (newPosition = play.Position + 1; newPosition < NestPosition; ++newPosition)
+            int newPosition = play.Position;
+            Predicate<int> isEmptySpaceOfCorrectColor = (position) =>
+                desiredBoardColor == Board[position]
+                    && !OwlPositions.Contains(position);
+            do
             {
-                var newPositionColor = Board[newPosition];
-                if (newPositionColor == desiredBoardColor)
-                {
-                    break;
-                }
-            }
+                newPosition += 1;
+            } while (newPosition < NestPosition && !isEmptySpaceOfCorrectColor(newPosition));
             return newPosition;
         }
 

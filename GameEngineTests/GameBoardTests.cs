@@ -99,6 +99,38 @@ namespace GameEngineTests
             Assert.AreEqual(expectedNumberOfOwls, actualOwls);
         }
 
+        [TestMethod]
+        public void ShouldHootAnOwlToEmptyColoredSpace()
+        {
+            var board = new GameBoard(2, 2);
+
+            board.Move(new Play(CardType.Orange, 0));
+
+            CollectionAssert.AreEquivalent(new[] { 0, 1 }, board.OwlPositions);
+
+            board.Move(new Play(CardType.Orange, 0));
+
+            CollectionAssert.AreEquivalent(new[] { 1, 7 }, board.OwlPositions);
+        }
+
+        [TestMethod]
+        public void ShouldHootAnOwlToNest()
+        {
+            var board = new GameBoard(2, 2);
+
+            board.Move(new Play(CardType.Orange, 0));
+
+            CollectionAssert.AreEquivalent(new[] { 0, 1 }, board.OwlPositions);
+
+            board.Move(new Play(CardType.Orange, 0));
+
+            CollectionAssert.AreEquivalent(new[] { 1, 7 }, board.OwlPositions);
+
+            board.Move(new Play(CardType.Orange, 1));
+
+            CollectionAssert.AreEquivalent(new[] { 7, board.NestPosition }, board.OwlPositions);
+        }
+
         #endregion
     }
 }
