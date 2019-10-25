@@ -6,14 +6,14 @@ namespace GameEngineTests
     [TestClass]
     public class GameBoardTests
     {
-        [TestMethod]
-        public void ShouldStartOwlsAtFirstSpots()
-        {
-            var board = new GameBoard(2);
-            var actualPosition = board.OwlPosition;
-            var expectedPosition = 0;
+        #region Single-owl tests
 
-            Assert.AreEqual(expectedPosition, actualPosition);
+        [TestMethod]
+        public void ShouldStartOwlAtFirstSpot()
+        {
+            var board = new GameBoard(2, 1);
+            
+            Assert.AreEqual(0, board.OwlPositions[0]);
         }
 
         [TestMethod]
@@ -25,41 +25,80 @@ namespace GameEngineTests
         [DataRow(CardType.Purple, 5)]
         public void ShouldMakeSimpleMoves(CardType cardType, int newPosition)
         {
-            var board = new GameBoard(2);
+            var board = new GameBoard(2, 1);
+            var play = new Play(cardType, 0);
 
-            board.Move(cardType);
+            board.Move(play);
 
-            Assert.AreEqual(newPosition, board.OwlPosition);
+            Assert.AreEqual(newPosition, board.OwlPositions[0]);
         }
 
         [TestMethod]
         public void ShouldMoveOwlIntoNest()
         {
-            var board = new GameBoard(2);
-            board.OwlPosition = board.Board.Count - 2;
+            var board = new GameBoard(2, 1);
+            var initialPosition = board.Board.Count - 2;
+            board.OwlPositions[0] = initialPosition;
+            var play = new Play(CardType.Red, initialPosition);
 
-            board.Move(CardType.Red);
+            board.Move(play);
 
-            Assert.AreEqual(board.Board.Count - 1, board.OwlPosition);
-            Assert.AreEqual(BoardPositionType.Nest, board.Board[board.OwlPosition]);
+            var newOwlPosition = board.OwlPositions[0];
+            Assert.AreEqual(board.NestPosition, newOwlPosition,
+                "Owl is not on last position.");
+            Assert.AreEqual(BoardPositionType.Nest, board.Board[newOwlPosition],
+                "Owl's position is not a nest.");
         }
 
         [TestMethod]
-        public void ShouldFailToMoveOwlWhenItIsAlreadyInTheNest()
+        public void ShouldFailToMoveWhenThereAreNoOwlsAtThePosition()
         {
-            var board = new GameBoard(2);
-            board.OwlPosition = board.Board.Count - 1;
+            var board = new GameBoard(2, 1);
+            var positionWithNoOwls = 1;
+            var play = new Play(CardType.Red, positionWithNoOwls);
 
-            Assert.ThrowsException<InvalidMoveException>(() => board.Move(CardType.Red));
+            Assert.ThrowsException<InvalidMoveException>(() =>
+                board.Move(play)
+            );
+
         }
 
         [TestMethod]
         public void ShouldFailToMoveWhenInvalidCardType()
         {
-            var board = new GameBoard(2);
-            board.OwlPosition = board.Board.Count - 1;
+            var board = new GameBoard(2, 1);
+            var play = new Play(CardType.Sun, 0);
 
-            Assert.ThrowsException<InvalidMoveException>(() => board.Move(CardType.Sun));
+            Assert.ThrowsException<InvalidMoveException>(() =>
+                board.Move(play)
+            );
         }
+
+        #endregion
+
+        #region Multi-owl tests
+
+        [TestMethod]
+        public void ShouldStartWithSixOwlsByDefault()
+        {
+            var board = new GameBoard(2);
+            var actualOwls = board.OwlPositions.Count;
+
+            Assert.AreEqual(6, actualOwls);
+        }
+
+        [TestMethod]
+        [DataRow(1)]
+        [DataRow(6)]
+        [DataRow(100)]
+        public void ShouldStartWithSpecificNumberOfOwls(int expectedNumberOfOwls)
+        {
+            var board = new GameBoard(2, expectedNumberOfOwls);
+            var actualOwls = board.OwlPositions.Count;
+
+            Assert.AreEqual(expectedNumberOfOwls, actualOwls);
+        }
+
+        #endregion
     }
 }

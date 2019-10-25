@@ -8,39 +8,34 @@ namespace GameEngine
     { 
         public List<BoardPositionType> Board { get; private set; }
         public List<int> OwlPositions { get; set; }
-
-
-        public GameBoard(int gameSizeMultiplier)
+        
+        public int NestPosition
+        {
+            get { return Board.Count - 1; }
+        }
+        
+        public GameBoard(int gameSizeMultiplier, int numberOfOwls = 6)
         {
             BuildBoard(gameSizeMultiplier);
-            OwlPositions = Enumerable.Repeat(0, gameSizeMultiplier).ToList();
+            OwlPositions = Enumerable.Repeat(0, numberOfOwls).ToList();
         }
 
-        public void Move(CardType type, int owlIndex)
+        public void Move(Play play)
         {
-            if (OwlPositions[owlIndex] == Board.Count - 1)
-            {
-                throw new InvalidMoveException("Owl is already in the Nest");
-            }
-            if(type == CardType.Sun)
+            if (play.Card == CardType.Sun)
             {
                 throw new InvalidMoveException("Sun is not a valid movement type");
             }
 
-            var targetBoardPosition = Convert(type);
-            for (int i = OwlPositions[owlIndex] + 1; i < Board.Count; i++)
-            {
-                if(Board[i] == targetBoardPosition || Board[i] == BoardPositionType.Nest)
-                {
-                    OwlPositions[owlIndex] = i;
-                    break;
-                }
-            }
+            var owlToMove = FindOwl(play.Position);
+            var newPosition = FindDestinationPosition(play);
+
+            OwlPositions[owlToMove] = newPosition;
         }
 
         private BoardPositionType Convert(CardType cardType)
         {
-            switch(cardType)
+            switch (cardType)
             {
                 case CardType.Red:
                     return BoardPositionType.Red;
@@ -56,6 +51,30 @@ namespace GameEngine
                     return BoardPositionType.Purple;
             }
             return BoardPositionType.Nest;
+        }
+
+        private int FindOwl(int position)
+        {
+            var owlIndex = OwlPositions.IndexOf(position);
+            if (owlIndex == -1) {
+                throw new InvalidMoveException("There is no owl at position " + position);
+            }
+            return owlIndex;
+        }
+
+        private int FindDestinationPosition(Play play)
+        {
+            var desiredBoardColor = Convert(play.Card);
+            int newPosition;
+            for (newPosition = play.Position + 1; newPosition < NestPosition; ++newPosition)
+            {
+                var newPositionColor = Board[newPosition];
+                if (newPositionColor == desiredBoardColor)
+                {
+                    break;
+                }
+            }
+            return newPosition;
         }
 
         private void BuildBoard(int gameSizeMultiplier)

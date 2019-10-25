@@ -48,7 +48,7 @@ namespace GameEngineTests.Players
 
     class DummyPlayer : Player
     {
-        public override CardType SelectCardToPlay(GameBoard board)
+        public override Play FormulatePlay(GameBoard board)
         {
             throw new NotImplementedException();
         }
