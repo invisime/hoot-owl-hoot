@@ -10,5 +10,10 @@
             Card = card;
             Position = position;
         }
+
+        public override string ToString()
+        {
+            return string.Format("a {0} card on the owl at position {1}", Card, Position);
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace GameEngine
             else
             {
                 var play = Player.FormulatePlay(Board);
-                Console.WriteLine("Player chose to play a {0} card on an owl at position {1}", play.Card, play.Position);
+                Console.WriteLine("Player chose to play {0}", play);
                 Board.Move(play);
                 Player.Discard(play.Card);
             }
@@ -50,8 +50,7 @@ namespace GameEngine
 
         public bool GameIsWon()
         {
-            return Board.OwlPositions
-                .TrueForAll(position => position == Board.NestPosition);
+            return Board.Owls.AreAllNested;
         }
 
         public bool GameIsLost()

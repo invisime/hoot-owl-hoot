@@ -28,18 +28,5 @@ namespace GameEngine.Players
         }
 
         public abstract Play FormulatePlay(GameBoard board);
-
-        protected int PositionOfStragglerOwl(GameBoard board)
-        {
-            return board.OwlPositions
-                .Where(position => position < board.NestPosition)
-                .Min();
-        }
-        protected int PositionOfTryHardOwl(GameBoard board)
-        {
-            return board.OwlPositions
-                .Where(position => position < board.NestPosition)
-                .Max();
-        }
     }
 }

@@ -15,7 +15,7 @@ namespace GameEngine.Players
         {
             return new Play(
                 RandomCard,
-                PositionOfStragglerOwl(board)
+                board.Owls.TrailingOwl
             );
         }
     }

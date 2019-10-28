@@ -5,9 +5,9 @@ using System.Linq;
 namespace GameEngine
 {
     public class GameBoard
-    { 
+    {
         public List<BoardPositionType> Board { get; private set; }
-        public List<int> OwlPositions { get; set; }
+        public Parliament Owls { get; private set; }
         
         public int NestPosition
         {
@@ -17,63 +17,37 @@ namespace GameEngine
         public GameBoard(int gameSizeMultiplier, int numberOfOwls = 6)
         {
             BuildBoard(gameSizeMultiplier);
-            OwlPositions = Enumerable.Repeat(0, numberOfOwls).ToList();
+            Owls = new Parliament(numberOfOwls);
         }
 
         public void Move(Play play)
         {
-            if (play.Card == CardType.Sun)
-            {
-                throw new InvalidMoveException("Sun is not a valid movement type");
-            }
-
-            var owlToMove = FindOwl(play.Position);
             var newPosition = FindDestinationPosition(play);
-
-            OwlPositions[owlToMove] = newPosition;
-        }
-
-        private BoardPositionType Convert(CardType cardType)
-        {
-            switch (cardType)
+            if(newPosition == NestPosition)
             {
-                case CardType.Red:
-                    return BoardPositionType.Red;
-                case CardType.Orange:
-                    return BoardPositionType.Orange;
-                case CardType.Yellow:
-                    return BoardPositionType.Yellow;
-                case CardType.Green:
-                    return BoardPositionType.Green;
-                case CardType.Blue:
-                    return BoardPositionType.Blue;
-                case CardType.Purple:
-                    return BoardPositionType.Purple;
+                Owls.Nest(play.Position);
+            } else
+            {
+                Owls.Move(play.Position, newPosition);
             }
-            return BoardPositionType.Nest;
-        }
-
-        private int FindOwl(int position)
-        {
-            var owlIndex = OwlPositions.IndexOf(position);
-            if (owlIndex == -1) {
-                throw new InvalidMoveException("There is no owl at position " + position);
-            }
-            return owlIndex;
         }
 
         private int FindDestinationPosition(Play play)
         {
-            var desiredBoardColor = Convert(play.Card);
-            int newPosition = play.Position;
-            Predicate<int> isEmptySpaceOfCorrectColor = (position) =>
-                desiredBoardColor == Board[position]
-                    && !OwlPositions.Contains(position);
-            do
+            var desiredColor = play.Card.AsBoardPositionType();
+            int newPosition = play.Position + 1;
+
+            while (!OwlShouldStopHere(newPosition, desiredColor))
             {
-                newPosition += 1;
-            } while (newPosition < NestPosition && !isEmptySpaceOfCorrectColor(newPosition));
+                newPosition++;
+            }
             return newPosition;
+        }
+
+        private bool OwlShouldStopHere(int position, BoardPositionType desiredColor)
+        {
+            return position == NestPosition
+                || (desiredColor == Board[position] && !Owls.Inhabit(position));
         }
 
         private void BuildBoard(int gameSizeMultiplier)

@@ -11,7 +11,7 @@
         {
             return new Play(
                 OldestCard,
-                PositionOfTryHardOwl(board)
+                board.Owls.LeadOwl
             );
         }
     }
