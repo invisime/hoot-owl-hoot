@@ -6,10 +6,17 @@ namespace GameEngine.Players
     {
         private static readonly Random Random = new Random();
 
-        public override CardType SelectCardToPlay(GameBoard board)
+        private CardType RandomCard
         {
-            int index = Random.Next(0, Hand.Count);
-            return Hand[index];
+            get { return Hand[Random.Next(0, Hand.Count)]; }
+        }
+
+        public override Play FormulatePlay(GameBoard board)
+        {
+            return new Play(
+                RandomCard,
+                board.Owls.TrailingOwl
+            );
         }
     }
 }

@@ -1,75 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine
 {
     public class GameBoard
-    { 
+    {
         public List<BoardPositionType> Board { get; private set; }
-        public int OwlPosition { get; set; }
-
-
-        public GameBoard(int gameSizeMultiplier)
+        public Parliament Owls { get; private set; }
+        
+        public int NestPosition
+        {
+            get { return Board.Count - 1; }
+        }
+        
+        public GameBoard(int gameSizeMultiplier, int numberOfOwls = 6)
         {
             BuildBoard(gameSizeMultiplier);
-            OwlPosition = 0;
+            Owls = new Parliament(numberOfOwls);
         }
 
-        public void Move(CardType type)
+        public void Move(Play play)
         {
-            if(OwlPosition == Board.Count - 1)
+            var newPosition = FindDestinationPosition(play);
+            if(newPosition == NestPosition)
             {
-                throw new InvalidMoveException("Owl is already in the Nest");
-            }
-            if(type == CardType.Sun)
+                Owls.Nest(play.Position);
+            } else
             {
-                throw new InvalidMoveException("Sun is not a valid movement type");
-            }
-
-            var targetBoardPosition = Convert(type);
-            for (int i = OwlPosition + 1; i < Board.Count; i++)
-            {
-                if(Board[i] == targetBoardPosition || Board[i] == BoardPositionType.Nest)
-                {
-                    OwlPosition = i;
-                    break;
-                }
+                Owls.Move(play.Position, newPosition);
             }
         }
 
-        private BoardPositionType Convert(CardType cardType)
+        private int FindDestinationPosition(Play play)
         {
-            switch(cardType)
+            var desiredColor = play.Card.AsBoardPositionType();
+            int newPosition = play.Position + 1;
+
+            while (!OwlShouldStopHere(newPosition, desiredColor))
             {
-                case CardType.Red:
-                    return BoardPositionType.Red;
-                case CardType.Orange:
-                    return BoardPositionType.Orange;
-                case CardType.Yellow:
-                    return BoardPositionType.Yellow;
-                case CardType.Green:
-                    return BoardPositionType.Green;
-                case CardType.Blue:
-                    return BoardPositionType.Blue;
-                case CardType.Purple:
-                    return BoardPositionType.Purple;
+                newPosition++;
             }
-            return BoardPositionType.Nest;
+            return newPosition;
+        }
+
+        private bool OwlShouldStopHere(int position, BoardPositionType desiredColor)
+        {
+            return position == NestPosition
+                || (desiredColor == Board[position] && !Owls.Inhabit(position));
         }
 
         private void BuildBoard(int gameSizeMultiplier)
         {
+            var nonNestTypes = Enum.GetValues(typeof(BoardPositionType))
+                .Cast<BoardPositionType>()
+                .Where(b => b != BoardPositionType.Nest);
+
             Board = new List<BoardPositionType>();
             for (int i = 0; i < gameSizeMultiplier; i++)
             {
-                foreach (BoardPositionType type in Enum.GetValues(typeof(BoardPositionType)))
-                {
-                    if (type == BoardPositionType.Nest)
-                    {
-                        continue;
-                    }
-                    Board.Add(type);
-                }
+                Board.AddRange(nonNestTypes);
             }
             Board.Add(BoardPositionType.Nest);
         }

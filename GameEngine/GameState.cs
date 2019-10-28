@@ -11,7 +11,7 @@ namespace GameEngine
         public IPlayer Player { get; private set; }
         public int SunCounter { get; private set; }
         public int GameSizeMultiplier { get; }
-
+        
         public GameState(IPlayer player, Deck deck, int gameSizeMultiplier)
         {
             Board = new GameBoard(gameSizeMultiplier);
@@ -38,10 +38,10 @@ namespace GameEngine
             }
             else
             {
-                var cardToPlay = Player.SelectCardToPlay(Board);
-                Console.WriteLine("Player chose to play a {0} card", cardToPlay);
-                Board.Move(cardToPlay);
-                Player.Discard(cardToPlay);
+                var play = Player.FormulatePlay(Board);
+                Console.WriteLine("Player chose to play {0}", play);
+                Board.Move(play);
+                Player.Discard(play.Card);
             }
             var newCards = Deck.Draw(1);
             Console.WriteLine("Player drew a {0} card", newCards[0]);
@@ -50,7 +50,7 @@ namespace GameEngine
 
         public bool GameIsWon()
         {
-            return Board.OwlPosition == Board.Board.Count - 1;
+            return Board.Owls.AreAllNested;
         }
 
         public bool GameIsLost()

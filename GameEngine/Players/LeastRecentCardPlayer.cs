@@ -2,9 +2,17 @@
 {
     public class LeastRecentCardPlayer : Player
     {
-        public override CardType SelectCardToPlay(GameBoard board)
+        private CardType OldestCard
         {
-            return Hand[0];
+            get { return Hand[0]; }
+        }
+
+        public override Play FormulatePlay(GameBoard board)
+        {
+            return new Play(
+                OldestCard,
+                board.Owls.LeadOwl
+            );
         }
     }
 }

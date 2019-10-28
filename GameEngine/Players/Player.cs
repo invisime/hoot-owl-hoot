@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine.Players
 {
@@ -21,11 +22,11 @@ namespace GameEngine.Players
             Hand.Remove(card);
         }
 
-        public abstract CardType SelectCardToPlay(GameBoard board);
-
         public bool HandContainsSun()
         {
             return Hand.Contains(CardType.Sun);
         }
+
+        public abstract Play FormulatePlay(GameBoard board);
     }
 }
