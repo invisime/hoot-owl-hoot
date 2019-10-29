@@ -11,6 +11,7 @@ namespace GameEngine
         public int Count { get; private set; }
         public int InTheNest { get; private set; }
 
+        public IEnumerable<int> ListOfPositions { get { return PositionsWithOwls; } }
         public bool AreAllNested { get { return Count == InTheNest; } }
         public int LeadOwl { get { return PositionsWithOwls.Max(); } }
         public int TrailingOwl { get { return PositionsWithOwls.Min(); } }

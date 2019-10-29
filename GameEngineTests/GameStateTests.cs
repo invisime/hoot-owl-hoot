@@ -89,28 +89,32 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldWinGameWhenOwlsReachNest()
         {
-            var redCards = Enumerable.Repeat(CardType.Red, Multiplier * NumberOfOwls);
+            var redCards = Enumerable.Repeat(CardType.Red, Multiplier * NumberOfOwls + 3);
             Deck.Cards.InsertRange(0, redCards);
             State.StartGame();
 
-            foreach (int expectedNestedOwls in Enumerable.Range(0, NumberOfOwls))
+            foreach (int expectedOwlsInTheNest in Enumerable.Range(0, NumberOfOwls))
             {
-                var owlsStillInStartingPositions = Enumerable.Range(0, NumberOfOwls - expectedNestedOwls).ToArray();
+                var owlsInStartingPositionsOrNest = Enumerable.Range(0, NumberOfOwls - expectedOwlsInTheNest)
+                    .Concat(Enumerable.Repeat(State.Board.NestPosition, State.Board.Owls.InTheNest))
+                    .ToArray();
 
-                State.Board.AssertOwlPositionsMatch(owlsStillInStartingPositions);
-                Assert.AreEqual(expectedNestedOwls, State.Board.Owls.InTheNest);
+                State.Board.AssertOwlPositionsMatch(owlsInStartingPositionsOrNest);
+                Assert.AreEqual(expectedOwlsInTheNest, State.Board.Owls.InTheNest);
                 Assert.IsFalse(State.GameIsWon());
 
-                foreach (int playsForThisOwl in Enumerable.Range(0, Multiplier))
+                foreach (int playNumber in Enumerable.Range(1, Multiplier))
                 {
                     Assert.AreEqual(CardType.Red, State.Player.Hand[0]);
 
                     State.TakeTurn();
                     
-                    int expectedOwlsAtStart = NumberOfOwls - expectedNestedOwls - 1;
-                    var expectedNewPosition = expectedNestedOwls + Multiplier * (playsForThisOwl + 1);
-                    var expectedPositions = Enumerable.Range(0, expectedOwlsAtStart)
-                        .Concat(new[] { expectedNewPosition })
+                    var expectedOwlsAtStart = Enumerable.Range(0, NumberOfOwls - expectedOwlsInTheNest - 1);
+                    var expectedNewPosition = Multiplier * playNumber;
+                    var expectedNestedOwls = Enumerable.Repeat(State.Board.NestPosition, expectedOwlsInTheNest);
+                    var expectedPositions = expectedOwlsAtStart
+                        .Append(expectedNewPosition)
+                        .Concat(expectedNestedOwls)
                         .ToArray();
                     State.Board.AssertOwlPositionsMatch(expectedPositions);
                 }

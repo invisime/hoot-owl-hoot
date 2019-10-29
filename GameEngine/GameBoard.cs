@@ -23,7 +23,7 @@ namespace GameEngine
         public void Move(Play play)
         {
             var newPosition = FindDestinationPosition(play);
-            if(newPosition == NestPosition)
+            if(newPosition >= NestPosition)
             {
                 Owls.Nest(play.Position);
             } else
@@ -32,7 +32,7 @@ namespace GameEngine
             }
         }
 
-        private int FindDestinationPosition(Play play)
+        public int FindDestinationPosition(Play play)
         {
             var desiredColor = play.Card.AsBoardPositionType();
             int newPosition = play.Position + 1;
@@ -46,7 +46,7 @@ namespace GameEngine
 
         private bool OwlShouldStopHere(int position, BoardPositionType desiredColor)
         {
-            return position == NestPosition
+            return position >= NestPosition
                 || (desiredColor == Board[position] && !Owls.Inhabit(position));
         }
 
