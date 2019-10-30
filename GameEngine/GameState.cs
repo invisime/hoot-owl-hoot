@@ -44,8 +44,15 @@ namespace GameEngine
                 Player.Discard(play.Card);
             }
             var newCards = Deck.Draw(1);
-            Console.WriteLine("Player drew a {0} card", newCards[0]);
             Player.AddCardsToHand(newCards);
+            if (newCards.Length > 0)
+            {
+                Console.WriteLine("Player drew a {0} card", newCards[0]);
+            }
+            else
+            {
+                Console.WriteLine("Player drew no cards since the deck was empty");
+            }
         }
 
         public bool GameIsWon()

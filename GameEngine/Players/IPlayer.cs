@@ -6,7 +6,7 @@ namespace GameEngine.Players
     {
         List<CardType> Hand { get; }
 
-        void AddCardsToHand(List<CardType> cards);
+        void AddCardsToHand(params CardType[] cards);
         void Discard(CardType card);
         Play FormulatePlay(GameBoard board);
         bool HandContainsSun();

@@ -13,9 +13,8 @@ namespace GameEngineTests.Players
         {
             var firstCard = CardType.Red;
             var secondCard = CardType.Orange;
-            var hand = new List<CardType> { firstCard, secondCard };
             var player = new LeastRecentCardPlayer();
-            player.AddCardsToHand(hand);
+            player.AddCardsToHand(firstCard, secondCard);
             var board = new GameBoard(2);
 
             var play = player.FormulatePlay(board);

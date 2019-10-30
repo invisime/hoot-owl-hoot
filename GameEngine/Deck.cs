@@ -14,11 +14,12 @@ namespace GameEngine
             Shuffle();
         }
 
-        public List<CardType> Draw(int numberOfDraws)
+        public CardType[] Draw(int numberDesired)
         {
-            var cards = Cards.GetRange(0, numberOfDraws);
-            Cards.RemoveRange(0, numberOfDraws);
-            return cards;
+            var numberToDraw = Math.Min(numberDesired, Cards.Count);
+            var cards = Cards.GetRange(0, numberToDraw);
+            Cards.RemoveRange(0, numberToDraw);
+            return cards.ToArray();
         }
 
         private void BuildDeck(int gameSizeMultiplier)

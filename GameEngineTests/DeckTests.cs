@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -28,6 +29,18 @@ namespace GameEngineTests
 
             var deckSizeAfter = deck.Cards.Count;
             Assert.AreEqual(deckSizeBefore - 3, deckSizeAfter);
+        }
+
+        [TestMethod]
+        public void ShouldDrawFewerWhenDrawingTooMany()
+        {
+            var deck = new Deck(2);
+            deck.Draw(deck.Cards.Count - 1);
+            var theRestOfTheDeck = new List<CardType>(deck.Cards);
+
+            var actualCardsDrawn = deck.Draw(1000);
+
+            CollectionAssert.AreEqual(theRestOfTheDeck, actualCardsDrawn);
         }
     }
 }

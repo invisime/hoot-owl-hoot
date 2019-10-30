@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GameEngine;
 using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,12 +12,10 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldDiscard()
         {
-            var expectedCardType = CardType.Blue;
-            var hand = new List<CardType> { expectedCardType };
             var player = new DummyPlayer();
-            player.AddCardsToHand(hand);
+            player.AddCardsToHand(CardType.Blue);
 
-            player.Discard(expectedCardType);
+            player.Discard(CardType.Blue);
 
             Assert.AreEqual(0, player.Hand.Count);
         }
@@ -26,7 +23,7 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldAddCardsToHand()
         {
-            var expectedHand = new List<CardType> { CardType.Blue };
+            var expectedHand = new [] { CardType.Blue };
             var player = new DummyPlayer();
 
             player.AddCardsToHand(expectedHand);
@@ -38,7 +35,7 @@ namespace GameEngineTests.Players
         public void ShouldDetectIfHandContainsSun()
         {
             var player = new DummyPlayer();
-            player.AddCardsToHand(new List<CardType> { CardType.Sun });
+            player.AddCardsToHand(CardType.Sun);
             Assert.IsTrue(player.HandContainsSun());
 
             player.Discard(CardType.Sun);

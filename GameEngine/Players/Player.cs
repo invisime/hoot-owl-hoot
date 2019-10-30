@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace GameEngine.Players
 {
@@ -12,7 +11,7 @@ namespace GameEngine.Players
             Hand = new List<CardType>();
         }
 
-        public void AddCardsToHand(List<CardType> cards)
+        public void AddCardsToHand(params CardType[] cards)
         {
             Hand.AddRange(cards);
         }
