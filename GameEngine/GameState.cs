@@ -6,19 +6,22 @@ namespace GameEngine
 {
     public class GameState
     {
-        public GameBoard Board { get; private set; }
-        public Deck Deck { get; private set; }
-        public IPlayer Player { get; private set; }
+        public GameBoard Board { get; }
+        public Deck Deck { get; }
+        public IPlayer Player { get; }
+        public int SunSpaces { get; }
         public int SunCounter { get; private set; }
-        public int GameSizeMultiplier { get; }
-        
-        public GameState(IPlayer player, Deck deck, int gameSizeMultiplier)
+
+        public GameState(int multiplier, params IPlayer[] player)
+            : this(GameOptions.FromMultiplier(multiplier), player) { }
+
+        public GameState(GameOptions options, params IPlayer[] players)
         {
-            Board = new GameBoard(gameSizeMultiplier);
-            Deck = deck;
-            Player = player;
+            Board = new GameBoard(options.ColoredSpacesPerColor, options.Owls);
+            Deck = new Deck(options.ColoredCardsPerColor, options.SunCards);
+            Player = players[0];
+            SunSpaces = options.SunSpaces;
             SunCounter = 0;
-            GameSizeMultiplier = gameSizeMultiplier;
         }
 
         public void StartGame()
@@ -62,7 +65,7 @@ namespace GameEngine
 
         public bool GameIsLost()
         {
-            return SunCounter == GameSizeMultiplier;
+            return SunCounter == SunSpaces;
         }
     }
 }

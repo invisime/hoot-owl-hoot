@@ -18,11 +18,11 @@ namespace GameEngineTests
         [TestInitialize]
         public void TestInitialize()
         {
-            Player = new LeastRecentCardPlayer();
             Multiplier = 6;
-            NumberOfOwls = 6;
-            Deck = new Deck(Multiplier, 6);
-            State = new GameState(Player, Deck, Multiplier);
+            Player = new LeastRecentCardPlayer();
+            State = new GameState(Multiplier, Player);
+            Deck = State.Deck;
+            NumberOfOwls = State.Board.Owls.Count;
         }
 
         [TestMethod]
