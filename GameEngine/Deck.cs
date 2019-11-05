@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine
 {
@@ -8,9 +9,10 @@ namespace GameEngine
         private static readonly Random Random = new Random();
         public List<CardType> Cards { get; private set; }
 
-        public Deck(int gameSizeMultiplier)
+        public Deck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
-            BuildDeck(gameSizeMultiplier);
+            var defaultSunCards = gameSizeMultiplier + 4 * gameSizeMultiplier / 3;
+            BuildDeck(gameSizeMultiplier, numberOfSunCards ?? defaultSunCards);
             Shuffle();
         }
 
@@ -22,16 +24,11 @@ namespace GameEngine
             return cards.ToArray();
         }
 
-        private void BuildDeck(int gameSizeMultiplier)
+        private void BuildDeck(int gameSizeMultiplier, int sunCards)
         {
-            Cards = new List<CardType>();
-            for (int i = 0; i < gameSizeMultiplier; i++)
-            {
-                foreach (CardType type in Enum.GetValues(typeof(CardType)))
-                {
-                    Cards.Add(type);
-                }
-            }
+            Cards = new List<CardType>(Enumerable.Repeat(0, gameSizeMultiplier)
+                .SelectMany(cards => CardTypeExtensions.OneCardOfEachColor)
+                .Concat(Enumerable.Repeat(CardType.Sun, sunCards)));
         }
 
         private void Shuffle()

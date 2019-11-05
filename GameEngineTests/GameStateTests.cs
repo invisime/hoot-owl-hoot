@@ -21,7 +21,7 @@ namespace GameEngineTests
             Player = new LeastRecentCardPlayer();
             Multiplier = 6;
             NumberOfOwls = 6;
-            Deck = new Deck(Multiplier);
+            Deck = new Deck(Multiplier, 6);
             State = new GameState(Player, Deck, Multiplier);
         }
 
