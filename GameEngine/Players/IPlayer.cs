@@ -4,11 +4,8 @@ namespace GameEngine.Players
 {
     public interface IPlayer
     {
-        List<CardType> Hand { get; }
+        PlayerHand Hand { get; }
 
-        void AddCardsToHand(params CardType[] cards);
-        void Discard(CardType card);
         Play FormulatePlay(GameBoard board);
-        bool HandContainsSun();
     }
 }

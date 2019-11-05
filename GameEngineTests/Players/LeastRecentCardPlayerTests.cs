@@ -14,13 +14,13 @@ namespace GameEngineTests.Players
             var firstCard = CardType.Red;
             var secondCard = CardType.Orange;
             var player = new LeastRecentCardPlayer();
-            player.AddCardsToHand(firstCard, secondCard);
+            player.Hand.Add(firstCard, secondCard);
             var board = new GameBoard(2);
 
             var play = player.FormulatePlay(board);
             Assert.AreEqual(firstCard, play.Card);
 
-            player.Discard(play.Card);
+            player.Hand.Discard(play.Card);
             play = player.FormulatePlay(board);
             Assert.AreEqual(secondCard, play.Card);
         }

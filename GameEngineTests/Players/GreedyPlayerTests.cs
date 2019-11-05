@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngineTests.Players
 {
     [TestClass]
-    public class GreatestDistanceSingleCardPlayerTests
+    public class GreedyPlayerTests
     {
         private CardType[] OneCardOfEachColor
         {
@@ -21,9 +21,9 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthest()
         {
-            var player = new GreatestDistanceSingleCardPlayer();
+            var player = new GreedyPlayer();
             var board = new GameBoard(2, 1);
-            player.AddCardsToHand(OneCardOfEachColor);
+            player.Hand.Add(OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
 
@@ -34,10 +34,10 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayCardOnOwlThatGoesFurthestWithHootingIntoNest()
         {
-            var player = new GreatestDistanceSingleCardPlayer();
+            var player = new GreedyPlayer();
             var board = new GameBoard(2);
             board.Owls.Move(0, 6);
-            player.AddCardsToHand(OneCardOfEachColor);
+            player.Hand.Add(OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
 

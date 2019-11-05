@@ -12,7 +12,7 @@ namespace GameEngineTests.Players
         public void ShouldPlayRandomCardFromHand()
         {
             var player = new RandomPlayer();
-            player.AddCardsToHand(CardType.Blue);
+            player.Hand.Add(CardType.Blue);
             var board = new GameBoard(2);
 
             var play = player.FormulatePlay(board);

@@ -33,7 +33,7 @@ namespace GameEngineTests
             State.StartGame();
 
             Assert.AreEqual(0, State.SunCounter);
-            Assert.AreEqual(3, State.Player.Hand.Count);
+            Assert.AreEqual(3, State.Player.Hand.Cards.Count);
             Assert.AreEqual(startingDeckSize - 3, State.Deck.Cards.Count);
         }
 
@@ -55,7 +55,7 @@ namespace GameEngineTests
                 CardType.Yellow,
                 CardType.Green
             };
-            CollectionAssert.AreEqual(expectedHand, State.Player.Hand);
+            CollectionAssert.AreEqual(expectedHand, State.Player.Hand.Cards);
             Assert.IsTrue(State.Board.Owls.Inhabit(6));
             Assert.AreEqual(42, State.Deck.Cards.Count);
             Assert.AreEqual(0, State.SunCounter);
@@ -80,7 +80,7 @@ namespace GameEngineTests
                 CardType.Green
             };
             var expectedOwlPositions = Enumerable.Range(0, 6).ToArray();
-            CollectionAssert.AreEqual(expectedHand, State.Player.Hand);
+            CollectionAssert.AreEqual(expectedHand, State.Player.Hand.Cards);
             State.Board.AssertOwlPositionsMatch(expectedOwlPositions);
             Assert.AreEqual(42, State.Deck.Cards.Count);
             Assert.AreEqual(1, State.SunCounter);
@@ -105,7 +105,7 @@ namespace GameEngineTests
 
                 foreach (int playNumber in Enumerable.Range(1, Multiplier))
                 {
-                    Assert.AreEqual(CardType.Red, State.Player.Hand[0]);
+                    Assert.AreEqual(CardType.Red, State.Player.Hand.Cards[0]);
 
                     State.TakeTurn();
                     
@@ -137,7 +137,7 @@ namespace GameEngineTests
             var allOwlsAtStartPosition = Enumerable.Range(0, NumberOfOwls).ToArray();
             for (int i = 0; i < Multiplier; i++)
             {
-                Assert.AreEqual(CardType.Sun, State.Player.Hand[0]);
+                Assert.AreEqual(CardType.Sun, State.Player.Hand.Cards[0]);
 
                 State.TakeTurn();
 

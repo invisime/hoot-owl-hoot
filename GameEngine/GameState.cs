@@ -24,27 +24,27 @@ namespace GameEngine
         public void StartGame()
         {
             var hand = Deck.Draw(3);
-            Player.AddCardsToHand(hand);
+            Player.Hand.Add(hand);
         }
 
         public void TakeTurn()
         {
             Console.WriteLine("Taking a turn");
-            if (Player.HandContainsSun())
+            if (Player.Hand.ContainsSun)
             {
                 Console.WriteLine("Player forced to play a Sun card");
                 SunCounter++;
-                Player.Discard(CardType.Sun);
+                Player.Hand.Discard(CardType.Sun);
             }
             else
             {
                 var play = Player.FormulatePlay(Board);
                 Console.WriteLine("Player chose to play {0}", play);
                 Board.Move(play);
-                Player.Discard(play.Card);
+                Player.Hand.Discard(play.Card);
             }
             var newCards = Deck.Draw(1);
-            Player.AddCardsToHand(newCards);
+            Player.Hand.Add(newCards);
             if (newCards.Length > 0)
             {
                 Console.WriteLine("Player drew a {0} card", newCards[0]);
