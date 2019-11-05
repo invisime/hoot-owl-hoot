@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameBoardTests.cs" />
+    <Compile Include="Players\EpsilonGreedyPlayerTests.cs" />
     <Compile Include="Players\GreedyPlayerTests.cs" />
     <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
