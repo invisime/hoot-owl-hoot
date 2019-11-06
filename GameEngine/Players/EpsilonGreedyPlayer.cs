@@ -17,7 +17,7 @@ namespace GameEngine.Players
         {
             double randomSampling = Random.NextDouble();
 
-            if (randomSampling < Epsilon)
+            if (randomSampling > Epsilon)
             {
                 return base.FormulatePlay(board);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,8 +11,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldDiscard()
         {
-            var hand = new PlayerHand();
-            hand.Add(CardType.Blue);
+            var hand = new PlayerHand(new List<CardType> { CardType.Blue });
 
             hand.Discard(CardType.Blue);
 
@@ -33,8 +33,8 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldDetectIfHandContainsSun()
         {
-            var hand = new PlayerHand();
-            hand.Add(CardType.Sun);
+            var hand = new PlayerHand(new List<CardType> { CardType.Sun });
+
             Assert.IsTrue(hand.ContainsSun);
 
             hand.Discard(CardType.Sun);

@@ -21,34 +21,44 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthestWhenUsingGreedyStrategy()
         {
-            var player = new EpsilonGreedyPlayer(1);
+            var player = new EpsilonGreedyPlayer(0);
+            var greedyPlayer = new GreedyPlayer();
+
             var board = new GameBoard(2, 1);
+
             player.Hand.Add(OneCardOfEachColor);
+            greedyPlayer.Hand.Add(OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
+            var greedyPlay = player.FormulatePlay(board);
 
-            Assert.AreEqual(CardType.Red, play.Card);
-            Assert.AreEqual(0, play.Position);
+            Assert.AreEqual(play.Card, greedyPlay.Card);
+            Assert.AreEqual(play.Position, greedyPlay.Position);
         }
 
         [TestMethod]
         public void ShouldPlayCardOnOwlThatGoesFurthestWithHootingIntoNestWhenUsingGreedyStrategy()
         {
-            var player = new EpsilonGreedyPlayer(1);
+            var player = new EpsilonGreedyPlayer(0);
+            var greedyPlayer = new GreedyPlayer();
+
             var board = new GameBoard(2);
             board.Owls.Move(0, 6);
+
             player.Hand.Add(OneCardOfEachColor);
+            greedyPlayer.Hand.Add(OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
+            var greedyPlay = player.FormulatePlay(board);
 
-            Assert.AreEqual(CardType.Red, play.Card);
-            Assert.AreEqual(1, play.Position);
+            Assert.AreEqual(play.Card, greedyPlay.Card);
+            Assert.AreEqual(play.Position, greedyPlay.Position);
         }
 
         [TestMethod]
         public void ShouldPlayCardAtRandomFromHandWhenUsingRandomStrategy()
         {
-            var player = new EpsilonGreedyPlayer(0);
+            var player = new EpsilonGreedyPlayer(1);
             var board = new GameBoard(2, 1);
             player.Hand.Add(OneCardOfEachColor);
 

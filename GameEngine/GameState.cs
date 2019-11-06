@@ -1,5 +1,4 @@
-﻿
-using GameEngine.Players;
+﻿using GameEngine.Players;
 using System;
 
 namespace GameEngine
@@ -23,8 +22,8 @@ namespace GameEngine
 
         public void StartGame()
         {
-            var hand = Deck.Draw(3);
-            Player.Hand.Add(hand);
+            var cards = Deck.Draw(3);
+            Player.Hand.Add(cards);
         }
 
         public void TakeTurn()

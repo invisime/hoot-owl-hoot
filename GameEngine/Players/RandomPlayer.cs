@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GameEngine.Players
+﻿namespace GameEngine.Players
 {
     public class RandomPlayer : Player
     {
