@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SeededRandomTests.cs" />
     <Compile Include="GameBoardTests.cs" />
     <Compile Include="Players\EpsilonGreedyPlayerTests.cs" />
     <Compile Include="Players\GreedyPlayerTests.cs" />
