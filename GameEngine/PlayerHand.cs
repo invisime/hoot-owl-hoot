@@ -6,7 +6,7 @@ namespace GameEngine
     public class PlayerHand
     {
         private static readonly Random Random = new Random();
-        public List<CardType> Cards { get; private set; }
+        public List<CardType> Cards { get; }
 
         public PlayerHand()
         {

@@ -5,7 +5,7 @@ namespace GameEngine.Players
     public class EpsilonGreedyPlayer: GreedyPlayer
     {
         private static readonly Random Random = new Random();
-        private double Epsilon { get; set; }
+        private double Epsilon { get; }
 
         public EpsilonGreedyPlayer(double epsilon) :
             base()

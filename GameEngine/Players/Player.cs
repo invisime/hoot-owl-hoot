@@ -4,7 +4,7 @@ namespace GameEngine.Players
 {
     public abstract class Player : IPlayer
     {
-        public PlayerHand Hand { get; private set; }
+        public PlayerHand Hand { get; }
 
         protected Player()
         {
