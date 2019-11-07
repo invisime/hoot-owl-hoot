@@ -8,8 +8,7 @@ namespace GameEngine
         public void RunGame()
         {
             var player = new LeastRecentCardPlayer();
-            var deck = new Deck(10);
-            var state = new GameState(player, deck, 10);
+            var state = new GameState(10, player);
             state.StartGame();
             int numberOfTurns = 0;
             for (; ; numberOfTurns++)
