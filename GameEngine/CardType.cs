@@ -1,4 +1,8 @@
-﻿namespace GameEngine
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace GameEngine
 {
     public enum CardType
     {
@@ -11,8 +15,19 @@
         Sun
     }
 
-    static class CardTypeExtensions
+    public static class CardTypeExtensions
     {
+        public static CardType[] OneCardOfEachColor
+        {
+            get
+            {
+                return Enum.GetValues(typeof(CardType))
+                    .Cast<CardType>()
+                    .Where(card => card != CardType.Sun)
+                    .ToArray();
+            }
+        }
+
         public static BoardPositionType AsBoardPositionType(this CardType cardType)
         {
             switch (cardType)

@@ -8,22 +8,12 @@ namespace GameEngineTests.Players
     [TestClass]
     public class GreedyPlayerTests
     {
-        private CardType[] OneCardOfEachColor
-        {
-            get
-            {
-                return new Deck(1).Cards
-                    .Where(card => card != CardType.Sun)
-                    .ToArray();
-            }
-        }
-
         [TestMethod]
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthest()
         {
             var player = new GreedyPlayer();
             var board = new GameBoard(2, 1);
-            player.Hand.Add(OneCardOfEachColor);
+            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
 
@@ -37,7 +27,7 @@ namespace GameEngineTests.Players
             var player = new GreedyPlayer();
             var board = new GameBoard(2);
             board.Owls.Move(0, 6);
-            player.Hand.Add(OneCardOfEachColor);
+            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
 
