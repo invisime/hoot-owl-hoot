@@ -10,7 +10,6 @@ namespace GameEngineTests
     public class GameStateTests
     {
         private IPlayer Player;
-        private Deck Deck;
         private GameState State;
         private int Multiplier;
         private int NumberOfOwls;
@@ -21,7 +20,6 @@ namespace GameEngineTests
             Multiplier = 6;
             Player = new LeastRecentCardPlayer();
             State = new GameState(Multiplier, Player);
-            Deck = State.Deck;
             NumberOfOwls = State.Board.Owls.Count;
         }
 
@@ -40,7 +38,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldTakeOneTurnWithoutSunCard()
         {
-            Deck.Cards.InsertRange(0, new List<CardType> {
+            State.Deck.Cards.InsertRange(0, new List<CardType> {
                 CardType.Red,
                 CardType.Orange,
                 CardType.Yellow,
@@ -64,7 +62,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldPlaySunCardFirstWhenPossible()
         {
-            Deck.Cards.InsertRange(0, new List<CardType> {
+            State.Deck.Cards.InsertRange(0, new List<CardType> {
                 CardType.Orange,
                 CardType.Yellow,
                 CardType.Sun,
@@ -90,7 +88,7 @@ namespace GameEngineTests
         public void ShouldWinGameWhenOwlsReachNest()
         {
             var redCards = Enumerable.Repeat(CardType.Red, Multiplier * NumberOfOwls + 3);
-            Deck.Cards.InsertRange(0, redCards);
+            State.Deck.Cards.InsertRange(0, redCards);
             State.StartGame();
 
             foreach (int expectedOwlsInTheNest in Enumerable.Range(0, NumberOfOwls))
@@ -129,7 +127,7 @@ namespace GameEngineTests
         public void ShouldLoseGameWhenSunCounterReachesMaximum()
         {
             var cards = Enumerable.Repeat(CardType.Sun, Multiplier);
-            Deck.Cards.InsertRange(0, cards);
+            State.Deck.Cards.InsertRange(0, cards);
             State.StartGame();
 
             Assert.IsFalse(State.GameIsLost());

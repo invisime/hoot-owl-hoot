@@ -12,14 +12,14 @@ namespace GameEngine
         public int SunSpaces { get; }
         public int SunCounter { get; private set; }
 
-        public GameState(int multiplier, params IPlayer[] player)
+        public GameState(int multiplier, IPlayer player)
             : this(GameOptions.FromMultiplier(multiplier), player) { }
 
-        public GameState(GameOptions options, params IPlayer[] players)
+        public GameState(GameOptions options, IPlayer player)
         {
             Board = new GameBoard(options.ColoredSpacesPerColor, options.Owls);
             Deck = new Deck(options.ColoredCardsPerColor, options.SunCards);
-            Player = players[0];
+            Player = player;
             SunSpaces = options.SunSpaces;
             SunCounter = 0;
         }

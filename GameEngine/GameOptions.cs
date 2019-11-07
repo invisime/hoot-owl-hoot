@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GameEngine
+﻿namespace GameEngine
 {
     public class GameOptions
     {
@@ -11,6 +7,8 @@ namespace GameEngine
         public int SunCards { get; private set; }
         public int SunSpaces { get; private set; }
         public int Owls { get; private set; }
+
+        private GameOptions() { }
 
         public static GameOptions FromMultiplier(int gameSizeMultiplier)
         {
