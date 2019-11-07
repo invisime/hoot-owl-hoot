@@ -8,16 +8,6 @@ namespace GameEngineTests.Players
     [TestClass]
     public class EpsilonGreedyPlayerTests
     {
-        private CardType[] OneCardOfEachColor
-        {
-            get
-            {
-                return new Deck(1).Cards
-                    .Where(card => card != CardType.Sun)
-                    .ToArray();
-            }
-        }
-
         [TestMethod]
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthestWhenUsingGreedyStrategy()
         {
@@ -26,8 +16,8 @@ namespace GameEngineTests.Players
 
             var board = new GameBoard(2, 1);
 
-            player.Hand.Add(OneCardOfEachColor);
-            greedyPlayer.Hand.Add(OneCardOfEachColor);
+            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
+            greedyPlayer.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
             var greedyPlay = player.FormulatePlay(board);
@@ -45,8 +35,8 @@ namespace GameEngineTests.Players
             var board = new GameBoard(2);
             board.Owls.Move(0, 6);
 
-            player.Hand.Add(OneCardOfEachColor);
-            greedyPlayer.Hand.Add(OneCardOfEachColor);
+            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
+            greedyPlayer.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
             var greedyPlay = player.FormulatePlay(board);
@@ -60,11 +50,11 @@ namespace GameEngineTests.Players
         {
             var player = new EpsilonGreedyPlayer(1);
             var board = new GameBoard(2, 1);
-            player.Hand.Add(OneCardOfEachColor);
+            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
 
             var play = player.FormulatePlay(board);
 
-            CollectionAssert.Contains(OneCardOfEachColor, play.Card);
+            CollectionAssert.Contains(CardTypeExtensions.OneCardOfEachColor, play.Card);
             Assert.AreEqual(0, play.Position);
         }
     }
