@@ -4,7 +4,7 @@
     {
         private CardType OldestCard
         {
-            get { return Hand[0]; }
+            get { return Hand.Cards[0]; }
         }
 
         public override Play FormulatePlay(GameBoard board)

@@ -51,7 +51,8 @@
   <ItemGroup>
     <Compile Include="SeededRandomTests.cs" />
     <Compile Include="GameBoardTests.cs" />
-    <Compile Include="Players\GreatestDistanceSingleCardPlayerTests.cs" />
+    <Compile Include="Players\EpsilonGreedyPlayerTests.cs" />
+    <Compile Include="Players\GreedyPlayerTests.cs" />
     <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Players\RandomPlayerTests.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Players\LeastRecentCardPlayerTests.cs" />
     <Compile Include="GameEngineTests.cs" />
     <Compile Include="TestUtilities.cs" />
+    <Compile Include="PlayerHandTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

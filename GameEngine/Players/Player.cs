@@ -4,26 +4,11 @@ namespace GameEngine.Players
 {
     public abstract class Player : IPlayer
     {
-        public List<CardType> Hand { get; private set; }
+        public PlayerHand Hand { get; }
 
-        public Player()
+        protected Player()
         {
-            Hand = new List<CardType>();
-        }
-
-        public void AddCardsToHand(params CardType[] cards)
-        {
-            Hand.AddRange(cards);
-        }
-
-        public void Discard(CardType card)
-        {
-            Hand.Remove(card);
-        }
-
-        public bool HandContainsSun()
-        {
-            return Hand.Contains(CardType.Sun);
+            Hand = new PlayerHand();
         }
 
         public abstract Play FormulatePlay(GameBoard board);
