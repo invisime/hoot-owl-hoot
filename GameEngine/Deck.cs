@@ -6,7 +6,6 @@ namespace GameEngine
 {
     public class Deck
     {
-        private static readonly Random Random = new Random();
         public List<CardType> Cards { get; private set; }
 
         public Deck(int gameSizeMultiplier, int? numberOfSunCards = null)
@@ -38,7 +37,7 @@ namespace GameEngine
             while (n > 1)
             {
                 n--;
-                int k = Random.Next(n + 1);
+                int k = SeededRandom.Next(n + 1);
                 CardType value = Cards[k];
                 Cards[k] = Cards[n];
                 Cards[n] = value;
