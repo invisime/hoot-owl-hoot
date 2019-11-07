@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using GameEngine;
+﻿using GameEngine;
 using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,10 +11,9 @@ namespace GameEngineTests.Players
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthest()
         {
             var player = new GreedyPlayer();
-            var board = new GameBoard(2, 1);
-            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
+            var state = TestUtilities.GenerateTestState(2, 1);
 
-            var play = player.FormulatePlay(board);
+            var play = player.FormulatePlay(state);
 
             Assert.AreEqual(CardType.Red, play.Card);
             Assert.AreEqual(0, play.Position);
@@ -25,11 +23,10 @@ namespace GameEngineTests.Players
         public void ShouldPlayCardOnOwlThatGoesFurthestWithHootingIntoNest()
         {
             var player = new GreedyPlayer();
-            var board = new GameBoard(2);
-            board.Owls.Move(0, 6);
-            player.Hand.Add(CardTypeExtensions.OneCardOfEachColor);
+            var state = TestUtilities.GenerateTestState(2);
+            state.Board.Owls.Move(0, 6);
 
-            var play = player.FormulatePlay(board);
+            var play = player.FormulatePlay(state);
 
             Assert.AreEqual(CardType.Red, play.Card);
             Assert.AreEqual(1, play.Position);

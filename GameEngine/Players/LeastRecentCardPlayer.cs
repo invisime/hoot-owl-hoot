@@ -1,17 +1,12 @@
 ﻿namespace GameEngine.Players
 {
-    public class LeastRecentCardPlayer : Player
+    public class LeastRecentCardPlayer : IPlayer
     {
-        private CardType OldestCard
-        {
-            get { return Hand.Cards[0]; }
-        }
-
-        public override Play FormulatePlay(GameBoard board)
+        public Play FormulatePlay(GameState state)
         {
             return new Play(
-                OldestCard,
-                board.Owls.LeadOwl
+                state.Hand.OldestCard,
+                state.Board.Owls.LeadOwl
             );
         }
     }

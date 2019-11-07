@@ -1,7 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace GameEngineTests.Players
 {
@@ -11,11 +10,12 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayRandomCardFromHand()
         {
+            var state = TestUtilities.GenerateTestState(2);
+            state.Hand.Cards.Clear();
+            state.Hand.Add(CardType.Blue);
             var player = new RandomPlayer();
-            player.Hand.Add(CardType.Blue);
-            var board = new GameBoard(2);
 
-            var play = player.FormulatePlay(board);
+            var play = player.FormulatePlay(state);
 
             Assert.AreEqual(CardType.Blue, play.Card);
             Assert.AreEqual(0, play.Position);

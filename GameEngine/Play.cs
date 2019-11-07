@@ -4,6 +4,7 @@
     {
         public CardType Card { get; }
         public int Position { get; }
+        public static Play Sun = new Play(CardType.Sun, -1);
 
         public Play(CardType card, int position)
         {
@@ -13,7 +14,9 @@
 
         public override string ToString()
         {
-            return string.Format("a {0} card on the owl at position {1}", Card, Position);
+            return Card == CardType.Sun
+                ? "a Sun card"
+                : string.Format("a {0} card on the owl at position {1}", Card, Position);
         }
     }
 }

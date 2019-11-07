@@ -16,6 +16,8 @@ namespace GameEngine
         public int LeadOwl { get { return PositionsWithOwls.Max(); } }
         public int TrailingOwl { get { return PositionsWithOwls.Min(); } }
 
+        private Parliament() { }
+
         public Parliament(int numberOfOwls)
         {
             PositionsWithOwls = new HashSet<int>(
@@ -23,6 +25,16 @@ namespace GameEngine
             );
             Count = numberOfOwls;
             InTheNest = 0;
+        }
+
+        public Parliament Clone()
+        {
+            return new Parliament()
+            {
+                PositionsWithOwls = new HashSet<int>(PositionsWithOwls),
+                Count = Count,
+                InTheNest = InTheNest
+            };
         }
 
         public bool Inhabit(int position)

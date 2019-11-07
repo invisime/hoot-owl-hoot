@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-
-namespace GameEngine.Players
+﻿namespace GameEngine.Players
 {
-    public class GreedyPlayer : Player
+    public class GreedyPlayer : IPlayer
     {
-        public override Play FormulatePlay(GameBoard board)
+        public Play FormulatePlay(GameState state)
         {
             Play greatestSingleDistancePlay = null;
             int greatestDistance = 0;
-            foreach (var owlPosition in board.Owls.ListOfPositions) {
-                foreach (var card in Hand.Cards)
+            foreach (var owlPosition in state.Board.Owls.ListOfPositions) {
+                foreach (var card in state.Hand.Cards)
                 {
                     var play = new Play(card, owlPosition);
-                    var newPosition = board.FindDestinationPosition(play);
+                    var newPosition = state.Board.FindDestinationPosition(play);
                     var distance = newPosition - owlPosition;
                     if (distance > greatestDistance)
                     {

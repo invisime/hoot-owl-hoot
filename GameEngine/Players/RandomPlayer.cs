@@ -1,12 +1,12 @@
 ﻿namespace GameEngine.Players
 {
-    public class RandomPlayer : Player
+    public class RandomPlayer : IPlayer
     {
-        public override Play FormulatePlay(GameBoard board)
+        public Play FormulatePlay(GameState state)
         {
             return new Play(
-                Hand.RandomCard,
-                board.Owls.TrailingOwl
+                state.Hand.RandomCard,
+                state.Board.Owls.TrailingOwl
             );
         }
     }
