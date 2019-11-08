@@ -39,7 +39,7 @@ namespace GameEngine
             get { return State.SunCounter == State.SunSpaces; }
         }
 
-        public void TakeTurn(IPlayer player)
+        public void TakeTurn(IAgent player)
         {
             var play = State.Hand.ContainsSun
                 ? Play.Sun

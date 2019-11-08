@@ -10,7 +10,7 @@ namespace GameEngineTests
     [TestClass]
     public class GameTests
     {
-        private IPlayer Player;
+        private IAgent Player;
         private int Multiplier;
         private Game Game;
         private GameState State { get { return Game.State; } }
@@ -19,7 +19,7 @@ namespace GameEngineTests
         [TestInitialize]
         public void TestInitialize()
         {
-            Player = new LeastRecentCardPlayer();
+            Player = new LeastRecentCardAgent();
             Multiplier = 6;
             Game = new Game(Multiplier);
         }

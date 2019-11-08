@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngineTests.Players
 {
     [TestClass]
-    public class RandomPlayerTests
+    public class RandomAgentTests
     {
         [TestMethod]
         public void ShouldPlayRandomCardFromHand()
@@ -13,7 +13,7 @@ namespace GameEngineTests.Players
             var state = TestUtilities.GenerateTestState(2);
             state.Hand.Cards.Clear();
             state.Hand.Add(CardType.Blue);
-            var player = new RandomPlayer();
+            var player = new RandomAgent();
 
             var play = player.FormulatePlay(state);
 

@@ -2,12 +2,12 @@
 
 namespace GameEngine.Players
 {
-    public class EpsilonGreedyPlayer: GreedyPlayer
+    public class EpsilonGreedyAgent: GreedyAgent
     {
         private static readonly Random Random = new Random();
         private double Epsilon { get; }
 
-        public EpsilonGreedyPlayer(double epsilon) :
+        public EpsilonGreedyAgent(double epsilon) :
             base()
         {
             Epsilon = epsilon;

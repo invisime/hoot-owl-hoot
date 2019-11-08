@@ -1,6 +1,6 @@
 ﻿namespace GameEngine.Players
 {
-    public class GreedyPlayer : IPlayer
+    public class GreedyAgent : IAgent
     {
         public Play FormulatePlay(GameState state)
         {

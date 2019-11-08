@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngineTests.Players
 {
     [TestClass]
-    public class LeastRecentCardPlayerTests
+    public class LeastRecentCardAgentTests
     {
         [TestMethod]
         public void ShouldPlayOldestCardFromHand()
@@ -15,7 +15,7 @@ namespace GameEngineTests.Players
             var secondCard = CardType.Orange;
             state.Hand.Cards.Clear();
             state.Hand.Add(firstCard, secondCard);
-            var player = new LeastRecentCardPlayer();
+            var player = new LeastRecentCardAgent();
 
             var play = player.FormulatePlay(state);
             Assert.AreEqual(firstCard, play.Card);

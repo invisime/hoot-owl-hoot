@@ -1,12 +1,12 @@
 ﻿namespace GameEngine.Players
 {
-    public class LeastRecentCardPlayer : IPlayer
+    public class RandomAgent : IAgent
     {
         public Play FormulatePlay(GameState state)
         {
             return new Play(
-                state.Hand.OldestCard,
-                state.Board.Owls.LeadOwl
+                state.Hand.RandomCard,
+                state.Board.Owls.TrailingOwl
             );
         }
     }

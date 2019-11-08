@@ -5,13 +5,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngineTests.Players
 {
     [TestClass]
-    public class EpsilonGreedyPlayerTests
+    public class EpsilonGreedyAgentTests
     {
         [TestMethod]
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthestWhenUsingGreedyStrategy()
         {
-            var player = new EpsilonGreedyPlayer(0);
-            var greedyPlayer = new GreedyPlayer();
+            var player = new EpsilonGreedyAgent(0);
+            var greedyPlayer = new GreedyAgent();
 
             var state = TestUtilities.GenerateTestState(2, 1);
 
@@ -25,8 +25,8 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayCardOnOwlThatGoesFurthestWithHootingIntoNestWhenUsingGreedyStrategy()
         {
-            var player = new EpsilonGreedyPlayer(0);
-            var greedyPlayer = new GreedyPlayer();
+            var player = new EpsilonGreedyAgent(0);
+            var greedyPlayer = new GreedyAgent();
 
             var state = TestUtilities.GenerateTestState(2, 1);
             state.Board.Owls.Move(0, 6);
@@ -41,7 +41,7 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayCardAtRandomFromHandWhenUsingRandomStrategy()
         {
-            var player = new EpsilonGreedyPlayer(1);
+            var player = new EpsilonGreedyAgent(1);
             var state = TestUtilities.GenerateTestState(2, 1);
 
             var play = player.FormulatePlay(state);

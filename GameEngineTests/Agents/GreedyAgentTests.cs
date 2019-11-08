@@ -5,12 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngineTests.Players
 {
     [TestClass]
-    public class GreedyPlayerTests
+    public class GreedyAgentTests
     {
         [TestMethod]
         public void ShouldPlayCardOnOnlyOwlThatGoesFurthest()
         {
-            var player = new GreedyPlayer();
+            var player = new GreedyAgent();
             var state = TestUtilities.GenerateTestState(2, 1);
 
             var play = player.FormulatePlay(state);
@@ -22,7 +22,7 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayCardOnOwlThatGoesFurthestWithHootingIntoNest()
         {
-            var player = new GreedyPlayer();
+            var player = new GreedyAgent();
             var state = TestUtilities.GenerateTestState(2);
             state.Board.Owls.Move(0, 6);
 

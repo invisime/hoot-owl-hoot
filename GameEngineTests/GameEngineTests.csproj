@@ -51,13 +51,13 @@
   <ItemGroup>
     <Compile Include="SeededRandomTests.cs" />
     <Compile Include="GameBoardTests.cs" />
-    <Compile Include="Players\EpsilonGreedyPlayerTests.cs" />
-    <Compile Include="Players\GreedyPlayerTests.cs" />
+    <Compile Include="Agents\EpsilonGreedyAgentTests.cs" />
+    <Compile Include="Agents\GreedyAgentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Players\RandomPlayerTests.cs" />
+    <Compile Include="Agents\RandomAgentTests.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="DeckTests.cs" />
-    <Compile Include="Players\LeastRecentCardPlayerTests.cs" />
+    <Compile Include="Agents\LeastRecentCardAgentTests.cs" />
     <Compile Include="GameEngineTests.cs" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="PlayerHandTests.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace GameEngine.Players
 {
-    public interface IPlayer
+    public interface IAgent
     {
         Play FormulatePlay(GameState state);
     }
