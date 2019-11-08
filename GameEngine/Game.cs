@@ -2,14 +2,16 @@
 
 namespace GameEngine
 {
-    public static class Game
+    public class Game
     {
-        public static GameState Start(int multiplier)
+        public GameState State { get; private set; }
+
+        public Game(int multiplier)
         {
-            return Start(GameOptions.FromMultiplier(multiplier));
+            State = Start(GameOptions.FromMultiplier(multiplier));
         }
 
-        public static GameState Start(GameOptions options)
+        private GameState Start(GameOptions options)
         {
             var deck = new Deck(options.ColoredCardsPerColor, options.SunCards);
             return new GameState
@@ -22,56 +24,27 @@ namespace GameEngine
             };
         }
 
-        public static bool IsOver(GameState state)
+        public bool IsOver
         {
-            return IsWon(state) || IsLost(state);
+            get { return IsWon || IsLost; }
         }
 
-        public static bool IsWon(GameState state)
+        public bool IsWon
         {
-            return state.Board.Owls.AreAllNested;
+            get { return State.Board.Owls.AreAllNested; }
         }
 
-        public static bool IsLost(GameState state)
+        public bool IsLost
         {
-            return state.SunCounter == state.SunSpaces;
+            get { return State.SunCounter == State.SunSpaces; }
         }
 
-        public static GameState TakeTurn(GameState state, IPlayer player)
+        public void TakeTurn(IPlayer player)
         {
-            var play = state.Hand.ContainsSun
+            var play = State.Hand.ContainsSun
                 ? Play.Sun
-                : player.FormulatePlay(state);
-            var newState = Successor(state, play);
-            return newState;
-        }
-
-        public static GameState Successor(GameState state, Play play)
-        {
-            var newBoard = state.Board.Clone();
-            var newDeck = state.Deck.Clone();
-            var newHand = state.Hand.Clone();
-            var newSunCounter = state.SunCounter;
-
-            if (play.Card == CardType.Sun)
-            {
-                newSunCounter++;
-            } else
-            {
-                newBoard.Move(play);
-            }
-
-            newHand.Discard(play.Card);
-            newHand.Add(newDeck.Draw(1));
-
-            return new GameState
-            {
-                Board = newBoard,
-                Deck = newDeck,
-                Hand = newHand,
-                SunCounter = newSunCounter,
-                SunSpaces = state.SunSpaces
-            };
+                : player.FormulatePlay(State);
+            State = State.Successor(play);
         }
     }
 }

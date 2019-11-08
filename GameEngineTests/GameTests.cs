@@ -12,7 +12,8 @@ namespace GameEngineTests
     {
         private IPlayer Player;
         private int Multiplier;
-        private GameState State;
+        private Game Game;
+        private GameState State { get { return Game.State; } }
         private int NumberOfOwls { get { return Multiplier; } }
 
         [TestInitialize]
@@ -20,7 +21,7 @@ namespace GameEngineTests
         {
             Player = new LeastRecentCardPlayer();
             Multiplier = 6;
-            State = Game.Start(Multiplier);
+            Game = new Game(Multiplier);
         }
 
         [TestMethod]
@@ -45,17 +46,17 @@ namespace GameEngineTests
             State.Deck.Cards.Insert(0, CardType.Green);
             var previousCardCount = State.Deck.Cards.Count;
 
-            var nextState = Game.TakeTurn(State, Player);
+            Game.TakeTurn(Player);
 
             var expectedHand = new List<CardType> {
                 CardType.Orange,
                 CardType.Yellow,
                 CardType.Green
             };
-            CollectionAssert.AreEqual(expectedHand, nextState.Hand.Cards);
-            Assert.IsTrue(nextState.Board.Owls.Inhabit(6));
-            Assert.AreEqual(previousCardCount - 1, nextState.Deck.Cards.Count);
-            Assert.AreEqual(0, nextState.SunCounter);
+            CollectionAssert.AreEqual(expectedHand, State.Hand.Cards);
+            Assert.IsTrue(State.Board.Owls.Inhabit(6));
+            Assert.AreEqual(previousCardCount - 1, State.Deck.Cards.Count);
+            Assert.AreEqual(0, State.SunCounter);
         }
 
         [TestMethod]
@@ -70,7 +71,7 @@ namespace GameEngineTests
             State.Deck.Cards.Insert(0, CardType.Green);
             var previousCardCount = State.Deck.Cards.Count;
 
-            var nextState = Game.TakeTurn(State, Player);
+            Game.TakeTurn(Player);
 
             var expectedHand = new List<CardType> {
                 CardType.Orange,
@@ -78,10 +79,10 @@ namespace GameEngineTests
                 CardType.Green
             };
             var expectedOwlPositions = Enumerable.Range(0, 6).ToArray();
-            CollectionAssert.AreEqual(expectedHand, nextState.Hand.Cards);
-            nextState.Board.AssertOwlPositionsMatch(expectedOwlPositions);
-            Assert.AreEqual(previousCardCount - 1, nextState.Deck.Cards.Count);
-            Assert.AreEqual(1, nextState.SunCounter);
+            CollectionAssert.AreEqual(expectedHand, State.Hand.Cards);
+            State.Board.AssertOwlPositionsMatch(expectedOwlPositions);
+            Assert.AreEqual(previousCardCount - 1, State.Deck.Cards.Count);
+            Assert.AreEqual(1, State.SunCounter);
         }
 
         [TestMethod]
@@ -91,38 +92,37 @@ namespace GameEngineTests
             State.Deck.Cards.InsertRange(0, redCards);
             State.Hand.Cards.Clear();
             State.Hand.Add(State.Deck.Draw(3));
-            var currentState = State;
 
             foreach (int expectedOwlsInTheNest in Enumerable.Range(0, NumberOfOwls))
             {
                 var owlsInStartingPositionsOrNest = Enumerable.Range(0, NumberOfOwls - expectedOwlsInTheNest)
-                    .Concat(Enumerable.Repeat(currentState.Board.NestPosition, currentState.Board.Owls.InTheNest))
+                    .Concat(Enumerable.Repeat(State.Board.NestPosition, State.Board.Owls.InTheNest))
                     .ToArray();
 
-                currentState.Board.AssertOwlPositionsMatch(owlsInStartingPositionsOrNest);
-                Assert.AreEqual(expectedOwlsInTheNest, currentState.Board.Owls.InTheNest);
-                Assert.IsFalse(Game.IsWon(currentState));
+                State.Board.AssertOwlPositionsMatch(owlsInStartingPositionsOrNest);
+                Assert.AreEqual(expectedOwlsInTheNest, State.Board.Owls.InTheNest);
+                Assert.IsFalse(Game.IsWon);
 
                 foreach (int playNumber in Enumerable.Range(1, Multiplier))
                 {
-                    Assert.AreEqual(CardType.Red, currentState.Hand.Cards[0]);
+                    Assert.AreEqual(CardType.Red, State.Hand.Cards[0]);
 
-                    currentState = Game.TakeTurn(currentState, Player);
+                    Game.TakeTurn(Player);
 
                     var expectedOwlsAtStart = Enumerable.Range(0, NumberOfOwls - expectedOwlsInTheNest - 1);
                     var expectedNewPosition = Multiplier * playNumber;
-                    var expectedNestedOwls = Enumerable.Repeat(currentState.Board.NestPosition, expectedOwlsInTheNest);
+                    var expectedNestedOwls = Enumerable.Repeat(State.Board.NestPosition, expectedOwlsInTheNest);
                     var expectedPositions = expectedOwlsAtStart
                         .Append(expectedNewPosition)
                         .Concat(expectedNestedOwls)
                         .ToArray();
-                    currentState.Board.AssertOwlPositionsMatch(expectedPositions);
+                    State.Board.AssertOwlPositionsMatch(expectedPositions);
                 }
             }
 
-            Assert.AreEqual(NumberOfOwls, currentState.Board.Owls.InTheNest);
-            Assert.AreEqual(0, currentState.SunCounter);
-            Assert.IsTrue(Game.IsWon(currentState));
+            Assert.AreEqual(NumberOfOwls, State.Board.Owls.InTheNest);
+            Assert.AreEqual(0, State.SunCounter);
+            Assert.IsTrue(Game.IsWon);
         }
 
         [TestMethod]
@@ -132,22 +132,21 @@ namespace GameEngineTests
             State.Deck.Cards.InsertRange(0, sunCards);
             State.Hand.Cards.Clear();
             State.Hand.Add(State.Deck.Draw(3));
-            var currentState = State;
 
-            Assert.IsFalse(Game.IsLost(currentState));
+            Assert.IsFalse(Game.IsLost);
 
             var allOwlsAtStartPosition = Enumerable.Range(0, NumberOfOwls).ToArray();
             for (int i = 0; i < Multiplier; i++)
             {
-                Assert.AreEqual(CardType.Sun, currentState.Hand.Cards[0]);
+                Assert.AreEqual(CardType.Sun, State.Hand.Cards[0]);
 
-                currentState = Game.TakeTurn(currentState, Player);
+                Game.TakeTurn(Player);
 
-                currentState.Board.AssertOwlPositionsMatch(allOwlsAtStartPosition);
+                State.Board.AssertOwlPositionsMatch(allOwlsAtStartPosition);
             }
 
-            Assert.AreEqual(Multiplier, currentState.SunCounter);
-            Assert.IsTrue(Game.IsLost(currentState));
+            Assert.AreEqual(Multiplier, State.SunCounter);
+            Assert.IsTrue(Game.IsLost);
         }
     }
 }

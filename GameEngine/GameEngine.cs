@@ -9,13 +9,13 @@ namespace GameEngine
         {
             var player = new LeastRecentCardPlayer();
             int numberOfTurns = 0;
-            var state = Game.Start(10);
-            while(!Game.IsOver(state))
+            var game = new Game(10);
+            while(!game.IsOver)
             {
-                state = Game.TakeTurn(state, player);
+                game.TakeTurn(player);
                 numberOfTurns++;
             }
-            Console.WriteLine("Game is {0}!", Game.IsLost(state) ? "lost" : "won");
+            Console.WriteLine("Game is {0}!", game.IsLost ? "lost" : "won");
             Console.WriteLine("Game took {0} turns!", numberOfTurns);
         }
     }
