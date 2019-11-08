@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using GameEngine;
+﻿using GameEngine;
 using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,17 +10,18 @@ namespace GameEngineTests.Players
         [TestMethod]
         public void ShouldPlayOldestCardFromHand()
         {
+            var state = TestUtilities.GenerateTestState(2);
             var firstCard = CardType.Red;
             var secondCard = CardType.Orange;
+            state.Hand.Cards.Clear();
+            state.Hand.Add(firstCard, secondCard);
             var player = new LeastRecentCardPlayer();
-            player.Hand.Add(firstCard, secondCard);
-            var board = new GameBoard(2);
 
-            var play = player.FormulatePlay(board);
+            var play = player.FormulatePlay(state);
             Assert.AreEqual(firstCard, play.Card);
 
-            player.Hand.Discard(play.Card);
-            play = player.FormulatePlay(board);
+            state.Hand.Discard(play.Card);
+            play = player.FormulatePlay(state);
             Assert.AreEqual(secondCard, play.Card);
         }
     }

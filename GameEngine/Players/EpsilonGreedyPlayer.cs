@@ -13,18 +13,18 @@ namespace GameEngine.Players
             Epsilon = epsilon;
         }
 
-        public override Play FormulatePlay(GameBoard board)
+        public new Play FormulatePlay(GameState state)
         {
             double randomSampling = Random.NextDouble();
 
             if (randomSampling > Epsilon)
             {
-                return base.FormulatePlay(board);
+                return base.FormulatePlay(state);
             }
 
             return new Play(
-                Hand.RandomCard,
-                board.Owls.TrailingOwl
+                state.Hand.RandomCard,
+                state.Board.Owls.TrailingOwl
             );
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine
 {
@@ -11,15 +12,26 @@ namespace GameEngine
             Cards = new List<CardType>();
         }
 
-        public PlayerHand(List<CardType> startingHand)
+        public PlayerHand(IEnumerable<CardType> startingHand)
         {
-            Cards = startingHand;
+            Cards = startingHand.ToList();
+        }
+
+        public PlayerHand Clone()
+        {
+            return new PlayerHand(Cards);
         }
 
         public CardType RandomCard
         {
             get { return Cards[SeededRandom.Next(0, Cards.Count)]; }
         }
+
+        public CardType OldestCard
+        {
+            get { return Cards[0]; }
+        }
+
         public bool ContainsSun
         {
             get { return Cards.Contains(CardType.Sun); }

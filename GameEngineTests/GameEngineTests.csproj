@@ -53,10 +53,9 @@
     <Compile Include="GameBoardTests.cs" />
     <Compile Include="Players\EpsilonGreedyPlayerTests.cs" />
     <Compile Include="Players\GreedyPlayerTests.cs" />
-    <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Players\RandomPlayerTests.cs" />
-    <Compile Include="GameStateTests.cs" />
+    <Compile Include="GameTests.cs" />
     <Compile Include="DeckTests.cs" />
     <Compile Include="Players\LeastRecentCardPlayerTests.cs" />
     <Compile Include="GameEngineTests.cs" />

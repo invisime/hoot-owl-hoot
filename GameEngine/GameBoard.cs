@@ -13,11 +13,22 @@ namespace GameEngine
         {
             get { return Board.Count - 1; }
         }
+
+        private GameBoard() { }
         
         public GameBoard(int gameSizeMultiplier, int numberOfOwls = 6)
         {
             BuildBoard(gameSizeMultiplier);
             Owls = new Parliament(numberOfOwls);
+        }
+
+        public GameBoard Clone()
+        {
+            return new GameBoard
+            {
+                Board = new List<BoardPositionType>(Board),
+                Owls = Owls.Clone()
+            };
         }
 
         public void Move(Play play)

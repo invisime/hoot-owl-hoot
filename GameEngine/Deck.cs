@@ -8,11 +8,21 @@ namespace GameEngine
     {
         public List<CardType> Cards { get; private set; }
 
+        private Deck() { }
+
         public Deck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
             var defaultSunCards = gameSizeMultiplier + 4 * gameSizeMultiplier / 3;
             BuildDeck(gameSizeMultiplier, numberOfSunCards ?? defaultSunCards);
             Shuffle();
+        }
+
+        public Deck Clone()
+        {
+            return new Deck()
+            {
+                Cards = new List<CardType>(Cards)
+            };
         }
 
         public CardType[] Draw(int numberDesired)
