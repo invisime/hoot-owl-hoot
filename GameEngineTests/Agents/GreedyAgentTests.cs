@@ -2,7 +2,7 @@
 using GameEngine.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GameEngineTests.Players
+namespace GameEngineTests.Agents
 {
     [TestClass]
     public class GreedyAgentTests
