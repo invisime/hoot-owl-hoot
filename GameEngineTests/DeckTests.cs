@@ -9,6 +9,30 @@ namespace GameEngineTests
     public class DeckTests
     {
         [TestMethod]
+        public void ShouldEqualItsClone()
+        {
+            var initialDeck = new Deck(2);
+            var clonedDeck = initialDeck.Clone();
+
+            Assert.AreNotSame(initialDeck, clonedDeck);
+            Assert.AreNotSame(initialDeck.Cards, clonedDeck.Cards);
+            Assert.IsTrue(initialDeck.Cards.SequenceEqual(clonedDeck.Cards));
+            Assert.AreEqual(initialDeck, clonedDeck);
+        }
+
+        [TestMethod]
+        public void ShouldNotBeEqualAfterDraw()
+        {
+            var deck = new Deck(2);
+            var clonedDeck = deck.Clone();
+
+            clonedDeck.Draw(1);
+
+            Assert.IsFalse(deck.Cards.SequenceEqual(clonedDeck.Cards));
+            Assert.AreNotEqual(deck, clonedDeck);
+        }
+
+        [TestMethod]
         public void ShouldDrawFromBeginningOfDeck()
         {
             var deck = new Deck(2);

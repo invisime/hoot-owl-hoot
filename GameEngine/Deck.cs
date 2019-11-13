@@ -17,6 +17,18 @@ namespace GameEngine
             Shuffle();
         }
 
+        public override bool Equals(object o)
+        {
+            var other = o as Deck;
+            return other != null
+                && Cards.SequenceEqual(other.Cards);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
         public Deck Clone()
         {
             return new Deck()

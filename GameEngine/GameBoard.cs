@@ -22,6 +22,19 @@ namespace GameEngine
             Owls = new Parliament(numberOfOwls);
         }
 
+        public override bool Equals(object o)
+        {
+            var other = o as GameBoard;
+            return other != null
+                && Board.SequenceEqual(other.Board)
+                && Owls.Equals(other.Owls);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
         public GameBoard Clone()
         {
             return new GameBoard

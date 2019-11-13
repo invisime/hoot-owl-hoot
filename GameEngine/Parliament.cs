@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine
@@ -9,7 +10,7 @@ namespace GameEngine
         private HashSet<int> PositionsWithOwls { get; set; }
 
         public int Count { get; private set; }
-        public int InTheNest { get; private set; }
+        public int InTheNest { get { return Count - PositionsWithOwls.Count; } }
 
         public IEnumerable<int> ListOfPositions { get { return PositionsWithOwls; } }
         public bool AreAllNested { get { return Count == InTheNest; } }
@@ -24,7 +25,19 @@ namespace GameEngine
                 Enumerable.Range(0, numberOfOwls)
             );
             Count = numberOfOwls;
-            InTheNest = 0;
+        }
+
+        public override bool Equals(object o)
+        {
+            var other = o as Parliament;
+            return other != null
+                && InTheNest == other.InTheNest
+                && PositionsWithOwls.SetEquals(other.PositionsWithOwls);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
 
         public Parliament Clone()
@@ -32,8 +45,7 @@ namespace GameEngine
             return new Parliament()
             {
                 PositionsWithOwls = new HashSet<int>(PositionsWithOwls),
-                Count = Count,
-                InTheNest = InTheNest
+                Count = Count
             };
         }
 
@@ -51,7 +63,6 @@ namespace GameEngine
         public void Nest(int from)
         {
             TakeOff(from);
-            InTheNest++;
         }
 
         private void TakeOff(int from)

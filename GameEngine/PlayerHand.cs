@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine
@@ -7,14 +8,27 @@ namespace GameEngine
     {
         public List<CardType> Cards { get; }
 
-        public PlayerHand()
-        {
-            Cards = new List<CardType>();
-        }
+        public PlayerHand() :
+            this(new List<CardType>()) { }
 
+        public PlayerHand(params CardType[] startingHand) :
+            this(startingHand.ToList()) { }
+        
         public PlayerHand(IEnumerable<CardType> startingHand)
         {
             Cards = startingHand.ToList();
+        }
+
+        public override bool Equals(object o)
+        {
+            var other = o as PlayerHand;
+            return other != null
+                && Cards.SequenceEqual(other.Cards);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
 
         public PlayerHand Clone()

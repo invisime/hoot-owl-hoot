@@ -6,6 +6,40 @@ namespace GameEngineTests
     [TestClass]
     public class GameBoardTests
     {
+        [TestMethod]
+        public void ShouldEqualItsClone()
+        {
+            var initialBoard = new GameBoard(6);
+            var clonedBoard = initialBoard.Clone();
+
+            Assert.AreNotSame(initialBoard, clonedBoard);
+            CollectionAssert.AreEqual(initialBoard.Board, clonedBoard.Board);
+            Assert.AreEqual(initialBoard.Owls, clonedBoard.Owls);
+            Assert.AreEqual(initialBoard, clonedBoard);
+        }
+
+        [TestMethod]
+        public void ShouldNotBeEqualIfThePositionsAreNotEqual()
+        {
+            var initialBoard = new GameBoard(6);
+            var clonedBoard = initialBoard.Clone();
+
+            clonedBoard.Board.Remove(0);
+
+            Assert.AreNotEqual(initialBoard, clonedBoard);
+        }
+
+        [TestMethod]
+        public void ShouldNotBeEqualIfTheParlimentsAreNotEqual()
+        {
+            var initialBoard = new GameBoard(6);
+            var clonedBoard = initialBoard.Clone();
+
+            clonedBoard.Owls.Nest(0);
+
+            Assert.AreNotEqual(initialBoard, clonedBoard);
+        }
+
         #region Single-owl tests
 
         [TestMethod]
