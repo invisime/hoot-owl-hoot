@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Players
+﻿namespace GameEngine.Agents
 {
     public class RandomAgent : IAgent
     {

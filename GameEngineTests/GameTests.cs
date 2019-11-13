@@ -1,5 +1,5 @@
 ﻿using GameEngine;
-using GameEngine.Players;
+using GameEngine.Agents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
