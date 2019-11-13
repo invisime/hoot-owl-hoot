@@ -1,11 +1,13 @@
 ﻿using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngineTests
 {
     public static class TestUtilities
     {
-        public static GameState GenerateTestState(int multiplier, int? numberOfOwls = null)
+        public static GameState GenerateTestState(int multiplier = 6, int? numberOfOwls = null)
         {
             var board = numberOfOwls.HasValue
                 ? new GameBoard(multiplier, numberOfOwls.Value)
@@ -13,7 +15,10 @@ namespace GameEngineTests
             return new GameState
             {
                 Board = board,
-                Hand = new PlayerHand(CardTypeExtensions.OneCardOfEachColor)
+                Deck = new Deck(multiplier),
+                Hand = new PlayerHand(CardTypeExtensions.OneCardOfEachColor),
+                SunCounter = 0,
+                SunSpaces = multiplier
             };
         }
 
@@ -34,6 +39,16 @@ namespace GameEngineTests
                 }
             }
             Assert.AreEqual(expectedOwlsInNest, board.Owls.InTheNest);
+        }
+
+        public static void AssertPositionsMatch(this Parliament owls, Parliament otherOwls)
+        {
+            owls.AssertPositionsMatch(otherOwls.ListOfPositions.ToArray());
+        }
+
+        public static void AssertPositionsMatch(this Parliament owls, params int[] expectedPositions)
+        {
+            CollectionAssert.AreEquivalent(expectedPositions, owls.ListOfPositions.ToList());
         }
     }
 }

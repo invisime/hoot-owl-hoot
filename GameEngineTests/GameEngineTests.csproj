@@ -49,6 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParliamentTests.cs" />
+    <Compile Include="GameStateTests.cs" />
     <Compile Include="SeededRandomTests.cs" />
     <Compile Include="GameBoardTests.cs" />
     <Compile Include="Agents\EpsilonGreedyAgentTests.cs" />
