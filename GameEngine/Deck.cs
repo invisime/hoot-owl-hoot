@@ -17,26 +17,6 @@ namespace GameEngine
             Shuffle();
         }
 
-        public override bool Equals(object o)
-        {
-            var other = o as Deck;
-            return other != null
-                && Cards.SequenceEqual(other.Cards);
-        }
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Deck Clone()
-        {
-            return new Deck()
-            {
-                Cards = new List<CardType>(Cards)
-            };
-        }
-
         public CardType[] Draw(int numberDesired)
         {
             var numberToDraw = Math.Min(numberDesired, Cards.Count);
@@ -64,6 +44,41 @@ namespace GameEngine
                 Cards[k] = Cards[n];
                 Cards[n] = value;
             }
+        }
+
+        public override bool Equals(object o)
+        {
+            var other = o as Deck;
+            return other != null
+                && Cards.SequenceEqual(other.Cards);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1217012356;
+            unchecked
+            {
+                hashCode += EqualityComparer<List<CardType>>.Default.GetHashCode(Cards);
+            }
+            return hashCode;
+        }
+
+        public static bool operator ==(Deck left, Deck right)
+        {
+            return EqualityComparer<Deck>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(Deck left, Deck right)
+        {
+            return !(left == right);
+        }
+
+        public Deck Clone()
+        {
+            return new Deck()
+            {
+                Cards = new List<CardType>(Cards)
+            };
         }
     }
 }

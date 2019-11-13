@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine
@@ -27,28 +26,6 @@ namespace GameEngine
             Count = numberOfOwls;
         }
 
-        public override bool Equals(object o)
-        {
-            var other = o as Parliament;
-            return other != null
-                && InTheNest == other.InTheNest
-                && PositionsWithOwls.SetEquals(other.PositionsWithOwls);
-        }
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Parliament Clone()
-        {
-            return new Parliament()
-            {
-                PositionsWithOwls = new HashSet<int>(PositionsWithOwls),
-                Count = Count
-            };
-        }
-
         public bool Inhabit(int position)
         {
             return PositionsWithOwls.Contains(position);
@@ -72,6 +49,44 @@ namespace GameEngine
             {
                 throw new InvalidMoveException("There is no owl at position " + from);
             }
+        }
+
+        public override bool Equals(object o)
+        {
+            var other = o as Parliament;
+            return other != null
+                && InTheNest == other.InTheNest
+                && PositionsWithOwls.SetEquals(other.PositionsWithOwls);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1545310984;
+            unchecked
+            {
+                hashCode = hashCode * -1521134295 + EqualityComparer<HashSet<int>>.Default.GetHashCode(PositionsWithOwls);
+                hashCode = hashCode * -1521134295 + Count.GetHashCode();
+            }
+            return hashCode;
+        }
+
+        public static bool operator ==(Parliament left, Parliament right)
+        {
+            return EqualityComparer<Parliament>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(Parliament left, Parliament right)
+        {
+            return !(left == right);
+        }
+
+        public Parliament Clone()
+        {
+            return new Parliament()
+            {
+                PositionsWithOwls = new HashSet<int>(PositionsWithOwls),
+                Count = Count
+            };
         }
     }
 }

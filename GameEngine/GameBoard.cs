@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine
@@ -20,28 +19,6 @@ namespace GameEngine
         {
             BuildBoard(gameSizeMultiplier);
             Owls = new Parliament(numberOfOwls);
-        }
-
-        public override bool Equals(object o)
-        {
-            var other = o as GameBoard;
-            return other != null
-                && Board.SequenceEqual(other.Board)
-                && Owls.Equals(other.Owls);
-        }
-
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
-
-        public GameBoard Clone()
-        {
-            return new GameBoard
-            {
-                Board = new List<BoardPositionType>(Board),
-                Owls = Owls.Clone()
-            };
         }
 
         public void Move(Play play)
@@ -76,9 +53,7 @@ namespace GameEngine
 
         private void BuildBoard(int gameSizeMultiplier)
         {
-            var nonNestTypes = Enum.GetValues(typeof(BoardPositionType))
-                .Cast<BoardPositionType>()
-                .Where(b => b != BoardPositionType.Nest);
+            var nonNestTypes = BoardPositionTypeExtensions.OneOfEachColor;
 
             Board = new List<BoardPositionType>();
             for (int i = 0; i < gameSizeMultiplier; i++)
@@ -86,6 +61,44 @@ namespace GameEngine
                 Board.AddRange(nonNestTypes);
             }
             Board.Add(BoardPositionType.Nest);
+        }
+
+        public override bool Equals(object o)
+        {
+            var other = o as GameBoard;
+            return other != null
+                && Board.SequenceEqual(other.Board)
+                && Owls.Equals(other.Owls);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 137991109;
+            unchecked
+            {
+                hashCode = hashCode * -1521134295 + EqualityComparer<List<BoardPositionType>>.Default.GetHashCode(Board);
+                hashCode = hashCode * -1521134295 + EqualityComparer<Parliament>.Default.GetHashCode(Owls);
+            }
+            return hashCode;
+        }
+
+        public static bool operator ==(GameBoard left, GameBoard right)
+        {
+            return EqualityComparer<GameBoard>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(GameBoard left, GameBoard right)
+        {
+            return !(left == right);
+        }
+
+        public GameBoard Clone()
+        {
+            return new GameBoard
+            {
+                Board = new List<BoardPositionType>(Board),
+                Owls = Owls.Clone()
+            };
         }
     }
 }

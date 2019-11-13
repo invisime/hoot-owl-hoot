@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine
@@ -7,6 +6,14 @@ namespace GameEngine
     public class PlayerHand
     {
         public List<CardType> Cards { get; }
+
+        public CardType RandomCard {
+            get { return Cards[SeededRandom.Next(0, Cards.Count)]; }
+        }
+
+        public CardType OldestCard { get { return Cards[0]; } }
+
+        public bool ContainsSun { get { return Cards.Contains(CardType.Sun); } }
 
         public PlayerHand() :
             this(new List<CardType>()) { }
@@ -19,6 +26,16 @@ namespace GameEngine
             Cards = startingHand.ToList();
         }
 
+        public void Discard(CardType card)
+        {
+            Cards.Remove(card);
+        }
+
+        public void Add(params CardType[] cards)
+        {
+            Cards.AddRange(cards);
+        }
+
         public override bool Equals(object o)
         {
             var other = o as PlayerHand;
@@ -28,37 +45,27 @@ namespace GameEngine
 
         public override int GetHashCode()
         {
-            throw new NotImplementedException();
+            var hashCode = -1423067844;
+            unchecked
+            {
+                hashCode += EqualityComparer<List<CardType>>.Default.GetHashCode(Cards);
+            }
+            return hashCode;
+        }
+
+        public static bool operator ==(PlayerHand left, PlayerHand right)
+        {
+            return EqualityComparer<PlayerHand>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(PlayerHand left, PlayerHand right)
+        {
+            return !(left == right);
         }
 
         public PlayerHand Clone()
         {
             return new PlayerHand(Cards);
-        }
-
-        public CardType RandomCard
-        {
-            get { return Cards[SeededRandom.Next(0, Cards.Count)]; }
-        }
-
-        public CardType OldestCard
-        {
-            get { return Cards[0]; }
-        }
-
-        public bool ContainsSun
-        {
-            get { return Cards.Contains(CardType.Sun); }
-        }
-
-        public void Discard(CardType card)
-        {
-            Cards.Remove(card);
-        }
-
-        public void Add(params CardType[] cards)
-        {
-            Cards.AddRange(cards);
         }
     }
 }
