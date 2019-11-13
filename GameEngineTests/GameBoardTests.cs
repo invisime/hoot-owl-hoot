@@ -30,7 +30,7 @@ namespace GameEngineTests
         }
 
         [TestMethod]
-        public void ShouldNotBeEqualIfTheParlimentsAreNotEqual()
+        public void ShouldNotBeEqualIfTheParliamentsAreNotEqual()
         {
             var initialBoard = new GameBoard(6);
             var clonedBoard = initialBoard.Clone();
