@@ -8,7 +8,10 @@ namespace GameEngine
 
         public CardType Card { get; }
         public int Position { get; }
-        public int StepCost { get { return 1; } }
+        public int StepCost
+        {
+            get { return Card == CardType.Sun ? 0 : 1; } 
+        }
 
         public Play(CardType card, int position)
         {
