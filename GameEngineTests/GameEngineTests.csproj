@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agents\AStarAgentTests.cs" />
+    <Compile Include="Agents\BreadthFirstAgentTests.cs" />
     <Compile Include="Agents\GreedyBestFirstAgentTests.cs" />
     <Compile Include="Heuristics\WorstCaseNumberOfPlaysToGoTests.cs" />
     <Compile Include="ParliamentTests.cs" />
