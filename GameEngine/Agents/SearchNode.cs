@@ -9,7 +9,6 @@ namespace GameEngine.Agents
         public SearchNode Parent { get; protected set; }
         public Play Action { get; protected set; }
         public int PathCost { get; protected set; }
-        public int StepCost { get { return 1; } }
 
         protected SearchNode() { }
 
@@ -44,7 +43,7 @@ namespace GameEngine.Agents
                 State = State.Successor(play),
                 Parent = this,
                 Action = play,
-                PathCost = PathCost + StepCost
+                PathCost = PathCost + Action?.StepCost ?? 1
             };
         }
     }

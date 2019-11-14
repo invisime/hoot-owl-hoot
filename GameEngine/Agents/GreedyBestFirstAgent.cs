@@ -1,51 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using GameEngine.Heuristics;
+using System.Collections.Generic;
 
 namespace GameEngine.Agents
 {
-    public class GreedyBestFirstAgent : IAgent
+    public class GreedyBestFirstAgent<T> : TreeSearchAgent where T : IHeuristic, new()
     {
-        public Queue<SearchNode> solution;
+        private IHeuristic Heuristic { get; }
 
-        public Play FormulatePlay(GameState state)
+        public GreedyBestFirstAgent() : this(new T()) { }
+
+        private GreedyBestFirstAgent(IHeuristic heuristic)
         {
-            solution = solution ?? GreedyBestFirstSearch(state);
-            var nextNode = solution.Dequeue();
-            if (nextNode.Parent.State != state)
+            Heuristic = heuristic;
+        }
+
+        protected override SearchNode RemoveStrategicNode(IList<SearchNode> nodes)
+        {
+            SearchNode minValueNode = default;
+            var minimumValue = int.MaxValue;
+            foreach (var node in nodes)
             {
-                throw new StateMismatchException();
-            }
-            return nextNode.Action;
-        }
-
-        private Queue<SearchNode> GreedyBestFirstSearch(GameState state)
-        {
-            var frontierNodes = new List<SearchNode> { new RootNode(state) };
-            while (true)
-            {
-                if (frontierNodes.Count == 0)
+                var value = Heuristic.Evaluate(node.State);
+                if (minimumValue > value)
                 {
-                    throw new NoSolutionFoundException();
+                    minimumValue = value;
+                    minValueNode = node;
                 }
-                var node = frontierNodes.RemoveMin(H);
-                if ( H(node) == 0 )
-                {
-                    return new Queue<SearchNode>(node.Solution());
-                }
-                frontierNodes.AddRange(node.Expand());
             }
-        }
-
-        private int H(SearchNode node)
-        {
-            return H(node.State);
-        }
-
-        public static int H(GameState state)
-        {
-            return (state.Board.Owls.Count - state.Board.Owls.InTheNest)
-                * state.Board.NestPosition
-                - state.Board.Owls.ListOfPositions.Sum();
+            nodes.Remove(minValueNode);
+            return minValueNode;
         }
     }
 }

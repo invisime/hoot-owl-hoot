@@ -4,9 +4,11 @@ namespace GameEngine
 {
     public class Play
     {
+        public static Play Sun = new Play(CardType.Sun, -1);
+
         public CardType Card { get; }
         public int Position { get; }
-        public static Play Sun = new Play(CardType.Sun, -1);
+        public int StepCost { get { return 1; } }
 
         public Play(CardType card, int position)
         {
