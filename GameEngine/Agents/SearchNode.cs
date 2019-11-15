@@ -43,7 +43,7 @@ namespace GameEngine.Agents
                 State = State.Successor(play),
                 Parent = this,
                 Action = play,
-                PathCost = PathCost + Action?.StepCost ?? 1
+                PathCost = PathCost + play.StepCost
             };
         }
     }
