@@ -1,10 +1,13 @@
-﻿using GameEngine.Players;
+﻿using GameEngine.Agents;
 
 namespace GameEngine
 {
     public class Game
     {
         public GameState State { get; private set; }
+        public bool IsOver { get { return State.IsOver; } }
+        public bool IsWon { get { return State.IsWin; } }
+        public bool IsLost { get { return State.IsLoss; } }
 
         public Game(int multiplier)
         {
@@ -22,21 +25,6 @@ namespace GameEngine
                 SunSpaces = options.SunSpaces,
                 SunCounter = 0
             };
-        }
-
-        public bool IsOver
-        {
-            get { return IsWon || IsLost; }
-        }
-
-        public bool IsWon
-        {
-            get { return State.Board.Owls.AreAllNested; }
-        }
-
-        public bool IsLost
-        {
-            get { return State.SunCounter == State.SunSpaces; }
         }
 
         public void TakeTurn(IAgent player)

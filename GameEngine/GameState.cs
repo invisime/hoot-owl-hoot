@@ -10,6 +10,21 @@ namespace GameEngine
         public int SunSpaces;
         public int SunCounter;
 
+        public bool IsOver
+        {
+            get { return IsWin || IsLoss; }
+        }
+
+        public bool IsWin
+        {
+            get { return Board.Owls.AreAllNested; }
+        }
+
+        public bool IsLoss
+        {
+            get { return SunCounter == SunSpaces; }
+        }
+
         public GameState Successor(Play play)
         {
             var state = Clone();

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Players
+namespace GameEngine.Agents
 {
     public class EpsilonGreedyAgent: GreedyAgent
     {

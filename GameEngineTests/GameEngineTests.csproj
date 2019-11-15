@@ -49,6 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agents\GreedyBestFirstAgentTests.cs" />
+    <Compile Include="Heuristics\WorstCaseNumberOfPlaysToGoTests.cs" />
     <Compile Include="ParliamentTests.cs" />
     <Compile Include="GameStateTests.cs" />
     <Compile Include="SeededRandomTests.cs" />
@@ -73,6 +75,7 @@
       <Name>GameEngine</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

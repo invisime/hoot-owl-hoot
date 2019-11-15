@@ -1,4 +1,4 @@
-﻿using GameEngine.Players;
+﻿using GameEngine.Agents;
 using System;
 
 namespace GameEngine
