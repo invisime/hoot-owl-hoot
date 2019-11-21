@@ -52,6 +52,7 @@
     <Compile Include="Agents\AStarAgentTests.cs" />
     <Compile Include="Agents\BreadthFirstAgentTests.cs" />
     <Compile Include="Agents\GreedyBestFirstAgentTests.cs" />
+    <Compile Include="DeterministicDeckTests.cs" />
     <Compile Include="Heuristics\WorstCaseNumberOfPlaysToGoTests.cs" />
     <Compile Include="ParliamentTests.cs" />
     <Compile Include="GameStateTests.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="DeckTests.cs" />
     <Compile Include="Agents\LeastRecentCardAgentTests.cs" />
     <Compile Include="GameEngineTests.cs" />
+    <Compile Include="StochasticDeckTests.cs" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="PlayerHandTests.cs" />
   </ItemGroup>

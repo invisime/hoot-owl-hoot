@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GameEngine
+﻿namespace GameEngine
 {
     public interface IDeck
     {

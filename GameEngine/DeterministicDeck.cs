@@ -8,7 +8,7 @@ namespace GameEngine
     {
         public List<CardType> Cards { get; private set; }
 
-        private DeterministicDeck() { }
+        protected DeterministicDeck() { }
 
         public DeterministicDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
@@ -17,7 +17,7 @@ namespace GameEngine
             Shuffle();
         }
 
-        public CardType[] Draw(int numberDesired)
+        public virtual CardType[] Draw(int numberDesired)
         {
             var numberToDraw = Math.Min(numberDesired, Cards.Count);
             var cards = Cards.GetRange(0, numberToDraw);
@@ -32,7 +32,7 @@ namespace GameEngine
                 .Concat(Enumerable.Repeat(CardType.Sun, sunCards)));
         }
 
-        private void Shuffle()
+        protected void Shuffle()
         {
             // http://en.wikipedia.org/wiki/Fisher-Yates_shuffle
             int n = Cards.Count;
