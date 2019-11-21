@@ -4,20 +4,22 @@ using System.Linq;
 
 namespace GameEngine
 {
-    public class DeterministicDeck : IDeck
+    public class DeterministicDeck : Deck
     {
-        public List<CardType> Cards { get; private set; }
+        public List<CardType> cards { get; private set; }
+        public override List<CardType> Cards => cards;
+        public override int Count => Cards.Count;
 
-        protected DeterministicDeck() { }
+        private DeterministicDeck() { }
 
         public DeterministicDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
             var defaultSunCards = gameSizeMultiplier + 4 * gameSizeMultiplier / 3;
             BuildDeck(gameSizeMultiplier, numberOfSunCards ?? defaultSunCards);
-            Shuffle();
+            cards = Shuffle(Cards);
         }
 
-        public virtual CardType[] Draw(int numberDesired)
+        public override CardType[] Draw(int numberDesired)
         {
             var numberToDraw = Math.Min(numberDesired, Cards.Count);
             var cards = Cards.GetRange(0, numberToDraw);
@@ -27,23 +29,9 @@ namespace GameEngine
 
         private void BuildDeck(int gameSizeMultiplier, int sunCards)
         {
-            Cards = new List<CardType>(Enumerable.Repeat(0, gameSizeMultiplier)
+            cards = new List<CardType>(Enumerable.Repeat(0, gameSizeMultiplier)
                 .SelectMany(cards => CardTypeExtensions.OneCardOfEachColor)
                 .Concat(Enumerable.Repeat(CardType.Sun, sunCards)));
-        }
-
-        protected void Shuffle()
-        {
-            // http://en.wikipedia.org/wiki/Fisher-Yates_shuffle
-            int n = Cards.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = SeededRandom.Next(n + 1);
-                CardType value = Cards[k];
-                Cards[k] = Cards[n];
-                Cards[n] = value;
-            }
         }
 
         public override bool Equals(object o)
@@ -73,11 +61,11 @@ namespace GameEngine
             return !(left == right);
         }
 
-        public IDeck Clone()
+        public override IDeck Clone()
         {
             return new DeterministicDeck()
             {
-                Cards = new List<CardType>(Cards)
+                cards = new List<CardType>(Cards)
             };
         }
     }

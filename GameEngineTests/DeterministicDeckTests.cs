@@ -4,9 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngineTests
 {
     [TestClass]
-    public class DeterministicDeckTests : DeckTests
+    public class DeterministicDeckTests : DeckTests<DeterministicDeck>
     {
-        protected override IDeck InitializeDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
+        protected override DeterministicDeck InitializeDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
             return new DeterministicDeck(gameSizeMultiplier, numberOfSunCards);
         }

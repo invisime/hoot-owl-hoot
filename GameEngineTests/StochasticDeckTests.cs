@@ -6,9 +6,9 @@ using System.Linq;
 namespace GameEngineTests
 {
     [TestClass]
-    public class StochasticDeckTests : DeckTests
+    public class StochasticDeckTests : DeckTests<StochasticDeck>
     {
-        protected override IDeck InitializeDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
+        protected override StochasticDeck InitializeDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
             return new StochasticDeck(gameSizeMultiplier, numberOfSunCards);
         }
@@ -28,14 +28,14 @@ namespace GameEngineTests
         }
 
         [TestMethod]
-        public void DoesNotDrawTheTopCardEveryTime()
+        public void ShouldNotJustDrawFromTheTopOfTheDeck()
         {
             var deck = new StochasticDeck(1000);
             var top100Cards = deck.Cards.GetRange(0, 100);
 
             var actualDraws = deck.Draw(100);
 
-            // Not 100% guaranteed, but very, very likely.
+            // It's possible this fails, but it's very, very unlikely.
             CollectionAssert.AreNotEqual(top100Cards, actualDraws);
         }
 

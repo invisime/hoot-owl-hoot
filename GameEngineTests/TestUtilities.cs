@@ -6,15 +6,18 @@ namespace GameEngineTests
 {
     public static class TestUtilities
     {
-        public static TestableGameState GenerateTestState(int multiplier = 6, int? numberOfOwls = null)
+        public static GameState GenerateTestState(
+            int multiplier = 6,
+            int? numberOfOwls = null,
+            int? numberOfSunCards = null)
         {
             var board = numberOfOwls.HasValue
                 ? new GameBoard(multiplier, numberOfOwls.Value)
                 : new GameBoard(multiplier);
-            return new TestableGameState
+            return new GameState
             {
                 Board = board,
-                Deck = new DeterministicDeck(multiplier),
+                Deck = new DeterministicDeck(multiplier, numberOfSunCards),
                 Hand = new PlayerHand(CardTypeExtensions.OneCardOfEachColor),
                 SunCounter = 0,
                 SunSpaces = multiplier
@@ -48,15 +51,6 @@ namespace GameEngineTests
         public static void AssertPositionsMatch(this Parliament owls, params int[] expectedPositions)
         {
             CollectionAssert.AreEquivalent(expectedPositions, owls.ListOfPositions.ToList());
-        }
-    }
-
-    public class TestableGameState : GameState
-    {
-        public void RemoveAllSunCardsFromDeck()
-        {
-            (Deck as DeterministicDeck)
-                .Cards.RemoveAll(card => card == CardType.Sun);
         }
     }
 }
