@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace GameEngine
 {
-    public class Deck
+    public class DeterministicDeck : IDeck
     {
         public List<CardType> Cards { get; private set; }
 
-        private Deck() { }
+        private DeterministicDeck() { }
 
-        public Deck(int gameSizeMultiplier, int? numberOfSunCards = null)
+        public DeterministicDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
             var defaultSunCards = gameSizeMultiplier + 4 * gameSizeMultiplier / 3;
             BuildDeck(gameSizeMultiplier, numberOfSunCards ?? defaultSunCards);
@@ -48,7 +48,7 @@ namespace GameEngine
 
         public override bool Equals(object o)
         {
-            var other = o as Deck;
+            var other = o as DeterministicDeck;
             return other != null
                 && Cards.SequenceEqual(other.Cards);
         }
@@ -63,19 +63,19 @@ namespace GameEngine
             return hashCode;
         }
 
-        public static bool operator ==(Deck left, Deck right)
+        public static bool operator ==(DeterministicDeck left, DeterministicDeck right)
         {
-            return EqualityComparer<Deck>.Default.Equals(left, right);
+            return EqualityComparer<DeterministicDeck>.Default.Equals(left, right);
         }
 
-        public static bool operator !=(Deck left, Deck right)
+        public static bool operator !=(DeterministicDeck left, DeterministicDeck right)
         {
             return !(left == right);
         }
 
-        public Deck Clone()
+        public IDeck Clone()
         {
-            return new Deck()
+            return new DeterministicDeck()
             {
                 Cards = new List<CardType>(Cards)
             };

@@ -45,7 +45,7 @@ namespace GameEngineTests.Agents
             var state = TestUtilities.GenerateTestState(2, 1);
             state.Hand.Cards.Clear();
             state.Hand.Cards.AddRange(CardTypeExtensions.OneCardOfEachColor);
-            state.Deck.Cards.RemoveAll(card => card == CardType.Sun);
+            state.RemoveAllSunCardsFromDeck();
 
             Agent.FormulatePlay(state);
             // Ignore what the agent said to play, and play something else instead.

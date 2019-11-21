@@ -16,7 +16,7 @@ namespace GameEngine
 
         private GameState Start(GameOptions options)
         {
-            var deck = new Deck(options.ColoredCardsPerColor, options.SunCards);
+            var deck = new DeterministicDeck(options.ColoredCardsPerColor, options.SunCards);
             return new GameState
             {
                 Board = new GameBoard(options.ColoredSpacesPerColor, options.Owls),

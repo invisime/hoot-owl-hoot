@@ -11,8 +11,8 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldEqualItsClone()
         {
-            var initialDeck = new Deck(2);
-            var clonedDeck = initialDeck.Clone();
+            var initialDeck = new DeterministicDeck(2);
+            var clonedDeck = initialDeck.Clone() as DeterministicDeck;
 
             Assert.AreNotSame(initialDeck, clonedDeck);
             Assert.AreNotSame(initialDeck.Cards, clonedDeck.Cards);
@@ -23,8 +23,8 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldNotBeEqualAfterDraw()
         {
-            var deck = new Deck(2);
-            var clonedDeck = deck.Clone();
+            var deck = new DeterministicDeck(2);
+            var clonedDeck = deck.Clone() as DeterministicDeck;
 
             clonedDeck.Draw(1);
 
@@ -35,7 +35,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldDrawFromBeginningOfDeck()
         {
-            var deck = new Deck(2);
+            var deck = new DeterministicDeck(2);
             var expectedCards = deck.Cards.GetRange(0, 2);
 
             var actualCards = deck.Draw(2);
@@ -46,7 +46,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldRemoveDrawnCardsFromTheDeck()
         {
-            var deck = new Deck(2);
+            var deck = new DeterministicDeck(2);
             var deckSizeBefore = deck.Cards.Count;
 
             deck.Draw(3);
@@ -58,7 +58,7 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldDrawFewerWhenDrawingTooMany()
         {
-            var deck = new Deck(2);
+            var deck = new DeterministicDeck(2);
             deck.Draw(deck.Cards.Count - 1);
             var theRestOfTheDeck = new List<CardType>(deck.Cards);
 
@@ -70,15 +70,15 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldDefaultTo28PercentSunCards()
         {
-            var cards = new Deck(1).Cards;
+            var cards = new DeterministicDeck(1).Cards;
             Assert.AreEqual(8, cards.Count);
             Assert.AreEqual(2, cards.Count(card => card == CardType.Sun));
 
-            cards = new Deck(6).Cards;
+            cards = new DeterministicDeck(6).Cards;
             Assert.AreEqual(50, cards.Count);
             Assert.AreEqual(14, cards.Count(card => card == CardType.Sun));
 
-            cards = new Deck(300).Cards;
+            cards = new DeterministicDeck(300).Cards;
             Assert.AreEqual(2500, cards.Count);
             Assert.AreEqual(700, cards.Count(card => card == CardType.Sun));
         }
@@ -86,15 +86,15 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldAcceptExplicitNumberOfSunCards()
         {
-            var cards = new Deck(1, 0).Cards;
+            var cards = new DeterministicDeck(1, 0).Cards;
             Assert.AreEqual(6, cards.Count);
-            CollectionAssert.DoesNotContain(cards, CardType.Sun);
+            CollectionAssert.DoesNotContain(cards.ToList(), CardType.Sun);
 
-            cards = new Deck(6, 1).Cards;
+            cards = new DeterministicDeck(6, 1).Cards;
             Assert.AreEqual(37, cards.Count);
             Assert.AreEqual(1, cards.Count(card => card == CardType.Sun));
 
-            cards = new Deck(300, 800).Cards;
+            cards = new DeterministicDeck(300, 800).Cards;
             Assert.AreEqual(2600, cards.Count);
             Assert.AreEqual(800, cards.Count(card => card == CardType.Sun));
         }
