@@ -37,11 +37,11 @@ namespace GameEngineTests
         public void ShouldRemoveDrawnCardsFromTheDeck()
         {
             var deck = InitializeDeck(2);
-            var deckSizeBefore = deck.Cards.Count;
+            var deckSizeBefore = deck.Count;
 
             deck.Draw(3);
 
-            var deckSizeAfter = deck.Cards.Count;
+            var deckSizeAfter = deck.Count;
             Assert.AreEqual(deckSizeBefore - 3, deckSizeAfter);
         }
 
@@ -49,7 +49,7 @@ namespace GameEngineTests
         public void ShouldDrawFewerWhenDrawingTooMany()
         {
             var deck = InitializeDeck(2);
-            deck.Draw(deck.Cards.Count - 1);
+            deck.Draw(deck.Count - 1);
             var theRestOfTheDeck = new List<CardType>(deck.Cards);
 
             var actualCardsDrawn = deck.Draw(1000);

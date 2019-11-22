@@ -34,7 +34,7 @@ namespace GameEngineTests
 
             Assert.AreEqual(0, Game.State.SunCounter);
             Assert.AreEqual(3, Hand.Cards.Count);
-            Assert.AreEqual(startingDeckSize - 3, Deck.Cards.Count);
+            Assert.AreEqual(startingDeckSize - 3, Deck.Count);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace GameEngineTests
                 CardType.Yellow,
             });
             Deck.Cards.Insert(0, CardType.Green);
-            var previousCardCount = Deck.Cards.Count;
+            var previousCardCount = Deck.Count;
 
             Game.TakeTurn(Player);
 
@@ -58,7 +58,7 @@ namespace GameEngineTests
             };
             CollectionAssert.AreEqual(expectedHand, Hand.Cards);
             Assert.IsTrue(Board.Owls.Inhabit(6));
-            Assert.AreEqual(previousCardCount - 1, Deck.Cards.Count);
+            Assert.AreEqual(previousCardCount - 1, Deck.Count);
             Assert.AreEqual(0, SunCounter);
         }
 
@@ -72,7 +72,7 @@ namespace GameEngineTests
                 CardType.Sun
             });
             Deck.Cards.Insert(0, CardType.Green);
-            var previousCardCount = Deck.Cards.Count;
+            var previousCardCount = Deck.Count;
 
             Game.TakeTurn(Player);
 
@@ -84,7 +84,7 @@ namespace GameEngineTests
             var expectedOwlPositions = Enumerable.Range(0, 6).ToArray();
             CollectionAssert.AreEqual(expectedHand, Hand.Cards);
             Board.AssertOwlPositionsMatch(expectedOwlPositions);
-            Assert.AreEqual(previousCardCount - 1, Deck.Cards.Count);
+            Assert.AreEqual(previousCardCount - 1, Deck.Count);
             Assert.AreEqual(1, SunCounter);
         }
 
