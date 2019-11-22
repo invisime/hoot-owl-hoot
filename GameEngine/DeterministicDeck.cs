@@ -14,17 +14,22 @@ namespace GameEngine
 
         public DeterministicDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
-            var defaultSunCards = gameSizeMultiplier + 4 * gameSizeMultiplier / 3;
-            BuildDeck(gameSizeMultiplier, numberOfSunCards ?? defaultSunCards);
+            BuildDeck(gameSizeMultiplier, StartingSunCount(gameSizeMultiplier, numberOfSunCards));
             cards = Shuffle(Cards);
         }
 
         public override CardType[] Draw(int numberDesired)
         {
-            var numberToDraw = Math.Min(numberDesired, Cards.Count);
+            var numberToDraw = Math.Min(numberDesired, Count);
             var cards = Cards.GetRange(0, numberToDraw);
             Cards.RemoveRange(0, numberToDraw);
             return cards.ToArray();
+        }
+
+        public override CardType[] Sample(int numberDesired)
+        {
+            var numberToDraw = Math.Min(numberDesired, Count);
+            return Cards.GetRange(0, numberToDraw).ToArray();
         }
 
         private void BuildDeck(int gameSizeMultiplier, int sunCards)
@@ -32,6 +37,21 @@ namespace GameEngine
             cards = new List<CardType>(Enumerable.Repeat(0, gameSizeMultiplier)
                 .SelectMany(cards => CardTypeExtensions.OneCardOfEachColor)
                 .Concat(Enumerable.Repeat(CardType.Sun, sunCards)));
+        }
+
+        private List<CardType> Shuffle(List<CardType> cards)
+        {
+            // http://en.wikipedia.org/wiki/Fisher-Yates_shuffle
+            int n = cards.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = SeededRandom.Next(n + 1);
+                CardType card = cards[k];
+                cards[k] = cards[n];
+                cards[n] = card;
+            }
+            return cards;
         }
 
         public override bool Equals(object o)

@@ -15,38 +15,63 @@ namespace GameEngine
 
         public override List<CardType> Cards { get => SampleAll().ToList(); }
 
-        public override int Count => CardsByCount.Values.Sum();
+        private int RunningCount { get; set; }
+        public override int Count => RunningCount;
 
         private StochasticDeck() { }
 
         public StochasticDeck(int gameSizeMultiplier, int? numberOfSunCards = null)
         {
-            var defaultSunCards = gameSizeMultiplier + 4 * gameSizeMultiplier / 3;
+            RunningCount = StartingCount(gameSizeMultiplier, numberOfSunCards);
             CardsByCount = CardTypeExtensions.OneCardOfEachColor
                 .ToDictionary(cardType => cardType, _ => gameSizeMultiplier);
-            CardsByCount[CardType.Sun] = numberOfSunCards ?? defaultSunCards;
+            CardsByCount[CardType.Sun] = StartingSunCount(gameSizeMultiplier, numberOfSunCards);
         }
 
         public override IDeck Clone()
         {
             return new StochasticDeck
             {
+                RunningCount = RunningCount,
                 CardsByCount = new Dictionary<CardType, int>(CardsByCount)
             };
         }
 
         public override CardType[] Draw(int numberDesired)
         {
-            var cardsDrawn = Sample(numberDesired);
-            cardsDrawn.ToList().ForEach(card => --CardsByCount[card]);
+            var numberToDraw = Math.Min(numberDesired, Count);
+            var cardsDrawn = new CardType[numberToDraw]
+                .Select(_ =>
+                {
+                    var card = SampleOne();
+                    --CardsByCount[card];
+                    --RunningCount;
+                    return card;
+                }).ToArray();
             return cardsDrawn;
         }
 
-        public override CardType[] SampleAll()
+        public override CardType[] Sample(int numberDesired)
         {
-            return Shuffle(CardsByCount
-                .SelectMany(kvp => Enumerable.Repeat(kvp.Key, kvp.Value))
-                .ToList()).ToArray();
+            return Clone().Draw(numberDesired);
+        }
+
+        private CardType SampleOne()
+        {
+            var pick = SeededRandom.Next(0, Count - 1);
+            var cardsSkipped = 0;
+            foreach (var kvp in CardsByCount)
+            {
+                cardsSkipped += kvp.Value;
+                if (cardsSkipped > pick)
+                {
+                    return kvp.Key;
+                }
+            }
+            throw new ArgumentOutOfRangeException(String.Format(
+                "Of {0} cards, pick was {1}, but we skipped {2} cards and ran out.",
+                Count, pick, cardsSkipped
+            ));
         }
 
         public override bool Equals(object o)

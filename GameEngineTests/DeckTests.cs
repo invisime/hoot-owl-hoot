@@ -74,7 +74,6 @@ namespace GameEngineTests
         }
 
         [TestMethod]
-
         public virtual void ShouldAcceptExplicitNumberOfSunCards()
         {
             var cards = InitializeDeck(1, 0).Cards;
