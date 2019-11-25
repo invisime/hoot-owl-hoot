@@ -6,7 +6,7 @@ namespace GameEngine
 {
     public class DeterministicDeck : Deck
     {
-        public List<CardType> cards { get; private set; }
+        private List<CardType> cards;
         public override List<CardType> Cards => cards;
         public override int Count => Cards.Count;
 
