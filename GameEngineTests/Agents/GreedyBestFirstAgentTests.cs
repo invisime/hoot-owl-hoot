@@ -42,10 +42,9 @@ namespace GameEngineTests.Agents
         [TestMethod]
         public void ShouldThrowAnExceptionIfTheBoardStateDoesNotMatchPreviousPlay()
         {
-            var state = TestUtilities.GenerateTestState(2, 1);
+            var state = TestUtilities.GenerateTestState(2, 1, 0);
             state.Hand.Cards.Clear();
             state.Hand.Cards.AddRange(CardTypeExtensions.OneCardOfEachColor);
-            state.Deck.Cards.RemoveAll(card => card == CardType.Sun);
 
             Agent.FormulatePlay(state);
             // Ignore what the agent said to play, and play something else instead.

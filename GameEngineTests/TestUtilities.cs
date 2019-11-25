@@ -6,7 +6,10 @@ namespace GameEngineTests
 {
     public static class TestUtilities
     {
-        public static GameState GenerateTestState(int multiplier = 6, int? numberOfOwls = null)
+        public static GameState GenerateTestState(
+            int multiplier = 6,
+            int? numberOfOwls = null,
+            int? numberOfSunCards = null)
         {
             var board = numberOfOwls.HasValue
                 ? new GameBoard(multiplier, numberOfOwls.Value)
@@ -14,7 +17,7 @@ namespace GameEngineTests
             return new GameState
             {
                 Board = board,
-                Deck = new Deck(multiplier),
+                Deck = new DeterministicDeck(multiplier, numberOfSunCards),
                 Hand = new PlayerHand(CardTypeExtensions.OneCardOfEachColor),
                 SunCounter = 0,
                 SunSpaces = multiplier

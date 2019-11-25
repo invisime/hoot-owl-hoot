@@ -5,7 +5,7 @@ namespace GameEngine
     public class GameState
     {
         public GameBoard Board;
-        public Deck Deck;
+        public IDeck Deck;
         public PlayerHand Hand;
         public int SunSpaces;
         public int SunCounter;
@@ -61,7 +61,7 @@ namespace GameEngine
             unchecked
             {
                 hashCode = hashCode * -1521134295 + EqualityComparer<GameBoard>.Default.GetHashCode(Board);
-                hashCode = hashCode * -1521134295 + EqualityComparer<Deck>.Default.GetHashCode(Deck);
+                hashCode = hashCode * -1521134295 + EqualityComparer<IDeck>.Default.GetHashCode(Deck);
                 hashCode = hashCode * -1521134295 + EqualityComparer<PlayerHand>.Default.GetHashCode(Hand);
                 hashCode = hashCode * -1521134295 + SunSpaces.GetHashCode();
                 hashCode = hashCode * -1521134295 + SunCounter.GetHashCode();
