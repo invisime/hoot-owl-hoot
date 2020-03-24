@@ -15,7 +15,7 @@ namespace GameEngineTests
             Assert.AreNotSame(initialState, clonedState);
             Assert.AreEqual(initialState.Board, clonedState.Board);
             Assert.AreEqual(initialState.Deck, clonedState.Deck);
-            Assert.AreEqual(initialState.Hand, clonedState.Hand);
+            CollectionAssert.AreEqual(initialState.Hands, clonedState.Hands);
             Assert.AreEqual(initialState.SunSpaces, clonedState.SunSpaces);
             Assert.AreEqual(initialState.SunCounter, clonedState.SunCounter);
             Assert.AreEqual(initialState, clonedState);
@@ -49,9 +49,9 @@ namespace GameEngineTests
             var initialState = TestUtilities.GenerateTestState();
             var nextState = initialState.Clone();
 
-            nextState.Hand.Discard(initialState.Hand.Cards[0]);
+            nextState.CurrentPlayerHand.Discard(initialState.CurrentPlayerHand.Cards[0]);
 
-            Assert.AreNotEqual(initialState.Hand, nextState.Hand);
+            Assert.AreNotEqual(initialState.Hands, nextState.Hands);
             Assert.AreNotEqual(initialState, nextState);
         }
 

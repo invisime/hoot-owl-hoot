@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngineTests
@@ -18,7 +19,7 @@ namespace GameEngineTests
             {
                 Board = board,
                 Deck = new DeterministicDeck(multiplier, numberOfSunCards),
-                Hand = new PlayerHand(CardTypeExtensions.OneCardOfEachColor),
+                Hands = new List<PlayerHand> { new PlayerHand(CardTypeExtensions.OneCardOfEachColor) },
                 SunCounter = 0,
                 SunSpaces = multiplier
             };
