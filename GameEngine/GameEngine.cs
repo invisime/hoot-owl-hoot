@@ -7,9 +7,9 @@ namespace GameEngine
     {
         public void RunGame()
         {
-            var player = new LeastRecentCardAgent();
+            var player = new RandomAgent();
             int numberOfTurns = 0;
-            var game = new Game(10);
+            var game = new Game(4);
             while(!game.IsOver)
             {
                 game.TakeTurn(player);
