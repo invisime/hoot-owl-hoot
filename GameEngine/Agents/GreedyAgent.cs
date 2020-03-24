@@ -7,7 +7,7 @@
             Play greatestSingleDistancePlay = null;
             int greatestDistance = 0;
             foreach (var owlPosition in state.Board.Owls.ListOfPositions) {
-                foreach (var card in state.Hand.Cards)
+                foreach (var card in state.CurrentPlayerHand.Cards)
                 {
                     var play = new Play(card, owlPosition);
                     var newPosition = state.Board.FindDestinationPosition(play);

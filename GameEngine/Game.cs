@@ -1,4 +1,5 @@
-﻿using GameEngine.Agents;
+﻿using System.Collections.Generic;
+using GameEngine.Agents;
 
 namespace GameEngine
 {
@@ -21,7 +22,7 @@ namespace GameEngine
             {
                 Board = new GameBoard(options.ColoredSpacesPerColor, options.Owls),
                 Deck = deck,
-                Hand = new PlayerHand(deck.Draw(3)),
+                Hands = new List<PlayerHand> { new PlayerHand(deck.Draw(3)) } ,
                 SunSpaces = options.SunSpaces,
                 SunCounter = 0
             };
@@ -29,7 +30,7 @@ namespace GameEngine
 
         public void TakeTurn(IAgent player)
         {
-            var play = State.Hand.ContainsSun
+            var play = State.CurrentPlayerHand.ContainsSun
                 ? Play.Sun
                 : player.FormulatePlay(State);
             State = State.Successor(play);

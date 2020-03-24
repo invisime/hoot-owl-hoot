@@ -5,7 +5,7 @@
         public Play FormulatePlay(GameState state)
         {
             return new Play(
-                state.Hand.OldestCard,
+                state.CurrentPlayerHand.OldestCard,
                 state.Board.Owls.LeadOwl
             );
         }
