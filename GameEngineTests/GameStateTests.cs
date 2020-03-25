@@ -18,6 +18,7 @@ namespace GameEngineTests
             CollectionAssert.AreEqual(initialState.Hands, clonedState.Hands);
             Assert.AreEqual(initialState.SunSpaces, clonedState.SunSpaces);
             Assert.AreEqual(initialState.SunCounter, clonedState.SunCounter);
+            Assert.AreEqual(initialState.CurrentPlayer, clonedState.CurrentPlayer);
             Assert.AreEqual(initialState, clonedState);
         }
 
