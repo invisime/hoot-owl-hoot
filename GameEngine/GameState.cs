@@ -11,10 +11,9 @@ namespace GameEngine
         public List<PlayerHand> Hands;
         public int SunSpaces;
         public int SunCounter;
+        public int CurrentPlayer = 0;
 
-        private int currentPlayer = 0;
-
-        public PlayerHand CurrentPlayerHand => Hands[currentPlayer];
+        public PlayerHand CurrentPlayerHand => Hands[CurrentPlayer];
 
         public bool IsOver
         {
@@ -47,7 +46,7 @@ namespace GameEngine
             state.CurrentPlayerHand.Discard(play.Card);
             state.CurrentPlayerHand.Add(state.Deck.Draw(1));
 
-            NextPlayer();
+            state.NextPlayer();
 
             return state;
         }
@@ -61,7 +60,7 @@ namespace GameEngine
                 && Hands.Count == other.Hands.Count && Hands.Zip( other.Hands, (a,b) => a.Equals(b) ).All( b => b )
                 && SunSpaces == other.SunSpaces
                 && SunCounter == other.SunCounter
-                && currentPlayer == other.currentPlayer;
+                && CurrentPlayer == other.CurrentPlayer;
         }
 
         public override int GetHashCode()
@@ -96,19 +95,20 @@ namespace GameEngine
                 Deck = Deck.Clone(),
                 Hands = Hands.Select( hand => hand.Clone() ).ToList(),
                 SunCounter = SunCounter,
-                SunSpaces = SunSpaces
+                SunSpaces = SunSpaces,
+                CurrentPlayer = CurrentPlayer,
             };
         }
 
         private void NextPlayer()
         {
-            if (currentPlayer < Hands.Count - 1)
+            if (CurrentPlayer < Hands.Count - 1)
             {
-                currentPlayer++;
+                CurrentPlayer++;
             }
             else
             {
-                currentPlayer = 0;
+                CurrentPlayer = 0;
             }
         }
     }
