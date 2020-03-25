@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GameEngine.Agents;
+﻿using GameEngine.Agents;
+using System.Linq;
 
 namespace GameEngine
 {
@@ -10,19 +10,19 @@ namespace GameEngine
         public bool IsWon { get { return State.IsWin; } }
         public bool IsLost { get { return State.IsLoss; } }
 
-        public Game(int multiplier)
+        public Game(int multiplier, int playerCount = 1)
         {
-            State = Start(GameOptions.FromMultiplier(multiplier));
+            State = Start(GameOptions.FromMultiplier(multiplier), playerCount);
         }
 
-        private GameState Start(GameOptions options)
+        private GameState Start(GameOptions options, int playerCount)
         {
             var deck = new DeterministicDeck(options.ColoredCardsPerColor, options.SunCards);
             return new GameState
             {
                 Board = new GameBoard(options.ColoredSpacesPerColor, options.Owls),
                 Deck = deck,
-                Hands = new List<PlayerHand> { new PlayerHand(deck.Draw(3)) } ,
+                Hands = Enumerable.Repeat(0, playerCount).Select( _ => new PlayerHand(deck.Draw(3)) ).ToList(),
                 SunSpaces = options.SunSpaces,
                 SunCounter = 0
             };
