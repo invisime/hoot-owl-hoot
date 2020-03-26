@@ -55,12 +55,13 @@ namespace GameEngine
         {
             var other = o as GameState;
             return other != null
-                && Board.Equals(other.Board)
-                && Deck.Equals(other.Deck)
-                && Hands.Count == other.Hands.Count && Hands.Zip( other.Hands, (a,b) => a.Equals(b) ).All( b => b )
                 && SunSpaces == other.SunSpaces
                 && SunCounter == other.SunCounter
-                && CurrentPlayer == other.CurrentPlayer;
+                && Board.Equals(other.Board)
+                && Deck.Equals(other.Deck)
+                && CurrentPlayer == other.CurrentPlayer
+                && Hands.Count == other.Hands.Count
+                && Hands.Zip(other.Hands, (a, b) => a.Equals(b)).All(b => b);
         }
 
         public override int GetHashCode()
