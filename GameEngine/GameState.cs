@@ -103,14 +103,8 @@ namespace GameEngine
 
         private void NextPlayer()
         {
-            if (CurrentPlayer < Hands.Count - 1)
-            {
-                CurrentPlayer++;
-            }
-            else
-            {
-                CurrentPlayer = 0;
-            }
+            CurrentPlayer++;
+            CurrentPlayer %= Hands.Count;
         }
     }
 }
