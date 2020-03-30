@@ -82,14 +82,17 @@ namespace GameEngineTests
         [TestMethod]
         public void ShouldUseNextPlayerHandAfterSuccessorIsCalled()
         {
-            var initialState = TestUtilities.GenerateTestState(playerCount: 2);
+            var initialState = TestUtilities.GenerateTestState(playerCount: 3);
             Assert.AreEqual(0, initialState.CurrentPlayer);
 
             var nextState1 = initialState.Successor(Play.Sun);
             Assert.AreEqual(1, nextState1.CurrentPlayer);
 
             var nextState2 = nextState1.Successor(Play.Sun);
-            Assert.AreEqual(0, nextState2.CurrentPlayer);
+            Assert.AreEqual(2, nextState2.CurrentPlayer);
+
+            var nextState3 = nextState2.Successor(Play.Sun);
+            Assert.AreEqual(0, nextState3.CurrentPlayer);
         }
     }
 }
