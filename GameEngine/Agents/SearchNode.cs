@@ -18,11 +18,11 @@ namespace GameEngine.Agents
             {
                 return new SearchNode[] { };
             }
-            if (State.Hand.ContainsSun)
+            if (State.CurrentPlayerHand.ContainsSun)
             {
                 return new SearchNode[] { ChildNode(Play.Sun) };
             }
-            return State.Hand.Cards
+            return State.CurrentPlayerHand.Cards
                     .SelectMany(card => State.Board.Owls.ListOfPositions
                         .Select(owl => new Play(card, owl)))
                     .Select(ChildNode);

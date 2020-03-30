@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine
 {
@@ -6,9 +8,12 @@ namespace GameEngine
     {
         public GameBoard Board;
         public IDeck Deck;
-        public PlayerHand Hand;
+        public IList<PlayerHand> Hands;
         public int SunSpaces;
         public int SunCounter;
+        public int CurrentPlayer = 0;
+
+        public PlayerHand CurrentPlayerHand => Hands[CurrentPlayer];
 
         public bool IsOver
         {
@@ -38,8 +43,10 @@ namespace GameEngine
                 state.Board.Move(play);
             }
 
-            state.Hand.Discard(play.Card);
-            state.Hand.Add(state.Deck.Draw(1));
+            state.CurrentPlayerHand.Discard(play.Card);
+            state.CurrentPlayerHand.Add(state.Deck.Draw(1));
+
+            state.NextPlayer();
 
             return state;
         }
@@ -48,11 +55,13 @@ namespace GameEngine
         {
             var other = o as GameState;
             return other != null
+                && SunSpaces == other.SunSpaces
+                && SunCounter == other.SunCounter
                 && Board.Equals(other.Board)
                 && Deck.Equals(other.Deck)
-                && Hand.Equals(other.Hand)
-                && SunSpaces == other.SunSpaces
-                && SunCounter == other.SunCounter;
+                && CurrentPlayer == other.CurrentPlayer
+                && Hands.Count == other.Hands.Count
+                && Hands.Zip(other.Hands, (a, b) => a.Equals(b)).All(b => b);
         }
 
         public override int GetHashCode()
@@ -62,7 +71,7 @@ namespace GameEngine
             {
                 hashCode = hashCode * -1521134295 + EqualityComparer<GameBoard>.Default.GetHashCode(Board);
                 hashCode = hashCode * -1521134295 + EqualityComparer<IDeck>.Default.GetHashCode(Deck);
-                hashCode = hashCode * -1521134295 + EqualityComparer<PlayerHand>.Default.GetHashCode(Hand);
+                hashCode = hashCode * -1521134295 + EqualityComparer<IList<PlayerHand>>.Default.GetHashCode(Hands);
                 hashCode = hashCode * -1521134295 + SunSpaces.GetHashCode();
                 hashCode = hashCode * -1521134295 + SunCounter.GetHashCode();
             }
@@ -85,10 +94,17 @@ namespace GameEngine
             {
                 Board = Board.Clone(),
                 Deck = Deck.Clone(),
-                Hand = Hand.Clone(),
+                Hands = Hands.Select( hand => hand.Clone() ).ToList(),
                 SunCounter = SunCounter,
-                SunSpaces = SunSpaces
+                SunSpaces = SunSpaces,
+                CurrentPlayer = CurrentPlayer,
             };
+        }
+
+        private void NextPlayer()
+        {
+            CurrentPlayer++;
+            CurrentPlayer %= Hands.Count;
         }
     }
 }

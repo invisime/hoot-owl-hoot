@@ -11,8 +11,8 @@ namespace GameEngineTests.Agents
         public void ShouldPlayRandomCardFromHand()
         {
             var state = TestUtilities.GenerateTestState(2);
-            state.Hand.Cards.Clear();
-            state.Hand.Add(CardType.Blue);
+            state.CurrentPlayerHand.Cards.Clear();
+            state.CurrentPlayerHand.Add(CardType.Blue);
             var player = new RandomAgent();
 
             var play = player.FormulatePlay(state);

@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace GameEngineTests
 {
@@ -15,9 +16,10 @@ namespace GameEngineTests
             Assert.AreNotSame(initialState, clonedState);
             Assert.AreEqual(initialState.Board, clonedState.Board);
             Assert.AreEqual(initialState.Deck, clonedState.Deck);
-            Assert.AreEqual(initialState.Hand, clonedState.Hand);
+            CollectionAssert.AreEqual(initialState.Hands.ToArray(), clonedState.Hands.ToArray());
             Assert.AreEqual(initialState.SunSpaces, clonedState.SunSpaces);
             Assert.AreEqual(initialState.SunCounter, clonedState.SunCounter);
+            Assert.AreEqual(initialState.CurrentPlayer, clonedState.CurrentPlayer);
             Assert.AreEqual(initialState, clonedState);
         }
 
@@ -49,9 +51,9 @@ namespace GameEngineTests
             var initialState = TestUtilities.GenerateTestState();
             var nextState = initialState.Clone();
 
-            nextState.Hand.Discard(initialState.Hand.Cards[0]);
+            nextState.CurrentPlayerHand.Discard(initialState.CurrentPlayerHand.Cards[0]);
 
-            Assert.AreNotEqual(initialState.Hand, nextState.Hand);
+            Assert.AreNotEqual(initialState.Hands, nextState.Hands);
             Assert.AreNotEqual(initialState, nextState);
         }
 
@@ -75,6 +77,22 @@ namespace GameEngineTests
 
             Assert.AreNotEqual(initialState.SunCounter, nextState.SunCounter);
             Assert.AreNotEqual(initialState, nextState);
+        }
+
+        [TestMethod]
+        public void ShouldUseNextPlayerHandAfterSuccessorIsCalled()
+        {
+            var initialState = TestUtilities.GenerateTestState(playerCount: 3);
+            Assert.AreEqual(0, initialState.CurrentPlayer);
+
+            var nextState1 = initialState.Successor(Play.Sun);
+            Assert.AreEqual(1, nextState1.CurrentPlayer);
+
+            var nextState2 = nextState1.Successor(Play.Sun);
+            Assert.AreEqual(2, nextState2.CurrentPlayer);
+
+            var nextState3 = nextState2.Successor(Play.Sun);
+            Assert.AreEqual(0, nextState3.CurrentPlayer);
         }
     }
 }

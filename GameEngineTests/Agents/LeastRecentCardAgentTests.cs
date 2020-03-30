@@ -13,14 +13,14 @@ namespace GameEngineTests.Agents
             var state = TestUtilities.GenerateTestState(2);
             var firstCard = CardType.Red;
             var secondCard = CardType.Orange;
-            state.Hand.Cards.Clear();
-            state.Hand.Add(firstCard, secondCard);
+            state.CurrentPlayerHand.Cards.Clear();
+            state.CurrentPlayerHand.Add(firstCard, secondCard);
             var player = new LeastRecentCardAgent();
 
             var play = player.FormulatePlay(state);
             Assert.AreEqual(firstCard, play.Card);
 
-            state.Hand.Discard(play.Card);
+            state.CurrentPlayerHand.Discard(play.Card);
             play = player.FormulatePlay(state);
             Assert.AreEqual(secondCard, play.Card);
         }

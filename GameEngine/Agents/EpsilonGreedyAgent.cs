@@ -23,7 +23,7 @@ namespace GameEngine.Agents
             }
 
             return new Play(
-                state.Hand.RandomCard,
+                state.CurrentPlayerHand.RandomCard,
                 state.Board.Owls.TrailingOwl
             );
         }

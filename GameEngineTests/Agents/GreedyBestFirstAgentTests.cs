@@ -30,8 +30,8 @@ namespace GameEngineTests.Agents
         public void ShouldThrowAnExceptionIfNoSolutionExists()
         {
             var state = TestUtilities.GenerateTestState(1, 1);
-            state.Hand.Cards.Clear();
-            state.Hand.Add(CardType.Sun);
+            state.CurrentPlayerHand.Cards.Clear();
+            state.CurrentPlayerHand.Add(CardType.Sun);
 
             // The only play is to play the sun card and lose.
             Assert.ThrowsException<NoSolutionFoundException>(() =>
@@ -43,8 +43,8 @@ namespace GameEngineTests.Agents
         public void ShouldThrowAnExceptionIfTheBoardStateDoesNotMatchPreviousPlay()
         {
             var state = TestUtilities.GenerateTestState(2, 1, 0);
-            state.Hand.Cards.Clear();
-            state.Hand.Cards.AddRange(CardTypeExtensions.OneCardOfEachColor);
+            state.CurrentPlayerHand.Cards.Clear();
+            state.CurrentPlayerHand.Cards.AddRange(CardTypeExtensions.OneCardOfEachColor);
 
             Agent.FormulatePlay(state);
             // Ignore what the agent said to play, and play something else instead.

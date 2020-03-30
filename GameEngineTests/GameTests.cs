@@ -16,7 +16,7 @@ namespace GameEngineTests
         private Game Game;
         private GameBoard Board { get { return Game.State.Board; } }
         private DeterministicDeck Deck { get { return Game.State.Deck as DeterministicDeck; } }
-        private PlayerHand Hand { get { return Game.State.Hand; } }
+        private PlayerHand Hand { get { return Game.State.CurrentPlayerHand; } }
         private int SunCounter { get { return Game.State.SunCounter; } }
 
         [TestInitialize]

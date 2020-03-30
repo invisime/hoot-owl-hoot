@@ -9,7 +9,8 @@ namespace GameEngineTests
         public static GameState GenerateTestState(
             int multiplier = 6,
             int? numberOfOwls = null,
-            int? numberOfSunCards = null)
+            int? numberOfSunCards = null,
+            int playerCount = 1)
         {
             var board = numberOfOwls.HasValue
                 ? new GameBoard(multiplier, numberOfOwls.Value)
@@ -18,7 +19,7 @@ namespace GameEngineTests
             {
                 Board = board,
                 Deck = new DeterministicDeck(multiplier, numberOfSunCards),
-                Hand = new PlayerHand(CardTypeExtensions.OneCardOfEachColor),
+                Hands = Enumerable.Repeat(0, playerCount).Select( _ => new PlayerHand(CardTypeExtensions.OneCardOfEachColor) ).ToList(),
                 SunCounter = 0,
                 SunSpaces = multiplier
             };
