@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace GameEngineTests
 {
@@ -15,7 +16,7 @@ namespace GameEngineTests
             Assert.AreNotSame(initialState, clonedState);
             Assert.AreEqual(initialState.Board, clonedState.Board);
             Assert.AreEqual(initialState.Deck, clonedState.Deck);
-            CollectionAssert.AreEqual(initialState.Hands, clonedState.Hands);
+            CollectionAssert.AreEqual(initialState.Hands.ToArray(), clonedState.Hands.ToArray());
             Assert.AreEqual(initialState.SunSpaces, clonedState.SunSpaces);
             Assert.AreEqual(initialState.SunCounter, clonedState.SunCounter);
             Assert.AreEqual(initialState.CurrentPlayer, clonedState.CurrentPlayer);

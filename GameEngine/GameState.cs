@@ -8,7 +8,7 @@ namespace GameEngine
     {
         public GameBoard Board;
         public IDeck Deck;
-        public List<PlayerHand> Hands;
+        public IList<PlayerHand> Hands;
         public int SunSpaces;
         public int SunCounter;
         public int CurrentPlayer = 0;
@@ -71,7 +71,7 @@ namespace GameEngine
             {
                 hashCode = hashCode * -1521134295 + EqualityComparer<GameBoard>.Default.GetHashCode(Board);
                 hashCode = hashCode * -1521134295 + EqualityComparer<IDeck>.Default.GetHashCode(Deck);
-                hashCode = hashCode * -1521134295 + EqualityComparer<List<PlayerHand>>.Default.GetHashCode(Hands);
+                hashCode = hashCode * -1521134295 + EqualityComparer<IList<PlayerHand>>.Default.GetHashCode(Hands);
                 hashCode = hashCode * -1521134295 + SunSpaces.GetHashCode();
                 hashCode = hashCode * -1521134295 + SunCounter.GetHashCode();
             }
