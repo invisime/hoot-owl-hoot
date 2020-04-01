@@ -40,7 +40,7 @@ namespace GameEngine.Agents
         {
             if( depth == 0 || node.State.IsOver )
             {
-                return _heuristic.Evaluate(node.State);
+                return -1 * _heuristic.Evaluate(node.State);
             }
 
             var max = int.MinValue;
