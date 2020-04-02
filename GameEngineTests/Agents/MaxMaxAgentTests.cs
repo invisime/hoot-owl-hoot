@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using GameEngine;
 using GameEngine.Agents;
 using GameEngine.Heuristics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
