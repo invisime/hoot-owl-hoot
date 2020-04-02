@@ -18,7 +18,7 @@ namespace GameEngine.Agents
             var root = new RootNode(state);
             var max = int.MinValue;
             Play choice = null;
-            foreach( var node in root.Expand())
+            foreach( var node in root.Expand() )
             {
                 var currentValue = MaxMax(node, _depth);
                 if ( max < currentValue )
