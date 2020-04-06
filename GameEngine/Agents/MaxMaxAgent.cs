@@ -30,7 +30,7 @@ namespace GameEngine.Agents
             
             if ( choice == null )
             {
-                throw new Exception("Could not determine any play");
+                throw new NoMoveFoundException("Could not determine any play");
             }
 
             return choice;

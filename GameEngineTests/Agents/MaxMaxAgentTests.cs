@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GameEngine;
 using GameEngine.Agents;
 using GameEngine.Heuristics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,7 +16,7 @@ namespace GameEngineTests.Agents
             var agent = new MaxMaxAgent(1, new WorstCaseNumberOfPlaysToGo());
             var state = TestUtilities.GenerateTestState(0, 0, 0, 0);
 
-            Assert.ThrowsException<Exception>(() => agent.FormulatePlay(state));
+            Assert.ThrowsException<NoMoveFoundException>(() => agent.FormulatePlay(state));
         }
 
         [TestMethod]
