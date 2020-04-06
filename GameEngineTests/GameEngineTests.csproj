@@ -52,6 +52,7 @@
     <Compile Include="Agents\AStarAgentTests.cs" />
     <Compile Include="Agents\BreadthFirstAgentTests.cs" />
     <Compile Include="Agents\GreedyBestFirstAgentTests.cs" />
+    <Compile Include="Agents\MaxMaxAgentTests.cs" />
     <Compile Include="DeterministicDeckTests.cs" />
     <Compile Include="Heuristics\WorstCaseNumberOfPlaysToGoTests.cs" />
     <Compile Include="ParliamentTests.cs" />
