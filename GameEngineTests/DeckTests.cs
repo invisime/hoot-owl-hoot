@@ -88,5 +88,20 @@ namespace GameEngineTests
             Assert.AreEqual(2600, cards.Count);
             Assert.AreEqual(800, cards.Count(card => card == CardType.Sun));
         }
+
+        [TestMethod]
+        public void ShouldShowCorrectProbabilities()
+        {
+            var deck = InitializeDeck(1, 1);
+            var probs = deck.Probabilities();
+
+            Assert.AreEqual(0.1428, probs[CardType.Blue], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Green], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Orange], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Purple], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Red], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Yellow], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Sun], 0.0001);
+        }
     }
 }
