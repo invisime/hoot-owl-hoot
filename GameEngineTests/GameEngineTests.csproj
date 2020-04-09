@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Agents\AStarAgentTests.cs" />
     <Compile Include="Agents\BreadthFirstAgentTests.cs" />
+    <Compile Include="Agents\ExpectMaxAgentTests.cs" />
     <Compile Include="Agents\GreedyBestFirstAgentTests.cs" />
     <Compile Include="Agents\MaxMaxAgentTests.cs" />
     <Compile Include="DeterministicDeckTests.cs" />
