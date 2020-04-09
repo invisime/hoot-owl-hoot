@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameEngine
 {
@@ -7,6 +8,7 @@ namespace GameEngine
         CardType[] SampleAll();
         CardType[] Sample(int numberDesired);
         CardType[] Draw(int numberDesired);
+        Tuple<CardType, double> DrawForcedCard(CardType cardType); 
         IDictionary<CardType, double> Probabilities();
         IDeck Clone();
         bool Equals(object o);

@@ -32,6 +32,20 @@ namespace GameEngine
             return Cards.GetRange(0, numberToDraw).ToArray();
         }
 
+        public override Tuple<CardType, double> DrawForcedCard(CardType card)
+        {
+            if (cards.Contains(card))
+            {
+                var probs = Probabilities();
+                cards.Remove(card);
+                return Tuple.Create(card, probs[card]);
+            }
+            else
+            {
+                return Tuple.Create(card, 0d);
+            }
+        }
+
         private void BuildDeck(int gameSizeMultiplier, int sunCards)
         {
             cards = new List<CardType>(Enumerable.Repeat(0, gameSizeMultiplier)

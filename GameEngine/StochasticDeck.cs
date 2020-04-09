@@ -56,6 +56,21 @@ namespace GameEngine
             return Clone().Draw(numberDesired);
         }
 
+        public override Tuple<CardType, double> DrawForcedCard(CardType card)
+        {
+            if(CardsByCount[card] > 0)
+            {
+                var probs = Probabilities();
+                CardsByCount[card]--;
+                RunningCount--;
+                return Tuple.Create(card, probs[card]);
+            }
+            else
+            {
+                return Tuple.Create(card, 0d);
+            }
+        }
+
         private CardType SampleOne()
         {
             var pick = SeededRandom.Next(0, Count - 1);

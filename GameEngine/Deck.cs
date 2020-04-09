@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine
@@ -13,6 +14,8 @@ namespace GameEngine
         public virtual CardType[] SampleAll() => Sample(Count);
         public override abstract bool Equals(object o);
         public override abstract int GetHashCode();
+
+        public abstract Tuple<CardType, double> DrawForcedCard(CardType card);
 
         public virtual IDictionary<CardType, double> Probabilities()
         {
@@ -37,7 +40,7 @@ namespace GameEngine
                 .ToDictionary(count => count.cardType, count => count.prob);
                     
         }
-        
+
         protected int StartingCount(int multiplier, int? requestedSunCards = null)
         {
             return multiplier * CardTypeExtensions.OneCardOfEachColor.Length
