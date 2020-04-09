@@ -63,7 +63,7 @@ namespace GameEngine.Agents
                     }
                     return max;
                 default:
-                    throw new Exception("TODO");
+                    throw new NotImplementedException("SearchNode case not implemented");
             }
 
         }

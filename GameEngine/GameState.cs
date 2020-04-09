@@ -49,7 +49,7 @@ namespace GameEngine
         {
             if (TurnPhase != Phase.BeginningOfTurn)
             {
-                throw new Exception("TODO new exception");
+                throw new InvalidStateChangeException("MakePlay expects GameState to be in Phase.BeginningOfTurn");
             }
 
             var clone = Clone();
@@ -73,7 +73,7 @@ namespace GameEngine
         {
             if (TurnPhase != Phase.MadePlay)
             {
-                throw new Exception("TODO new exception");
+                throw new InvalidStateChangeException("DrawCard expects GameState to be in Phase.MadePlay");
             }
 
             var clone = Clone();
@@ -86,7 +86,7 @@ namespace GameEngine
         {
             if (TurnPhase != Phase.MadePlay)
             {
-                throw new Exception("TODO new exception");
+                throw new InvalidStateChangeException("DrawForcedCard expects GameState to be in Phase.MadePlay");
             }
 
             var clone = Clone();
@@ -100,7 +100,7 @@ namespace GameEngine
         {
             if (TurnPhase != Phase.DrewCard)
             {
-                throw new Exception("TODO new exception");
+                throw new InvalidStateChangeException("SwitchPlayers expects GameState to be in Phase.DrewCard");
             }
 
             var clone = Clone();
