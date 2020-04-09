@@ -103,5 +103,35 @@ namespace GameEngineTests
             Assert.AreEqual(0.1428, probs[CardType.Yellow], 0.0001);
             Assert.AreEqual(0.1428, probs[CardType.Sun], 0.0001);
         }
+
+        [TestMethod]
+        public void ShouldDrawForcedCardAndReflectChangesInDeck()
+        {
+            var deck = InitializeDeck(1, 1);
+
+            var probs = deck.Probabilities();
+
+            Assert.AreEqual(0.1428, probs[CardType.Blue], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Green], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Orange], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Purple], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Red], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Yellow], 0.0001);
+            Assert.AreEqual(0.1428, probs[CardType.Sun], 0.0001);
+
+            var cardProb = deck.DrawForcedCard(CardType.Blue);
+            Assert.AreEqual(CardType.Blue, cardProb.Item1);
+            Assert.AreEqual(0.1428, cardProb.Item2, 0.0001);
+
+            var probsAfterForce = deck.Probabilities();
+
+            Assert.AreEqual(0d, probsAfterForce[CardType.Blue], 0.0001);
+            Assert.AreEqual(0.1666, probsAfterForce[CardType.Green], 0.0001);
+            Assert.AreEqual(0.1666, probsAfterForce[CardType.Orange], 0.0001);
+            Assert.AreEqual(0.1666, probsAfterForce[CardType.Purple], 0.0001);
+            Assert.AreEqual(0.1666, probsAfterForce[CardType.Red], 0.0001);
+            Assert.AreEqual(0.1666, probsAfterForce[CardType.Yellow], 0.0001);
+            Assert.AreEqual(0.1666, probsAfterForce[CardType.Sun], 0.0001);
+        }
     }
 }
