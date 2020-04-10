@@ -102,6 +102,30 @@ namespace GameEngineTests
             Assert.AreEqual(0.1428, probs[CardType.Red], 0.0001);
             Assert.AreEqual(0.1428, probs[CardType.Yellow], 0.0001);
             Assert.AreEqual(0.1428, probs[CardType.Sun], 0.0001);
+
+            var card = deck.Draw(1)[0];
+            var newProbs = deck.Probabilities();
+
+            foreach(var cardType in new []
+                {
+                    CardType.Blue,
+                    CardType.Green,
+                    CardType.Orange,
+                    CardType.Purple,
+                    CardType.Red,
+                    CardType.Yellow,
+                    CardType.Sun,
+                })
+            {
+                if (cardType == card)
+                {
+                    Assert.AreEqual(0d, newProbs[cardType], 0.0001);
+                }
+                else
+                {
+                    Assert.AreEqual(0.1428, newProbs[cardType], 0.0001);
+                }
+            }
         }
 
         [TestMethod]
