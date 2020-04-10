@@ -123,7 +123,7 @@ namespace GameEngineTests
                 }
                 else
                 {
-                    Assert.AreEqual(0.1428, newProbs[cardType], 0.0001);
+                    Assert.AreEqual(0.1666, newProbs[cardType], 0.0001);
                 }
             }
         }
