@@ -6,6 +6,14 @@ namespace GameEngine
 {
     public class GameState
     {
+        public enum Phase
+        {
+            BeginningOfTurn,
+            MadePlay,
+            DrewCard,
+        }
+
+        public Phase TurnPhase = Phase.BeginningOfTurn;
         public GameBoard Board;
         public IDeck Deck;
         public IList<PlayerHand> Hands;
@@ -32,29 +40,80 @@ namespace GameEngine
 
         public GameState Successor(Play play)
         {
-            var state = Clone();
+            return MakePlay(play)
+                .DrawCard()
+                .SwitchPlayers();
+        }
+
+        public GameState MakePlay(Play play)
+        {
+            if (TurnPhase != Phase.BeginningOfTurn)
+            {
+                throw new InvalidStateChangeException("MakePlay expects GameState to be in Phase.BeginningOfTurn");
+            }
+
+            var clone = Clone();
 
             if (play.Card == CardType.Sun)
             {
-                state.SunCounter++;
+                clone.SunCounter++;
             }
             else
             {
-                state.Board.Move(play);
+                clone.Board.Move(play);
             }
 
-            state.CurrentPlayerHand.Discard(play.Card);
-            state.CurrentPlayerHand.Add(state.Deck.Draw(1));
+            clone.CurrentPlayerHand.Discard(play.Card);
 
-            state.NextPlayer();
+            clone.TurnPhase = Phase.MadePlay;
+            return clone;
+        }
 
-            return state;
+        public GameState DrawCard() 
+        {
+            if (TurnPhase != Phase.MadePlay)
+            {
+                throw new InvalidStateChangeException("DrawCard expects GameState to be in Phase.MadePlay");
+            }
+
+            var clone = Clone();
+            clone.CurrentPlayerHand.Add(clone.Deck.Draw(1));
+            clone.TurnPhase = Phase.DrewCard;
+            return clone;
+        }
+
+        public Tuple<GameState, double> DrawForcedCard(CardType card) 
+        {
+            if (TurnPhase != Phase.MadePlay)
+            {
+                throw new InvalidStateChangeException("DrawForcedCard expects GameState to be in Phase.MadePlay");
+            }
+
+            var clone = Clone();
+            var cardProb = clone.Deck.DrawForcedCard(card);
+            clone.CurrentPlayerHand.Add(cardProb.Item1);
+            clone.TurnPhase = Phase.DrewCard;
+            return Tuple.Create(clone, cardProb.Item2);
+        }
+
+        public GameState SwitchPlayers()
+        {
+            if (TurnPhase != Phase.DrewCard)
+            {
+                throw new InvalidStateChangeException("SwitchPlayers expects GameState to be in Phase.DrewCard");
+            }
+
+            var clone = Clone();
+            clone.NextPlayer();
+            clone.TurnPhase = Phase.BeginningOfTurn;
+            return clone;
         }
 
         public override bool Equals(object o)
         {
             var other = o as GameState;
             return other != null
+                && TurnPhase == other.TurnPhase
                 && SunSpaces == other.SunSpaces
                 && SunCounter == other.SunCounter
                 && Board.Equals(other.Board)
@@ -74,6 +133,7 @@ namespace GameEngine
                 hashCode = hashCode * -1521134295 + EqualityComparer<IList<PlayerHand>>.Default.GetHashCode(Hands);
                 hashCode = hashCode * -1521134295 + SunSpaces.GetHashCode();
                 hashCode = hashCode * -1521134295 + SunCounter.GetHashCode();
+                hashCode = hashCode * -1521134295 + TurnPhase.GetHashCode();
             }
             return hashCode;
         }
@@ -98,6 +158,7 @@ namespace GameEngine
                 SunCounter = SunCounter,
                 SunSpaces = SunSpaces,
                 CurrentPlayer = CurrentPlayer,
+                TurnPhase = TurnPhase,
             };
         }
 
