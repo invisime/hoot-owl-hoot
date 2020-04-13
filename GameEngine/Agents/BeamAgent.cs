@@ -39,7 +39,7 @@ namespace GameEngine.Agents
                     results.Add(best);
                 }
             }
-            throw new NoSolutionFoundException();
+            throw new NoMoveFoundException();
         }
 
         private Best FindBest(List<SearchNode> nodes)
