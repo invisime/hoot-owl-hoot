@@ -17,5 +17,15 @@ namespace GameEngineTests.Agents
 
             Assert.ThrowsException<NoMoveFoundException>(() => agent.FormulatePlay(state));
         }
+
+        [TestMethod]
+        public void ShouldReturnPlay()
+        {
+            var agent = new BeamAgent(1, new WorstCaseNumberOfPlaysToGo());
+            var state = TestUtilities.GenerateTestState();
+            var play = agent.FormulatePlay(state);
+
+            Assert.IsNotNull(play);
+        }
     }
 }
