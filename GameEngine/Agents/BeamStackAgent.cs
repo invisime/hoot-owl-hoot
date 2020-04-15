@@ -24,25 +24,6 @@ namespace GameEngine.Agents
             return solution.First().Action;
         }
 
-
-/*Algorithm DCBSS(Node start, Node goal, Real U, Integer relay)
-38 beam_stack ← ∅
-39 beam_stack.push([0, U)) // initialize beam stack
-40 π∗ ← nil // initialize optimal solution path
-41 while beam_stack.top() != nil do
-42     π ← search(start, goal, U, relay) // π = solution path 
-43     if π != nil then
-44         π∗ ← π
-45         U ← π.getCost()
-46     while beam_stack.top().fmax ≥ U do
-47         beam_stack.pop()
-48     end while
-49     if beam_stack.isEmpty() then return π∗
-50     beam_stack.top().fmin ← beam_stack.top().fmax
-51     beam_stack.top().fmax ← U
-52 end while
-*/
-
         private IEnumerable<SearchNode> BeamStack(SearchNode start, int upperBound)
         {
             var beamStack = new Stack<MinMax>();
@@ -113,16 +94,6 @@ namespace GameEngine.Agents
 
         }
         
-/*
- Procedure pruneLayer (Integer l) // l is layer ?
-1 Keep ← the best w nodes ∈ Open[l]
-2 Prune ← {n | n ∈ Open[l] ∧ n ∈/ Keep}
-3 beam_stack.top().fmax ← min {f(n) | n ∈ Prune}
-4 for each n ∈ Prune do // inadmissible pruning 
-5     Open[l] ← Open[l] \ {n}
-6     delete n
-7 end for
-*/
         private List<SearchNode> Prune(List<SearchNode> layer, MinMax range)
         {
             var highestCost = int.MinValue;
