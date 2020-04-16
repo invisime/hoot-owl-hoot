@@ -91,7 +91,6 @@ namespace GameEngine.Agents
             {
                 return null;
             }
-
         }
         
         private List<SearchNode> Prune(List<SearchNode> layer, MinMax range)
