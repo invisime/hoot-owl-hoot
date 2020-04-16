@@ -114,6 +114,7 @@ namespace GameEngine.Agents
                 else if (value < highestCost)
                 {
                     var i = nodes.FindIndex(n => n.Item2 == highestCost);
+                    pruneCosts.Add(nodes[i].Item2);
                     nodes.RemoveAt(i);
                     nodes.Add(Tuple.Create(node, value));
                     highestCost = nodes.Max(n => n.Item2);
