@@ -18,7 +18,13 @@ namespace GameEngine.Agents
 
         public Play FormulatePlay(GameState state)
         {
-            var solution = BeamStack(new RootNode(state), int.MaxValue);
+            var solution = BeamStack(new RootNode(state), int.MaxValue).ToList();
+
+            if (solution.Count == 0)
+            {
+                throw new NoMoveFoundException();
+            }
+
             return solution.First().Action;
         }
 

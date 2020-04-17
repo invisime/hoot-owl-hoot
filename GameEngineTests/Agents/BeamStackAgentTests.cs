@@ -20,7 +20,7 @@ namespace GameEngineTests.Agents
         [TestMethod]
         public void ShouldReturnPlay()
         {
-            var agent = new BeamStackAgent(5000, new WorstCaseNumberOfPlaysToGo());
+            var agent = new BeamStackAgent(1, new WorstCaseNumberOfPlaysToGo());
             var state = TestUtilities.GenerateTestState();
             var play = agent.FormulatePlay(state);
 
