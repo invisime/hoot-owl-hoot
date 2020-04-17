@@ -73,10 +73,13 @@ namespace GameEngine.Agents
                         upperBound = _heuristic.Evaluate(node.State);
                         bestGoal = node;
                     }
-                    open[layer + 1].AddRange(GetSuccessorsInRange(node, beamStack.Peek()));
-                    if (open[layer + 1].Count > _width)
+                    else
                     {
-                        open[layer + 1] = Prune(open[layer + 1], beamStack.Peek());
+                        open[layer + 1].AddRange(GetSuccessorsInRange(node, beamStack.Peek()));
+                        if (open[layer + 1].Count > _width)
+                        {
+                            open[layer + 1] = Prune(open[layer + 1], beamStack.Peek());
+                        }
                     }
                 }
                 layer++;
