@@ -92,14 +92,8 @@ namespace GameEngine.Agents
                 nextLayer = new List<SearchNode>();
                 beamStack.Push(new MinMax { Min = 0, Max = upperBound });
             }
-            if(bestGoal != null)
-            {
-                return bestGoal;
-            }
-            else
-            {
-                return null;
-            }
+
+            return bestGoal;
         }
         
         private List<SearchNode> Prune(List<SearchNode> layer, MinMax range)
