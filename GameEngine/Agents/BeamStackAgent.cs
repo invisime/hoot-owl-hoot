@@ -8,19 +8,17 @@ namespace GameEngine.Agents
     public class BeamStackAgent : IAgent
     {
         private readonly int _width;
-        private readonly int _upperBound;
         private readonly IHeuristic _heuristic;
 
-        public BeamStackAgent(int width, int upperBound, IHeuristic heuristic)
+        public BeamStackAgent(int width, IHeuristic heuristic)
         {
             _width = width;
-            _upperBound = upperBound;
             _heuristic = heuristic;
         }
 
         public Play FormulatePlay(GameState state)
         {
-            var solution = BeamStack(new RootNode(state), _upperBound);
+            var solution = BeamStack(new RootNode(state), int.MaxValue);
             return solution.First().Action;
         }
 
