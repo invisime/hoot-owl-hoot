@@ -53,21 +53,17 @@ namespace GameEngine.Agents
 
         private SearchNode Search(Stack<MinMax> beamStack, SearchNode start, int upperBound)
         {
-            var open = new List<List<SearchNode>>();
-
-            open.Add(new List<SearchNode> { start });
-            open.Add(new List<SearchNode>());
+            var currentLayer = new List<SearchNode> { start };
+            var nextLayer = new List<SearchNode>();
 
             SearchNode bestGoal = null;
 
-            var layer = 0;
-
-            while(open[layer].Count != 0 || open[layer + 1].Count != 0)
+            while(currentLayer.Count != 0 || nextLayer.Count != 0)
             {
-                while (open[layer].Count != 0)
+                while(currentLayer.Count != 0)
                 {
-                    var node = FindCheapest(open[layer]);
-                    open[layer].Remove(node);
+                    var node = FindCheapest(currentLayer);
+                    currentLayer.Remove(node);
                     if (node.State.IsOver)
                     {
                         upperBound = _heuristic.Evaluate(node.State);
@@ -75,15 +71,15 @@ namespace GameEngine.Agents
                     }
                     else
                     {
-                        open[layer + 1].AddRange(GetSuccessorsInRange(node, beamStack.Peek()));
-                        if (open[layer + 1].Count > _width)
+                        nextLayer.AddRange(GetSuccessorsInRange(node, beamStack.Peek()));
+                        if (nextLayer.Count > _width)
                         {
-                            open[layer + 1] = Prune(open[layer + 1], beamStack.Peek());
+                            nextLayer = Prune(nextLayer, beamStack.Peek());
                         }
                     }
                 }
-                layer++;
-                open.Add(new List<SearchNode>());
+                currentLayer = nextLayer;
+                nextLayer = new List<SearchNode>();
                 beamStack.Push(new MinMax { Min = 0, Max = upperBound });
             }
             if(bestGoal != null)
