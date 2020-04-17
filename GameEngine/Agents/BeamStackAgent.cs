@@ -46,6 +46,12 @@ namespace GameEngine.Agents
                     beamStack.Peek().Max = upperBound;
                 }
             }
+
+            if (optimalSolution == null)
+            {
+                throw new NoMoveFoundException();
+            }
+
             return optimalSolution.Solution();
         }
 
