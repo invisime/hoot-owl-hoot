@@ -95,40 +95,43 @@ namespace GameEngine.Agents
 
             return bestGoal;
         }
-        
+
         private List<SearchNode> Prune(List<SearchNode> layer, MinMax range)
         {
+            List<T> InferList<T>(T t) => new List<T>();
+
             var highestCost = int.MinValue;
-            var nodes = new List<Tuple<SearchNode, int>>();
+            var nodeCosts = InferList(new { Node = (SearchNode)null, Cost = 0 });
             var pruneCosts = new List<int>();
 
             foreach(var node in layer)
             {
-                var value = _heuristic.Evaluate(node.State);
-                if (nodes.Count < _width)
+                var cost = _heuristic.Evaluate(node.State);
+                if (nodeCosts.Count < _width)
                 {
-                    nodes.Add(Tuple.Create(node, value));
-                    if (value > highestCost)
+                    nodeCosts.Add(new { Node = node, Cost = cost });
+                    if (cost > highestCost)
                     {
-                        highestCost = value;
+                        highestCost = cost;
                     }
                 }
-                else if (value < highestCost)
+                else if (cost < highestCost)
                 {
-                    var i = nodes.FindIndex(n => n.Item2 == highestCost);
-                    pruneCosts.Add(nodes[i].Item2);
-                    nodes.RemoveAt(i);
-                    nodes.Add(Tuple.Create(node, value));
-                    highestCost = nodes.Max(n => n.Item2);
+                    var i = nodeCosts.FindIndex(n => n.Cost == highestCost);
+                    pruneCosts.Add(nodeCosts[i].Cost);
+                    nodeCosts.RemoveAt(i);
+
+                    nodeCosts.Add(new { Node = node, Cost = cost } );
+                    highestCost = nodeCosts.Max(n => n.Cost);
                 }
                 else
                 {
-                    pruneCosts.Add(value);
+                    pruneCosts.Add(cost);
                 }
             }
 
             range.Max = pruneCosts.Min();
-            return nodes.Select(node => node.Item1).ToList();
+            return nodeCosts.Select(node => node.Node).ToList();
         }
 
         private IEnumerable<SearchNode> GetSuccessorsInRange(SearchNode node, MinMax range)
