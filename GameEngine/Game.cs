@@ -10,14 +10,18 @@ namespace GameEngine
         public bool IsWon { get { return State.IsWin; } }
         public bool IsLost { get { return State.IsLoss; } }
 
-        public Game(int multiplier, int playerCount = 1)
+        public Game(int multiplier, int playerCount = 1, string deckType = "deterministic")
         {
-            State = Start(GameOptions.FromMultiplier(multiplier), playerCount);
+            State = Start(deckType, GameOptions.FromMultiplier(multiplier), playerCount);
         }
 
-        private GameState Start(GameOptions options, int playerCount)
+        private GameState Start(string deckType, GameOptions options, int playerCount)
         {
-            var deck = new DeterministicDeck(options.ColoredCardsPerColor, options.SunCards);
+            IDeck deck = new DeterministicDeck(options.ColoredCardsPerColor, options.SunCards);
+            if (deckType != "deterministic")
+            {
+                deck = new StochasticDeck(options.ColoredCardsPerColor, options.SunCards);
+            }
             return new GameState
             {
                 Board = new GameBoard(options.ColoredSpacesPerColor, options.Owls),
