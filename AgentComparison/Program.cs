@@ -142,7 +142,6 @@ Optional Configurations: --deck=[deterministic|stochastic]
 
         private static IAgent Agent(IReadOnlyDictionary<string, string> parameters, Options options)
         {
-            // TODO check to see if called out heuristic and agent exists
             IHeuristic heuristic = new WorstCaseNumberOfPlaysToGo();
             if (parameters.ContainsKey("heuristic"))
             {
