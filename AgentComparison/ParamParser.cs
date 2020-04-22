@@ -38,7 +38,7 @@ namespace AgentComparison
 
         private string Symbol()
         {
-            bool IsSymbolChar(char c) => char.IsLetterOrDigit(c) || c == '_' || c == '-';
+            bool IsSymbolChar(char c) => char.IsLetterOrDigit(c) || c == '_' || c == '-' || c == '.';
 
             ClearWhitespace();
 
