@@ -8,34 +8,44 @@ namespace AgentComparison
     public interface IAgentOption 
     {
         string Description(); 
-        IAgent CreateAgent(IHeuristic heuristic);
+        IAgent CreateAgent(IHeuristic heuristic, IReadOnlyDictionary<string, string> parameters);
     }
 
     public interface IHeuristicOption
     {
         string Description();
-        IAgent CreateHeuristic();
+        IHeuristic CreateHeuristic(IReadOnlyDictionary<string, string> parameters);
     }
 
     public class BeamStackAgentOption : IAgentOption
     {
-        public string Description() => "Beam Stack Agent";
-        public IAgent CreateAgent(IHeuristic heuristic) => new BeamStackAgent(0, heuristic); // TODO extra params?
+        public string Description() => "Usage: AgentComparison --agent=BeamStack --width=<integer> --heuristic=<heuristic-name>";
+        public IAgent CreateAgent(IHeuristic heuristic, IReadOnlyDictionary<string, string> parameters) 
+            => new BeamStackAgent(int.Parse(parameters["width"]), heuristic); 
+    }
+
+    public class BestCaseNumberOfPlaysToGoHeuristicOption : IHeuristicOption
+    {
+        public string Description() => "Usage: AgentComparison --agent=<agent-name> --heuristic=BestNumberOfPlays";
+        public IHeuristic CreateHeuristic(IReadOnlyDictionary<string, string> parameters) => new BestCaseNumberOfPlaysToGo();
     }
 
     public class Options
     {
-        private readonly IReadOnlyDictionary<string, IAgentOption> _agents;
-        private readonly IReadOnlyDictionary<string, IHeuristicOption> _heuristics;
-        public IReadOnlyDictionary<string, IAgentOption> Agents => _agents;
+        public IReadOnlyDictionary<string, IAgentOption> Agents { get; private set; } 
 
-        public IReadOnlyDictionary<string, IHeuristicOption> Heuristics => _heuristics;
+        public IReadOnlyDictionary<string, IHeuristicOption> Heuristics { get; private set; }
 
         public Options() 
         {
-            _agents = new Dictionary<string, IAgentOption>
+            Agents = new Dictionary<string, IAgentOption>
             {
                 { "BeamStack", new BeamStackAgentOption() }
+            };
+
+            Heuristics = new Dictionary<string, IHeuristicOption>
+            {
+                { "BestNumberOfPlays", new BestCaseNumberOfPlaysToGoHeuristicOption() }
             };
         }
 
