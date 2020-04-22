@@ -52,7 +52,12 @@ namespace AgentComparison
             => new LeastRecentCardAgent(); 
     }
 
-    // TODO GreedyBestFirstAgent after refactor
+    public class GreedyBestFirstAgentOption : IAgentOption
+    {
+        public string Description() => "Usage: AgentComparison --agent=GreedyBestFirst --heuristic=<heuristic-name>";
+        public IAgent CreateAgent(IHeuristic heuristic, IReadOnlyDictionary<string, string> parameters) 
+            => new GreedyBestFirstAgent(heuristic); 
+    }
 
     public class GreedyAgentOption : IAgentOption
     {
@@ -82,7 +87,12 @@ namespace AgentComparison
             => new BreadthFirstAgent(); 
     }
 
-    // TODO AStarAgent after refactor
+    public class AStarAgentOption : IAgentOption
+    {
+        public string Description() => "Usage: AgentComparison --agent=AStar --heuristic=<heuristic-name>";
+        public IAgent CreateAgent(IHeuristic heuristic, IReadOnlyDictionary<string, string> parameters) 
+            => new AStarAgent(heuristic); 
+    }
 
     public class BestCaseNumberOfPlaysToGoHeuristicOption : IHeuristicOption
     {
@@ -114,12 +124,14 @@ namespace AgentComparison
                 { "ExpectMax", new ExpectMaxAgentOption() },
                 { "EpsilonGreedy", new EpsilonGreedyAgentOption() },
                 { "BreadthFirst", new BreadthFirstAgentOption() },
+                { "AStar", new AStarAgentOption() },
+                { "GreedyBestFirst", new GreedyBestFirstAgentOption() },
             };
 
             Heuristics = new Dictionary<string, IHeuristicOption>
             {
                 { "BestNumberOfPlays", new BestCaseNumberOfPlaysToGoHeuristicOption() },
-                { "WorstNumberOfPlays", new WorstCaseNumberOfPlaysToGoHeuristicOption() }
+                { "WorstNumberOfPlays", new WorstCaseNumberOfPlaysToGoHeuristicOption() },
             };
         }
 
