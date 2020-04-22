@@ -13,7 +13,7 @@ namespace GameEngineTests.Agents
         [TestInitialize]
         public void TestInitialize()
         {
-            Agent = new GreedyBestFirstAgent<WorstCaseNumberOfPlaysToGo>();
+            Agent = new GreedyBestFirstAgent( new WorstCaseNumberOfPlaysToGo() );
         }
 
         [TestMethod]
