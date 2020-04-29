@@ -13,7 +13,7 @@ namespace GameEngineTests.Agents
         [TestInitialize]
         public void TestInitialize()
         {
-            Agent = new AStarAgent<BestCaseNumberOfPlaysToGo>();
+            Agent = new AStarAgent( new BestCaseNumberOfPlaysToGo() );
         }
 
         [TestMethod]

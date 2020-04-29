@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace GameEngine.Agents
 {
-    public class GreedyBestFirstAgent<T> : TreeSearchAgent where T : IHeuristic, new()
+    public class GreedyBestFirstAgent : TreeSearchAgent
     {
         private IHeuristic Heuristic { get; }
 
-        public GreedyBestFirstAgent() : this(new T()) { }
-
-        private GreedyBestFirstAgent(IHeuristic heuristic)
+        public GreedyBestFirstAgent(IHeuristic heuristic)
         {
             Heuristic = heuristic;
         }
